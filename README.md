@@ -24,6 +24,15 @@ dotnet run --project src/MothaSync.Client
 dotnet run --project src/MothaSync.Server
 ```
 
+## Bundled rclone
+
+`scripts/download-rclone.sh` downloads a pinned rclone release for every supported
+platform into `src/MothaSync.Client/Assets/rclone/` (gitignored), verifying each zip
+against the upstream `SHA256SUMS`. The client bundles the binary for the build's
+runtime identifier and on startup copies it to the AppData `MothaSync/bin` folder
+whenever the bundled checksum differs from the installed copy. Renovate bumps the
+version pin in the script through the regex custom manager in `renovate.json`.
+
 ## Release builds
 
 `scripts/build.sh` builds self-contained zips for every platform into `dist/`:
