@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package mothasync.v1;
+
+option csharp_namespace = "MothaSync.Shared.Contracts";
+
+// Auth model:
+//  1. An admin issues an enrollment token (shared secret, out of band).
+//  2. The client calls RegisterDevice once with that token and gets back a
+//     server-generated device_id and a per-device device_token.
+//  3. Every later request sends `Authorization: Bearer <device_token>`.
+//     The server resolves the token to a device_id and stamps it on events,
+//     so the id is never taken from the request body.
+
+message RegisterDeviceRequest {
+  // Shared secret handed out by the server admin.
+  string enrollment_token = 1;
+  // Human-readable label, e.g. hostname.
+  string device_name = 2;
+  // Client platform, e.g. "linux-x64", "win-x64", "osx-arm64".
+  string platform = 3;
+  string client_version = 4;
+}
+
+message RegisterDeviceResponse {
+  // Server-generated UUID identifying this device.
+  string device_id = 1;
+  // Secret bearer token for this device; store securely, shown only once.
+  string device_token = 2;
+}
