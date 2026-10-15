@@ -20,11 +20,11 @@
     <TrayIcon.Icons>
         <TrayIcons>
             <TrayIcon Icon="avares://MothaSync.Client/Assets/logo.png"
-                      ToolTipText="SyncMotha"
+                      ToolTipText="MothaSync"
                       Clicked="OnTrayClicked">
                 <TrayIcon.Menu>
                     <NativeMenu>
-                        <NativeMenuItem Header="Open SyncMotha" Click="OnOpen" />
+                        <NativeMenuItem Header="Open MothaSync" Click="OnOpen" />
                         <NativeMenuItemSeparator />
                         <NativeMenuItem Header="Exit" Click="OnExit" />
                     </NativeMenu>

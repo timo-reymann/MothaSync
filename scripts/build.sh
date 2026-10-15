@@ -23,7 +23,7 @@ done
 for rid in osx-arm64 osx-x64; do
   dotnet restore "$PROJECT" -r "$rid"
   dotnet msbuild "$PROJECT" -t:BundleApp -p:RuntimeIdentifier="$rid" -p:Configuration=Release -p:SelfContained=true
-  app="$PROJECT/bin/Release/net10.0/$rid/publish/SyncMotha.app"
+  app="$PROJECT/bin/Release/net10.0/$rid/publish/MothaSync.app"
   if command -v codesign >/dev/null; then
     codesign --force --deep -s - "$app"
   fi
