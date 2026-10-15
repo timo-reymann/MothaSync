@@ -103,6 +103,6 @@ public sealed class DeviceAuthenticationHandlerTests : IDisposable
         Assert.True(result.Succeeded);
         Assert.Equal(
             deviceId,
-            result.Ticket!.Principal.FindFirstValue(DeviceAuthentication.DeviceIdClaim));
+            result.Ticket.Principal.FindFirstValue(DeviceAuthentication.DeviceIdClaim));
     }
 }

@@ -74,8 +74,8 @@ public partial class AppHeader : UserControl
 
     private void ApplyActive()
     {
-        ((IPseudoClasses)HistoryButton.Classes).Set(":active", Active == HeaderTab.History);
-        ((IPseudoClasses)SettingsButton.Classes).Set(":active", Active == HeaderTab.Settings);
+        (HistoryButton.Classes as IPseudoClasses).Set(":active", Active == HeaderTab.History);
+        (SettingsButton.Classes as IPseudoClasses).Set(":active", Active == HeaderTab.Settings);
     }
 
     private void OnHistory(object? sender, RoutedEventArgs e)
