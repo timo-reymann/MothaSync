@@ -7,12 +7,14 @@
 - `src/MothaSync.Shared` — class library with contracts/models shared by client and server.
 - `src/MothaSync.Client` — Avalonia desktop app (MVVM template).
 - `src/MothaSync.Server` — ASP.NET Core Web API (controllers).
+- `tests/<Project>.Test` — xunit unit test project mirroring each project in `src/`.
 
 `Client` and `Server` both reference `Shared`; they must not reference each other.
 
 ## Commands
 
 - Build: `dotnet build`
+- Test: `dotnet test`
 - Run server: `dotnet run --project src/MothaSync.Server`
 - Run client: `dotnet run --project src/MothaSync.Client`
 
