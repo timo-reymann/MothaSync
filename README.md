@@ -4,7 +4,7 @@
 
 <h1 align="center">MothaSync</h1>
 
-<p align="center">A system tray backup tool that syncs a 3D schoolwork folder to two external SSDs.</p>
+<p align="center">A system tray tool that syncs a folder from disk A to disk B.</p>
 
 ## Projects
 

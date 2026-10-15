@@ -13,14 +13,14 @@
                     <DockPanel>
                         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="10">
                             <c:Icon Data="{StaticResource IconDrive}" Size="22" Foreground="{DynamicResource AppAccent}" />
-                            <TextBlock Text="Drive A · 3d-school" FontWeight="SemiBold" VerticalAlignment="Center" />
+                            <TextBlock Text="Drive A · Source" FontWeight="SemiBold" VerticalAlignment="Center" />
                         </StackPanel>
                         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Spacing="8" Margin="0,14,0,0">
                             <Ellipse Classes="dot ok" />
                             <TextBlock Classes="muted" Text="connected" FontSize="12" />
                         </StackPanel>
                         <TextBlock Classes="muted mono"
-                                   Text="/home/partner/3d-school"
+                                   Text="/home/user/projects"
                                    FontSize="12"
                                    TextWrapping="Wrap"
                                    Margin="0,10,0,0" />
@@ -31,14 +31,14 @@
                     <DockPanel>
                         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="10">
                             <c:Icon Data="{StaticResource IconDrive}" Size="22" Foreground="{DynamicResource AppAccent}" />
-                            <TextBlock Text="Drive B · SSD One" FontWeight="SemiBold" VerticalAlignment="Center" />
+                            <TextBlock Text="Drive B · Backup" FontWeight="SemiBold" VerticalAlignment="Center" />
                         </StackPanel>
                         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Spacing="8" Margin="0,14,0,0">
                             <Ellipse Classes="dot" />
                             <TextBlock Classes="muted" Text="waiting for drive" FontSize="12" />
                         </StackPanel>
                         <TextBlock Classes="muted mono"
-                                   Text="/Volumes/SSD One"
+                                   Text="/Volumes/Backup"
                                    FontSize="12"
                                    TextWrapping="Wrap"
                                    Margin="0,10,0,0" />

@@ -36,7 +36,7 @@
                     </Grid>
                 </HeaderedContentControl.Header>
                 <TextBlock Classes="log">
-                    <Run Foreground="{DynamicResource AppLogTime}" Text="17:46:53" /><Run Text=" INFO  Starting sync: /home/partner/3d-school -> /Volumes/SSD One" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="17:46:53" /><Run Text=" INFO  Starting sync: /home/user/projects -> /Volumes/Backup" /><LineBreak />
                     <Run Foreground="{DynamicResource AppLogTime}" Text="17:46:54" /><Run Text=" INFO  Checking 1291 files" /><LineBreak />
                     <Run Foreground="{DynamicResource AppLogTime}" Text="17:47:02" /><Run Text=" INFO  Transferred: modules/week-07/sculpt/torso_hi.obj" /><LineBreak />
                     <Run Foreground="{DynamicResource AppLogTime}" Text="17:47:09" /><Run Text=" INFO  Transferred: modules/week-07/sculpt/torso_lo.obj" /><LineBreak />
@@ -58,7 +58,7 @@
                     </Grid>
                 </HeaderedContentControl.Header>
                 <TextBlock Classes="log">
-                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:11" /><Run Text=" INFO  Starting sync: /home/partner/3d-school -> /Volumes/SSD One" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:11" /><Run Text=" INFO  Starting sync: /home/user/projects -> /Volumes/Backup" /><LineBreak />
                     <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:12" /><Run Text=" INFO  Checking 1291 files" /><LineBreak />
                     <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:19" /><Run Text=" INFO  Transferred: modules/week-07/sculpt/torso_hi.obj" /><LineBreak />
                     <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:31" /><Run Text=" INFO  Transferred: modules/week-07/sculpt/torso_lo.obj" /><LineBreak />

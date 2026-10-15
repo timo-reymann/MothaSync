@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=MothaSync
-Comment=Back up the 3D schoolwork folder to two external SSDs
+Comment=Sync a folder from one disk to another
 Exec=MothaSync.Client
 Icon=mothasync
 Categories=Utility;
