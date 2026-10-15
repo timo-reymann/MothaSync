@@ -184,6 +184,32 @@
         <Setter Property="BorderThickness" Value="0" />
     </Style>
 
+    <Style Selector="TextBox">
+        <Setter Property="Background" Value="{DynamicResource AppCard}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AppLine}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Padding" Value="12,10" />
+        <Setter Property="MinHeight" Value="40" />
+        <Setter Property="FontFamily" Value="{DynamicResource MonoFont}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Foreground" Value="{DynamicResource AppText}" />
+        <Setter Property="CaretBrush" Value="{DynamicResource AppAccent}" />
+        <Setter Property="SelectionBrush" Value="{DynamicResource AppAccentBorder}" />
+    </Style>
+    <Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="{DynamicResource AppCard}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AppLineHover}" />
+    </Style>
+    <Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="{DynamicResource AppCard}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AppAccent}" />
+        <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="TextBox /template/ TextBlock#PART_Watermark, TextBox /template/ TextBlock#PART_FloatingWatermark">
+        <Setter Property="Foreground" Value="{DynamicResource AppLogTime}" />
+    </Style>
+
     <Style Selector="ProgressBar">
         <Setter Property="Height" Value="6" />
         <Setter Property="MinHeight" Value="6" />
