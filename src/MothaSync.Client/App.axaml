@@ -16,4 +16,20 @@
         <FluentTheme />
         <StyleInclude Source="/Styles/Theme.axaml" />
     </Application.Styles>
+
+    <TrayIcon.Icons>
+        <TrayIcons>
+            <TrayIcon Icon="avares://MothaSync.Client/Assets/logo.png"
+                      ToolTipText="SyncMotha"
+                      Clicked="OnTrayClicked">
+                <TrayIcon.Menu>
+                    <NativeMenu>
+                        <NativeMenuItem Header="Open SyncMotha" Click="OnOpen" />
+                        <NativeMenuItemSeparator />
+                        <NativeMenuItem Header="Exit" Click="OnExit" />
+                    </NativeMenu>
+                </TrayIcon.Menu>
+            </TrayIcon>
+        </TrayIcons>
+    </TrayIcon.Icons>
 </Application>

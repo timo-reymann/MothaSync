@@ -33,6 +33,13 @@ A 1 px border separates the header from the body.
 
 Amber `#F59E0B` is reserved for paused and for warning icons. Keep it clearly different from the running yellow.
 
+## Tray icon
+
+The logo also serves as the system tray icon on Windows, macOS and Linux.
+Clicking it, or choosing "Open SyncMotha" from its menu, shows and focuses the main window.
+"Exit" in the tray menu quits the app.
+On Linux the tray needs a StatusNotifier host, which GNOME only provides with the AppIndicator extension.
+
 ## Logo
 
 The logo is a friendly mother holding one drive in each hand (`assets/logo.png`,
