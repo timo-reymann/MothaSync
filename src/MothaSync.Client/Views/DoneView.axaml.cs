@@ -1,3 +1,4 @@
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 
@@ -10,8 +11,19 @@ public partial class DoneView : UserControl
         InitializeComponent();
     }
 
-    private async void OnViewHistory(object? sender, RoutedEventArgs e)
+    protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
     {
-        await Dialogs.ShowHistory(this);
+        base.OnAttachedToVisualTree(e);
+        SyncStatusStore.Set(SyncStatus.Ok);
+    }
+
+    private void OnViewHistory(object? sender, RoutedEventArgs e)
+    {
+        Navigation.ShowHistory(this);
+    }
+
+    private void OnBackToOverview(object? sender, RoutedEventArgs e)
+    {
+        Navigation.ShowOverview(this);
     }
 }

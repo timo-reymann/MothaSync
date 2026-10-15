@@ -34,6 +34,6 @@ public partial class HistoryDetailView : UserControl
 
     private void OnBack(object? sender, RoutedEventArgs e)
     {
-        Dialogs.CloseWindowOf(this);
+        Navigation.GoBack(this);
     }
 }

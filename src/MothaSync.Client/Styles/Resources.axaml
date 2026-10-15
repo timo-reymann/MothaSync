@@ -25,7 +25,8 @@
     <SolidColorBrush x:Key="AppErrBorder" Color="#73EF4444" />
     <SolidColorBrush x:Key="AppErrText" Color="#FCA5A5" />
     <SolidColorBrush x:Key="AppWarn" Color="#F59E0B" />
-    <SolidColorBrush x:Key="AppRun" Color="#FACC15" />
+    <SolidColorBrush x:Key="AppWaiting" Color="#FACC15" />
+    <SolidColorBrush x:Key="AppSync" Color="#3B82F6" />
     <SolidColorBrush x:Key="AppIdle" Color="#94A3B8" />
 
     <SolidColorBrush x:Key="AppLogBg" Color="#1F1E1E" />

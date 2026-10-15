@@ -3,7 +3,7 @@
              xmlns:c="using:MothaSync.Client.Controls"
              x:Class="MothaSync.Client.Views.HistoryDetailView">
     <DockPanel>
-        <c:AppHeader DockPanel.Dock="Top" Status="Ok" Active="History" />
+        <c:AppHeader DockPanel.Dock="Top" Active="History" />
         <Grid RowDefinitions="Auto,Auto,*" Margin="24" RowSpacing="16">
             <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
                 <Button Grid.Column="0" Classes="icon" Click="OnBack" ToolTip.Tip="Back to history">

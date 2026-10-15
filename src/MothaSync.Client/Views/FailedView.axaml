@@ -3,7 +3,7 @@
              xmlns:c="using:MothaSync.Client.Controls"
              x:Class="MothaSync.Client.Views.FailedView">
     <DockPanel>
-        <c:AppHeader DockPanel.Dock="Top" Status="Error" />
+        <c:AppHeader DockPanel.Dock="Top" />
         <Grid RowDefinitions="Auto,Auto,*" Margin="24" RowSpacing="20">
             <Border Grid.Row="0"
                     Padding="16,14"

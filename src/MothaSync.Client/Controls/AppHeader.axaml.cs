@@ -1,17 +1,11 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Interactivity;
+using Avalonia.VisualTree;
 using MothaSync.Client.Views;
 
 namespace MothaSync.Client.Controls;
-
-public enum SyncStatus
-{
-    Idle,
-    Running,
-    Ok,
-    Error,
-}
 
 public enum HeaderTab
 {
@@ -22,21 +16,22 @@ public enum HeaderTab
 
 public partial class AppHeader : UserControl
 {
-    public static readonly StyledProperty<SyncStatus> StatusProperty =
-        AvaloniaProperty.Register<AppHeader, SyncStatus>(nameof(Status));
-
     public static readonly StyledProperty<HeaderTab> ActiveProperty =
         AvaloniaProperty.Register<AppHeader, HeaderTab>(nameof(Active));
 
     static AppHeader()
     {
-        StatusProperty.Changed.AddClassHandler<AppHeader>((header, _) => header.ApplyStatus());
         ActiveProperty.Changed.AddClassHandler<AppHeader>((header, _) => header.ApplyActive());
     }
 
     public AppHeader()
     {
         InitializeComponent();
+        HeaderBorder.AddHandler(
+            InputElement.PointerPressedEvent,
+            OnHeaderPointerPressed,
+            RoutingStrategies.Bubble,
+            handledEventsToo: true);
         ApplyStatus();
         ApplyActive();
     }
@@ -44,13 +39,15 @@ public partial class AppHeader : UserControl
     protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
     {
         base.OnAttachedToVisualTree(e);
+        SyncStatusStore.Changed += OnStatusChanged;
+        ApplyStatus();
         MinimizeButton.IsVisible = TopLevel.GetTopLevel(this) is MainWindow;
     }
 
-    public SyncStatus Status
+    protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
     {
-        get => GetValue(StatusProperty);
-        set => SetValue(StatusProperty, value);
+        SyncStatusStore.Changed -= OnStatusChanged;
+        base.OnDetachedFromVisualTree(e);
     }
 
     public HeaderTab Active
@@ -59,12 +56,15 @@ public partial class AppHeader : UserControl
         set => SetValue(ActiveProperty, value);
     }
 
+    private void OnStatusChanged() => ApplyStatus();
+
     private void ApplyStatus()
     {
         Dot.Classes.Clear();
         Dot.Classes.Add("dot");
-        Dot.Classes.Add(Status switch
+        Dot.Classes.Add(SyncStatusStore.Current switch
         {
+            SyncStatus.Waiting => "wait",
             SyncStatus.Running => "run",
             SyncStatus.Ok => "ok",
             SyncStatus.Error => "err",
@@ -78,20 +78,61 @@ public partial class AppHeader : UserControl
         ((IPseudoClasses)SettingsButton.Classes).Set(":active", Active == HeaderTab.Settings);
     }
 
-    private async void OnHistory(object? sender, RoutedEventArgs e)
+    private void OnHistory(object? sender, RoutedEventArgs e)
     {
-        if (TopLevel.GetTopLevel(this) is MainWindow)
+        if (Active == HeaderTab.History)
         {
-            await Dialogs.ShowHistory(this);
+            Navigation.ShowOverview(this);
+            return;
+        }
+
+        Navigation.ShowHistory(this);
+    }
+
+    private void OnSettings(object? sender, RoutedEventArgs e)
+    {
+        if (Active == HeaderTab.Settings)
+        {
+            Navigation.ShowOverview(this);
+            return;
+        }
+
+        Navigation.ShowSettings(this);
+    }
+
+    private void OnHeaderPointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        if (e.GetCurrentPoint(this).Properties.PointerUpdateKind != PointerUpdateKind.LeftButtonPressed ||
+            IsDescendantOf(e.Source as Visual, HeaderActions))
+        {
+            return;
+        }
+
+        if (IsDescendantOf(e.Source as Visual, HeaderIdentity))
+        {
+            Navigation.ShowOverview(this);
+            return;
+        }
+
+        if (TopLevel.GetTopLevel(this) is Window window)
+        {
+            window.BeginMoveDrag(e);
         }
     }
 
-    private async void OnSettings(object? sender, RoutedEventArgs e)
+    private static bool IsDescendantOf(Visual? visual, Visual ancestor)
     {
-        if (TopLevel.GetTopLevel(this) is MainWindow)
+        while (visual is not null)
         {
-            await Dialogs.ShowSettings(this);
+            if (ReferenceEquals(visual, ancestor))
+            {
+                return true;
+            }
+
+            visual = visual.GetVisualParent();
         }
+
+        return false;
     }
 
     private void OnMinimize(object? sender, RoutedEventArgs e)
@@ -104,6 +145,6 @@ public partial class AppHeader : UserControl
 
     private void OnExit(object? sender, RoutedEventArgs e)
     {
-        Dialogs.CloseWindowOf(this);
+        Navigation.CloseOrExit(this);
     }
 }

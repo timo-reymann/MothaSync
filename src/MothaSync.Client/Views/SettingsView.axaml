@@ -3,59 +3,134 @@
              xmlns:c="using:MothaSync.Client.Controls"
              x:Class="MothaSync.Client.Views.SettingsView">
     <DockPanel>
-        <c:AppHeader DockPanel.Dock="Top" Status="Idle" Active="Settings" />
-        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right" Margin="24">
+        <c:AppHeader DockPanel.Dock="Top" Active="Settings" />
+        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right"
+                    Margin="24,16,24,24">
             <Button Content="Cancel" Click="OnClose" />
-            <Button Classes="pri" Content="Save" Click="OnClose" />
+            <Button x:Name="SaveButton" Classes="pri" Content="Save" Click="OnSave" />
         </StackPanel>
-        <StackPanel VerticalAlignment="Center" Margin="24,24,24,0" Spacing="24">
-            <Grid ColumnDefinitions="*,Auto,*">
-                <Button Grid.Column="0" Classes="drive sel" Click="OnPickSource">
-                    <StackPanel Spacing="12">
-                        <TextBlock Classes="muted" Text="DRIVE A · SOURCE" FontSize="11" LetterSpacing="0.8" />
-                        <c:Icon Data="{StaticResource IconDrive}"
-                                Size="30"
-                                HorizontalAlignment="Left"
-                                Foreground="{DynamicResource AppAccent}" />
-                        <TextBlock Classes="muted mono" Text="/home/partner/3d-school" FontSize="12" TextWrapping="Wrap" />
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <c:Icon Data="{StaticResource IconFolder}" Size="14" Foreground="{DynamicResource AppAccent}" />
-                            <TextBlock Classes="muted" Text="click to change folder" FontSize="12" />
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="24,16,24,0" Spacing="16">
+                <!-- Source Drive Box -->
+                <Border Classes="card">
+                    <StackPanel Spacing="10">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <c:Icon Data="{StaticResource IconDrive}" Size="16"
+                                    Foreground="{DynamicResource AppAccent}" VerticalAlignment="Center" />
+                            <TextBlock Classes="muted" Text="DRIVE A · SOURCE" FontSize="11" FontWeight="SemiBold"
+                                       LetterSpacing="0.8" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <TextBox x:Name="SourceLabel"
+                                 PlaceholderText="Drive label"
+                                 VerticalAlignment="Center" />
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                            <TextBox Grid.Column="0"
+                                     x:Name="SourcePath"
+                                     PlaceholderText="Select or enter folder path…"
+                                     VerticalAlignment="Center" />
+                            <Button Grid.Column="1"
+                                    Click="OnPickSource"
+                                    ToolTip.Tip="Browse source folder"
+                                    VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                    <c:Icon Data="{StaticResource IconFolder}" Size="14"
+                                            Foreground="{DynamicResource AppAccent}" />
+                                    <TextBlock Text="Browse" FontSize="13" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Ellipse x:Name="SourceDot" Classes="dot" />
+                            <TextBlock x:Name="SourceStatusText" Classes="muted" Text="waiting for drive" FontSize="12" />
                         </StackPanel>
                     </StackPanel>
-                </Button>
-                <c:SyncArrow Grid.Column="1" />
-                <Button Grid.Column="2" Classes="drive" Click="OnPickDestination">
-                    <StackPanel Spacing="12">
-                        <TextBlock Classes="muted" Text="DRIVE B · DESTINATION" FontSize="11" LetterSpacing="0.8" />
-                        <c:Icon Data="{StaticResource IconDrive}"
-                                Size="30"
-                                HorizontalAlignment="Left"
-                                Foreground="{DynamicResource AppAccent}" />
-                        <TextBlock Classes="muted mono" Text="/Volumes/SSD One" FontSize="12" TextWrapping="Wrap" />
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <c:Icon Data="{StaticResource IconFolder}" Size="14" Foreground="{DynamicResource AppAccent}" />
-                            <TextBlock Classes="muted" Text="click to change folder" FontSize="12" />
+                </Border>
+
+                <!-- Destination Drive Box -->
+                <Border Classes="card">
+                    <StackPanel Spacing="10">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <c:Icon Data="{StaticResource IconDrive}" Size="16"
+                                    Foreground="{DynamicResource AppAccent}" VerticalAlignment="Center" />
+                            <TextBlock Classes="muted" Text="DRIVE B · DESTINATION" FontSize="11" FontWeight="SemiBold"
+                                       LetterSpacing="0.8" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <TextBox x:Name="DestinationLabel"
+                                 PlaceholderText="Drive label"
+                                 VerticalAlignment="Center" />
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                            <TextBox Grid.Column="0"
+                                     x:Name="DestinationPath"
+                                     PlaceholderText="Select or enter folder path…"
+                                     VerticalAlignment="Center" />
+                            <Button Grid.Column="1"
+                                    Click="OnPickDestination"
+                                    ToolTip.Tip="Browse destination drive"
+                                    VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                                    <c:Icon Data="{StaticResource IconFolder}" Size="14"
+                                            Foreground="{DynamicResource AppAccent}" />
+                                    <TextBlock Text="Browse" FontSize="13" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Ellipse x:Name="DestinationDot" Classes="dot" />
+                            <TextBlock x:Name="DestinationStatusText" Classes="muted" Text="waiting for drive" FontSize="12" />
                         </StackPanel>
                     </StackPanel>
-                </Button>
-            </Grid>
-            <TextBlock Classes="muted"
-                       Text="Files only flow from A to B. Anything you change on Drive B is overwritten at the next sync."
-                       FontSize="12.5"
-                       TextWrapping="Wrap"
-                       TextAlignment="Center"
-                       MaxWidth="440" />
-            <StackPanel Spacing="8">
-                <TextBlock Classes="muted" Text="SERVER URL" FontSize="11" LetterSpacing="0.8" />
-                <TextBox x:Name="ServerUrl"
-                         Text="https://mothasync.example.com"
-                         PlaceholderText="https://…" />
+                </Border>
+
+                <!-- Sync Note -->
                 <TextBlock Classes="muted"
-                           Text="Sync metrics and logs are sent to this server. Leave empty to keep them on this device."
+                           Text="Files only flow from A to B. Anything you change on Drive B is overwritten at the next sync."
                            FontSize="12"
-                           TextWrapping="Wrap" />
+                           TextWrapping="Wrap"
+                           Margin="4,0" />
+
+                <!-- Server URL Box -->
+                <Border Classes="card">
+                    <StackPanel Spacing="10">
+                        <TextBlock Classes="muted" Text="SERVER URL" FontSize="11" FontWeight="SemiBold"
+                                   LetterSpacing="0.8" />
+                        <TextBox x:Name="ServerUrl"
+                                 PlaceholderText="https://…" />
+                        <StackPanel x:Name="UrlValidationMessage"
+                                    Orientation="Horizontal"
+                                    Spacing="6"
+                                    IsVisible="False">
+                            <c:Icon Data="{StaticResource IconWarn}" Size="14" Foreground="{DynamicResource AppErr}"
+                                    VerticalAlignment="Center" />
+                            <TextBlock x:Name="UrlValidationText"
+                                       Text="Invalid URL. Please enter a valid URL starting with http:// or https://"
+                                       Foreground="{DynamicResource AppErrText}"
+                                       FontSize="12"
+                                       VerticalAlignment="Center"
+                                       TextWrapping="Wrap" />
+                        </StackPanel>
+                        <TextBlock Classes="muted"
+                                   Text="Sync metrics and logs are sent to this server. Leave empty to keep them on this device."
+                                   FontSize="12"
+                                   TextWrapping="Wrap" />
+                        <TextBlock Classes="muted" Text="ENROLLMENT TOKEN" FontSize="11" FontWeight="SemiBold"
+                                   LetterSpacing="0.8" Margin="0,6,0,0" />
+                        <TextBox x:Name="EnrollmentToken"
+                                 PasswordChar="•"
+                                 PlaceholderText="Provided by your server admin" />
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <Button x:Name="TestEnrollmentButton" Content="Test" Click="OnTestEnrollment" />
+                            <TextBlock x:Name="TestEnrollmentResult"
+                                       FontSize="12"
+                                       VerticalAlignment="Center"
+                                       TextWrapping="Wrap" />
+                        </StackPanel>
+                        <TextBlock Classes="muted"
+                                   Text="Used once to register this device with the server."
+                                   FontSize="12"
+                                   TextWrapping="Wrap" />
+                    </StackPanel>
+                </Border>
             </StackPanel>
-        </StackPanel>
+        </ScrollViewer>
     </DockPanel>
 </UserControl>

@@ -1,3 +1,4 @@
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 
@@ -10,8 +11,14 @@ public partial class NotConfiguredView : UserControl
         InitializeComponent();
     }
 
-    private async void OnConfigure(object? sender, RoutedEventArgs e)
+    protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
     {
-        await Dialogs.ShowSettings(this);
+        base.OnAttachedToVisualTree(e);
+        SyncStatusStore.Set(SyncStatus.Idle);
+    }
+
+    private void OnConfigure(object? sender, RoutedEventArgs e)
+    {
+        Navigation.ShowSettings(this);
     }
 }

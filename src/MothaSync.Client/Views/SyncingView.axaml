@@ -3,32 +3,36 @@
              xmlns:c="using:MothaSync.Client.Controls"
              x:Class="MothaSync.Client.Views.SyncingView">
     <DockPanel>
-        <c:AppHeader DockPanel.Dock="Top" Status="Running" />
+        <c:AppHeader DockPanel.Dock="Top" />
         <Grid RowDefinitions="Auto,Auto,*" Margin="24" RowSpacing="20">
             <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="12">
                 <Ellipse Grid.Column="0" Classes="dot run" />
                 <TextBlock Grid.Column="1" Text="Syncing…" FontWeight="SemiBold" VerticalAlignment="Center" />
-                <TextBlock Grid.Column="2"
+                <TextBlock x:Name="CurrentFile"
+                           Grid.Column="2"
                            Classes="muted mono"
-                           Text="modules/week-07/rigging/char_rig_final_v3.blend"
+                           Text=""
                            FontSize="12"
                            VerticalAlignment="Center"
                            TextTrimming="PrefixCharacterEllipsis" />
-                <Button Grid.Column="3" Classes="sm">
+                <Button Grid.Column="3" Classes="sm" Click="OnPause">
                     <StackPanel Orientation="Horizontal" Spacing="6">
-                        <c:Icon Data="{StaticResource IconPause}" Size="14" />
-                        <TextBlock Text="Pause" />
+                        <c:Icon x:Name="PauseIcon" Data="{StaticResource IconPause}" Size="14" />
+                        <TextBlock x:Name="PauseLabel" Text="Pause" />
                     </StackPanel>
                 </Button>
             </Grid>
             <StackPanel Grid.Row="1" Spacing="8">
-                <ProgressBar Minimum="0" Maximum="100" Value="62" />
-                <Grid ColumnDefinitions="*,Auto">
-                    <TextBlock Grid.Column="0" Text="62%" FontSize="12" FontWeight="SemiBold" />
-                    <TextBlock Grid.Column="1"
+                <ProgressBar x:Name="ProgressBar" Minimum="0" Maximum="100" Value="0" />
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+                    <TextBlock x:Name="PercentText" Text="0%" FontSize="12" FontWeight="SemiBold" VerticalAlignment="Center" />
+                    <TextBlock x:Name="StatsText"
+                               Grid.Column="2"
                                Classes="muted"
-                               Text="1284 files · 3.2 GB · ETA 0m 41s"
-                               FontSize="12" />
+                               Text=""
+                               FontSize="12"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Right" />
                 </Grid>
             </StackPanel>
             <HeaderedContentControl Grid.Row="2" Theme="{StaticResource LogPanel}">
@@ -41,16 +45,7 @@
                         </StackPanel>
                     </Grid>
                 </HeaderedContentControl.Header>
-                <TextBlock Classes="log">
-                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:11" /><Run Text=" INFO  Transferred: modules/week-06/uv/body_uv.png" /><LineBreak />
-                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:12" /><Run Text=" INFO  Transferred: modules/week-06/uv/head_uv.png" /><LineBreak />
-                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:14" /><Run Text=" INFO  Transferred: modules/week-07/sculpt/torso_hi.obj" /><LineBreak />
-                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:19" /><Run Text=" INFO  Transferred: modules/week-07/sculpt/torso_lo.obj" /><LineBreak />
-                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:19" /><Run Text=" INFO  Unchanged:   modules/week-07/refs/anatomy_01.jpg" /><LineBreak />
-                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:20" /><Run Text=" INFO  Unchanged:   modules/week-07/refs/anatomy_02.jpg" /><LineBreak />
-                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:24" /><Run Text=" INFO  Transferred: modules/week-07/rigging/char_rig_v2.blend" /><LineBreak />
-                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:31" /><Run Text=" INFO  Copying:     modules/week-07/rigging/char_rig_final_v3.blend" />
-                </TextBlock>
+                <TextBlock x:Name="LogText" Classes="log" />
             </HeaderedContentControl>
         </Grid>
     </DockPanel>

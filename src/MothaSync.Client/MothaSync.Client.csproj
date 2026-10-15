@@ -1,45 +1,62 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net10.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <ApplicationIcon>MothaSync.ico</ApplicationIcon>
-  </PropertyGroup>
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <ApplicationIcon>MothaSync.ico</ApplicationIcon>
+    </PropertyGroup>
 
-  <PropertyGroup>
-    <CFBundleName>MothaSync</CFBundleName>
-    <CFBundleDisplayName>MothaSync</CFBundleDisplayName>
-    <CFBundleIdentifier>de.timo_reymann.mothasync</CFBundleIdentifier>
-    <CFBundleVersion>1.0.0</CFBundleVersion>
-    <CFBundleShortVersionString>1.0.0</CFBundleShortVersionString>
-    <CFBundlePackageType>APPL</CFBundlePackageType>
-    <CFBundleExecutable>MothaSync.Client</CFBundleExecutable>
-    <CFBundleIconFile>MothaSync.icns</CFBundleIconFile>
-    <NSHighResolutionCapable>true</NSHighResolutionCapable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <CFBundleName>MothaSync</CFBundleName>
+        <CFBundleDisplayName>MothaSync</CFBundleDisplayName>
+        <CFBundleIdentifier>de.timo_reymann.mothasync</CFBundleIdentifier>
+        <CFBundleVersion>1.0.0</CFBundleVersion>
+        <CFBundleShortVersionString>1.0.0</CFBundleShortVersionString>
+        <CFBundlePackageType>APPL</CFBundlePackageType>
+        <CFBundleExecutable>MothaSync.Client</CFBundleExecutable>
+        <CFBundleIconFile>MothaSync.icns</CFBundleIconFile>
+        <NSHighResolutionCapable>true</NSHighResolutionCapable>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <AvaloniaResource Include="Assets\**" />
-  </ItemGroup>
+    <ItemGroup>
+        <AvaloniaResource Include="Assets\**"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Avalonia" Version="12.1.4" />
-    <PackageReference Include="Avalonia.Desktop" Version="12.1.4" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.4" />
-    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3">
-      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
-      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="DotNet.Bundle" Version="0.9.13" />
-  </ItemGroup>
+    <PropertyGroup>
+        <RcloneRid Condition="'$(RcloneRid)' == '' and '$(RuntimeIdentifier)' != ''">$(RuntimeIdentifier)</RcloneRid>
+        <RcloneRid Condition="'$(RcloneRid)' == ''">$([System.Runtime.InteropServices.RuntimeInformation]::RuntimeIdentifier)</RcloneRid>
+    </PropertyGroup>
 
-  <Target Name="CopyBundleIcon" AfterTargets="BundleApp">
-    <Copy SourceFiles="$(MSBuildProjectDirectory)\$(CFBundleIconFile)"
-          DestinationFolder="$(PublishDir)$(CFBundleName).app/Contents/Resources" />
-  </Target>
+    <ItemGroup Condition="Exists('$(MSBuildProjectDirectory)/Assets/rclone/$(RcloneRid)')">
+        <Content Include="Assets/rclone/$(RcloneRid)/**">
+            <Link>rclone\%(Filename)%(Extension)</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\MothaSync.Shared\MothaSync.Shared.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="12.1.4"/>
+        <PackageReference Include="Avalonia.Desktop" Version="12.1.4"/>
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.4"/>
+        <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3">
+            <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+            <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="DotNet.Bundle" Version="0.9.13"/>
+        <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.0"/>
+    </ItemGroup>
+
+    <Target Name="CopyBundleIcon" AfterTargets="BundleApp">
+        <Copy SourceFiles="$(MSBuildProjectDirectory)\$(CFBundleIconFile)"
+              DestinationFolder="$(PublishDir)$(CFBundleName).app/Contents/Resources"/>
+    </Target>
+
+    <ItemGroup>
+        <ProjectReference Include="..\MothaSync.Shared\MothaSync.Shared.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="MothaSync.Client.Test" />
+    </ItemGroup>
 </Project>
