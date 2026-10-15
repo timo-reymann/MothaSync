@@ -1,6 +1,6 @@
-# SyncMotha design
+# MothaSync design
 
-SyncMotha is a compact desktop utility.
+MothaSync is a compact desktop utility.
 It copies a source folder (Drive A) to a destination drive (Drive B) with rclone and stays out of the way.
 The look is dark, calm and precise.
 It should feel trustworthy, with no playful decoration.
@@ -15,7 +15,7 @@ It should feel trustworthy, with no playful decoration.
 
 ## Header
 
-Left to right: logo tile (32 px), app name "SyncMotha" in semibold, a status dot, then a spacer
+Left to right: logo tile (32 px), app name "MothaSync" in semibold, a status dot, then a spacer
 and 30 px icon buttons: history, settings, a thin divider, then minimize and close.
 Minimize only appears on the main window.
 Close ends the app on the main window and closes the dialog elsewhere. It turns red on hover.
@@ -36,7 +36,7 @@ Amber `#F59E0B` is reserved for paused and for warning icons. Keep it clearly di
 ## Tray icon
 
 The logo also serves as the system tray icon on Windows, macOS and Linux.
-Clicking it, or choosing "Open SyncMotha" from its menu, shows and focuses the main window.
+Clicking it, or choosing "Open MothaSync" from its menu, shows and focuses the main window.
 "Exit" in the tray menu quits the app.
 On Linux the tray needs a StatusNotifier host, which GNOME only provides with the AppIndicator extension.
 

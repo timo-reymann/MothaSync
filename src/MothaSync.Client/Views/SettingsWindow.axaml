@@ -4,7 +4,7 @@
                           x:Class="MothaSync.Client.Views.SettingsWindow"
                           Icon="avares://MothaSync.Client/Assets/logo.png"
                           CloseOnEscape="True"
-                          Title="SyncMotha Settings">
+                          Title="MothaSync Settings">
     <Border BorderBrush="{DynamicResource AppLine}" BorderThickness="1">
         <views:SettingsView />
     </Border>

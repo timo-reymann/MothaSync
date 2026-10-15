@@ -21,7 +21,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
                 <c:AppLogo />
-                <TextBlock Text="SyncMotha" FontWeight="SemiBold" VerticalAlignment="Center" />
+                <TextBlock Text="MothaSync" FontWeight="SemiBold" VerticalAlignment="Center" />
                 <Ellipse x:Name="Dot" Classes="dot idle" />
             </StackPanel>
         </DockPanel>

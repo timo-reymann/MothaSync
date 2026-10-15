@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="assets/logo.png" alt="SyncMotha logo: a mother holding a drive in each hand" width="160">
+  <img src="assets/logo.png" alt="MothaSync logo: a mother holding a drive in each hand" width="160">
 </p>
 
-<h1 align="center">SyncMotha</h1>
+<h1 align="center">MothaSync</h1>
 
 <p align="center">A system tray backup tool that syncs a 3D schoolwork folder to two external SSDs.</p>
 
@@ -48,7 +48,7 @@ Build the bundle with:
 ```bash
 dotnet restore src/MothaSync.Client -r osx-arm64
 dotnet msbuild src/MothaSync.Client -t:BundleApp -p:RuntimeIdentifier=osx-arm64 -p:Configuration=Release -p:SelfContained=true
-codesign --force --deep -s - src/MothaSync.Client/bin/Release/net10.0/osx-arm64/publish/SyncMotha.app
+codesign --force --deep -s - src/MothaSync.Client/bin/Release/net10.0/osx-arm64/publish/MothaSync.app
 ```
 
 The bundle identifier is `de.timo_reymann.syncmotha`.

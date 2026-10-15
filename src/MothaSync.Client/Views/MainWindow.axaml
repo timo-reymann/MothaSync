@@ -3,7 +3,7 @@
                           xmlns:views="using:MothaSync.Client.Views"
                           x:Class="MothaSync.Client.Views.MainWindow"
                           Icon="avares://MothaSync.Client/Assets/logo.png"
-                          Title="SyncMotha">
+                          Title="MothaSync">
     <Border BorderBrush="{DynamicResource AppLine}" BorderThickness="1">
         <views:WaitingView />
     </Border>

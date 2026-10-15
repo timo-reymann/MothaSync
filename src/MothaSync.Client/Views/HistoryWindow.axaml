@@ -4,7 +4,7 @@
                           x:Class="MothaSync.Client.Views.HistoryWindow"
                           Icon="avares://MothaSync.Client/Assets/logo.png"
                           CloseOnEscape="True"
-                          Title="SyncMotha History">
+                          Title="MothaSync History">
     <Border BorderBrush="{DynamicResource AppLine}" BorderThickness="1">
         <views:HistoryView />
     </Border>
