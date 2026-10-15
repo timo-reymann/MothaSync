@@ -4,4 +4,9 @@
     <Project Path="src/MothaSync.Server/MothaSync.Server.csproj" />
     <Project Path="src/MothaSync.Shared/MothaSync.Shared.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/MothaSync.Client.Test/MothaSync.Client.Test.csproj" />
+    <Project Path="tests/MothaSync.Server.Test/MothaSync.Server.Test.csproj" />
+    <Project Path="tests/MothaSync.Shared.Test/MothaSync.Shared.Test.csproj" />
+  </Folder>
 </Solution>
