@@ -1,0 +1,74 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:MothaSync.Client.Controls"
+             x:Class="MothaSync.Client.Views.HistoryDetailView">
+    <DockPanel>
+        <c:AppHeader DockPanel.Dock="Top" Status="Ok" Active="History" />
+        <Grid RowDefinitions="Auto,Auto,*" Margin="24" RowSpacing="16">
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+                <Button Grid.Column="0" Classes="icon" Click="OnBack" ToolTip.Tip="Back to history">
+                    <c:Icon Data="{StaticResource IconBack}" />
+                </Button>
+                <TextBlock x:Name="DateText"
+                           Grid.Column="1"
+                           Text="Oct 14 · 17:48"
+                           FontSize="16"
+                           FontWeight="SemiBold"
+                           VerticalAlignment="Center" />
+                <TextBlock x:Name="StatusText"
+                           Grid.Column="2"
+                           Classes="muted"
+                           Text="failed"
+                           FontSize="12"
+                           VerticalAlignment="Center" />
+            </Grid>
+            <WrapPanel Grid.Row="1">
+                <Border Classes="pill" Margin="0,4,8,4"><TextBlock x:Name="FilesText" Text="1283 files" FontSize="13" /></Border>
+                <Border Classes="pill" Margin="0,4,8,4"><TextBlock x:Name="SizeText" Text="3.1 GB" FontSize="13" /></Border>
+                <Border Classes="pill" Margin="0,4,8,4"><TextBlock x:Name="DurationText" Text="1m 55s" FontSize="13" /></Border>
+                <Border x:Name="ErrorPill" Classes="pill bad" Margin="0,4,8,4"><TextBlock Text="1 error" FontSize="13" /></Border>
+            </WrapPanel>
+            <HeaderedContentControl x:Name="FailedLog" Grid.Row="2" Theme="{StaticResource LogPanel}">
+                <HeaderedContentControl.Header>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Grid.Column="0" Text="rclone log" />
+                        <TextBlock Grid.Column="1" Classes="muted mono" Text="12 lines" FontSize="11" />
+                    </Grid>
+                </HeaderedContentControl.Header>
+                <TextBlock Classes="log">
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="17:46:53" /><Run Text=" INFO  Starting sync: /home/partner/3d-school -> /Volumes/SSD One" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="17:46:54" /><Run Text=" INFO  Checking 1291 files" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="17:47:02" /><Run Text=" INFO  Transferred: modules/week-07/sculpt/torso_hi.obj" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="17:47:09" /><Run Text=" INFO  Transferred: modules/week-07/sculpt/torso_lo.obj" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="17:47:21" /><Run Text=" INFO  Unchanged:   modules/week-07/refs/anatomy_01.jpg" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="17:47:48" /><Run Text=" INFO  Transferred: modules/week-07/rigging/char_rig_v2.blend" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="17:48:01" /><Run Text=" INFO  Copying:     modules/week-07/rigging/char_rig_final_v3.blend" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="17:48:09" /><Run Foreground="{DynamicResource AppWarn}" Text=" NOTICE" /><Run Text=" Retrying char_rig_final_v3.blend (1/3)" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="17:48:17" /><Run Foreground="{DynamicResource AppWarn}" Text=" NOTICE" /><Run Text=" Retrying char_rig_final_v3.blend (2/3)" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="17:48:25" /><Run Foreground="{DynamicResource AppErrText}" Text=" ERROR" /><Run Text=" char_rig_final_v3.blend: input/output error" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="17:48:48" /><Run Foreground="{DynamicResource AppErrText}" Text=" ERROR" /><Run Text=" Failed to sync: 1 file could not be copied" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="17:48:48" /><Run Text=" INFO  Nothing was deleted from the destination" />
+                </TextBlock>
+            </HeaderedContentControl>
+            <HeaderedContentControl x:Name="OkLog" Grid.Row="2" Theme="{StaticResource LogPanel}" IsVisible="False">
+                <HeaderedContentControl.Header>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Grid.Column="0" Text="rclone log" />
+                        <TextBlock Grid.Column="1" Classes="muted mono" Text="9 lines" FontSize="11" />
+                    </Grid>
+                </HeaderedContentControl.Header>
+                <TextBlock Classes="log">
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:11" /><Run Text=" INFO  Starting sync: /home/partner/3d-school -> /Volumes/SSD One" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:12" /><Run Text=" INFO  Checking 1291 files" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:19" /><Run Text=" INFO  Transferred: modules/week-07/sculpt/torso_hi.obj" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:31" /><Run Text=" INFO  Transferred: modules/week-07/sculpt/torso_lo.obj" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:48" /><Run Text=" INFO  Unchanged:   modules/week-07/refs/anatomy_01.jpg" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:03:20" /><Run Text=" INFO  Transferred: modules/week-07/rigging/char_rig_v2.blend" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:04:41" /><Run Text=" INFO  Transferred: modules/week-07/rigging/char_rig_final_v3.blend" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:04:52" /><Run Text=" INFO  Transferred: 1284 files, 3.2 GB" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:04:52" /><Run Text=" INFO  Sync complete" />
+                </TextBlock>
+            </HeaderedContentControl>
+        </Grid>
+    </DockPanel>
+</UserControl>

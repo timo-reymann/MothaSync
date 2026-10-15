@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/MothaSync.Client/MothaSync.Client.csproj" />
+    <Project Path="src/MothaSync.Server/MothaSync.Server.csproj" />
+    <Project Path="src/MothaSync.Shared/MothaSync.Shared.csproj" />
+  </Folder>
+</Solution>

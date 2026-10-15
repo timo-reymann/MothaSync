@@ -1,0 +1,11 @@
+<views:ChromelessWindow xmlns="https://github.com/avaloniaui"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                          xmlns:views="using:MothaSync.Client.Views"
+                          x:Class="MothaSync.Client.Views.HistoryWindow"
+                          Icon="avares://MothaSync.Client/Assets/logo.png"
+                          CloseOnEscape="True"
+                          Title="SyncMotha History">
+    <Border BorderBrush="{DynamicResource AppLine}" BorderThickness="1">
+        <views:HistoryView />
+    </Border>
+</views:ChromelessWindow>

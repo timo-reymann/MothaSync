@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:c="using:MothaSync.Client.Controls"
+                x:Class="MothaSync.Client.Views.WaitingView">
+    <DockPanel>
+        <c:AppHeader DockPanel.Dock="Top" Status="Idle" />
+        <StackPanel VerticalAlignment="Center" Margin="24" Spacing="24">
+            <TextBlock Classes="muted"
+                       Text="Waiting for both drives. Sync starts automatically 3 seconds after both are connected and writable."
+                       TextWrapping="Wrap" />
+            <Grid ColumnDefinitions="*,Auto,*">
+                <Border Grid.Column="0" Classes="card">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="10">
+                            <c:Icon Data="{StaticResource IconDrive}" Size="22" Foreground="{DynamicResource AppAccent}" />
+                            <TextBlock Text="Drive A · 3d-school" FontWeight="SemiBold" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Spacing="8" Margin="0,14,0,0">
+                            <Ellipse Classes="dot ok" />
+                            <TextBlock Classes="muted" Text="connected" FontSize="12" />
+                        </StackPanel>
+                        <TextBlock Classes="muted mono"
+                                   Text="/home/partner/3d-school"
+                                   FontSize="12"
+                                   TextWrapping="Wrap"
+                                   Margin="0,10,0,0" />
+                    </DockPanel>
+                </Border>
+                <c:SyncArrow Grid.Column="1" />
+                <Border Grid.Column="2" Classes="card">
+                    <DockPanel>
+                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="10">
+                            <c:Icon Data="{StaticResource IconDrive}" Size="22" Foreground="{DynamicResource AppAccent}" />
+                            <TextBlock Text="Drive B · SSD One" FontWeight="SemiBold" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Spacing="8" Margin="0,14,0,0">
+                            <Ellipse Classes="dot" />
+                            <TextBlock Classes="muted" Text="waiting for drive" FontSize="12" />
+                        </StackPanel>
+                        <TextBlock Classes="muted mono"
+                                   Text="/Volumes/SSD One"
+                                   FontSize="12"
+                                   TextWrapping="Wrap"
+                                   Margin="0,10,0,0" />
+                    </DockPanel>
+                </Border>
+            </Grid>
+        </StackPanel>
+    </DockPanel>
+</UserControl>

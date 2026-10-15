@@ -1,0 +1,35 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:MothaSync.Client.Controls"
+             xmlns:views="using:MothaSync.Client.Views"
+             x:Class="MothaSync.Client.Views.HistoryView">
+    <DockPanel>
+        <c:AppHeader DockPanel.Dock="Top" Status="Ok" Active="History" />
+        <StackPanel Margin="24" Spacing="16">
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+                <Button Grid.Column="0" Classes="icon" Click="OnBack" ToolTip.Tip="Back">
+                    <c:Icon Data="{StaticResource IconBack}" />
+                </Button>
+                <TextBlock Grid.Column="1" Text="Sync history" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center" />
+                <TextBlock Grid.Column="2" Classes="muted" Text="last 10 runs" FontSize="12" VerticalAlignment="Center" />
+            </Grid>
+            <Border BorderBrush="{DynamicResource AppLine}"
+                    BorderThickness="1"
+                    CornerRadius="12"
+                    ClipToBounds="True">
+                <StackPanel Spacing="1" Background="{DynamicResource AppLine}">
+                    <views:HistoryRow Date="Oct 15 · 14:05" Files="1284 files" Size="3.2 GB" Duration="2m 41s" />
+                    <views:HistoryRow Date="Oct 14 · 17:48" Files="1283 files" Size="3.1 GB" Duration="1m 55s" Failed="True" />
+                    <views:HistoryRow Date="Oct 13 · 16:20" Files="1279 files" Size="3.1 GB" Duration="2m 12s" />
+                    <views:HistoryRow Date="Oct 10 · 15:02" Files="1241 files" Size="2.9 GB" Duration="3m 08s" />
+                    <views:HistoryRow Date="Oct 09 · 18:31" Files="1207 files" Size="2.8 GB" Duration="1m 47s" />
+                    <views:HistoryRow Date="Oct 08 · 12:14" Files="1198 files" Size="2.8 GB" Duration="0m 58s" />
+                    <views:HistoryRow Date="Oct 07 · 16:55" Files="1190 files" Size="2.7 GB" Duration="0m 34s" Failed="True" />
+                    <views:HistoryRow Date="Oct 06 · 14:40" Files="1176 files" Size="2.7 GB" Duration="2m 26s" />
+                    <views:HistoryRow Date="Oct 03 · 17:09" Files="1131 files" Size="2.5 GB" Duration="2m 02s" />
+                    <views:HistoryRow Date="Oct 02 · 15:37" Files="1102 files" Size="2.4 GB" Duration="1m 31s" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </DockPanel>
+</UserControl>

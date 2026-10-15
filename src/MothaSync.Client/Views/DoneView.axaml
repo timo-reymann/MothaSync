@@ -1,0 +1,29 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:MothaSync.Client.Controls"
+             x:Class="MothaSync.Client.Views.DoneView">
+    <DockPanel>
+        <c:AppHeader DockPanel.Dock="Top" Status="Ok" />
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="18" Margin="24">
+            <Border Width="84" Height="84" CornerRadius="42" HorizontalAlignment="Center"
+                    Background="{DynamicResource AppOkSoft}"
+                    BorderBrush="{DynamicResource AppOk}"
+                    BorderThickness="2">
+                <c:Icon Data="{StaticResource IconCheck}"
+                        Size="40"
+                        StrokeThickness="2.6"
+                        Foreground="{DynamicResource AppOk}" />
+            </Border>
+            <TextBlock Text="Sync complete" FontSize="22" FontWeight="SemiBold" HorizontalAlignment="Center" />
+            <WrapPanel HorizontalAlignment="Center">
+                <Border Classes="pill"><TextBlock Text="1284 files" FontSize="13" /></Border>
+                <Border Classes="pill"><TextBlock Text="3.2 GB" FontSize="13" /></Border>
+                <Border Classes="pill"><TextBlock Text="2m 41s" FontSize="13" /></Border>
+            </WrapPanel>
+            <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center" Margin="0,8,0,0">
+                <Button Classes="pri" Content="View history" Click="OnViewHistory" />
+                <Button Content="Back to overview" />
+            </StackPanel>
+        </StackPanel>
+    </DockPanel>
+</UserControl>

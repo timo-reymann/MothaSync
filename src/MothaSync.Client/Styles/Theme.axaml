@@ -1,0 +1,226 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style Selector="Window">
+        <Setter Property="FontFamily" Value="{DynamicResource UiFont}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{DynamicResource AppText}" />
+        <Setter Property="Background" Value="{DynamicResource AppBg}" />
+    </Style>
+
+    <Style Selector="TextBlock.muted">
+        <Setter Property="Foreground" Value="{DynamicResource AppMuted}" />
+    </Style>
+    <Style Selector="TextBlock.mono">
+        <Setter Property="FontFamily" Value="{DynamicResource MonoFont}" />
+    </Style>
+    <Style Selector="TextBlock.log">
+        <Setter Property="FontFamily" Value="{DynamicResource MonoFont}" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="LineHeight" Value="19" />
+        <Setter Property="Foreground" Value="{DynamicResource AppMuted}" />
+        <Setter Property="Padding" Value="14,12" />
+    </Style>
+
+    <Style Selector="Border.card">
+        <Setter Property="Background" Value="{DynamicResource AppCard}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AppLine}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="Padding" Value="16" />
+    </Style>
+    <Style Selector="Border.pill">
+        <Setter Property="Background" Value="{DynamicResource AppCard}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AppLine}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="99" />
+        <Setter Property="Padding" Value="14,5" />
+        <Setter Property="Margin" Value="4" />
+    </Style>
+    <Style Selector="Border.pill.bad">
+        <Setter Property="Background" Value="{DynamicResource AppErrSoft}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AppErrBorder}" />
+    </Style>
+    <Style Selector="Border.pill.bad TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource AppErrText}" />
+    </Style>
+
+    <Style Selector="Ellipse.dot">
+        <Setter Property="Width" Value="8" />
+        <Setter Property="Height" Value="8" />
+        <Setter Property="Fill" Value="{DynamicResource AppIdle}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Ellipse.dot.ok">
+        <Setter Property="Fill" Value="{DynamicResource AppOk}" />
+    </Style>
+    <Style Selector="Ellipse.dot.err">
+        <Setter Property="Fill" Value="{DynamicResource AppErr}" />
+    </Style>
+    <Style Selector="Ellipse.dot.run">
+        <Setter Property="Fill" Value="{DynamicResource AppRun}" />
+        <Style.Animations>
+            <Animation Duration="0:0:1.6" IterationCount="INFINITE">
+                <KeyFrame Cue="0%">
+                    <Setter Property="Opacity" Value="1" />
+                </KeyFrame>
+                <KeyFrame Cue="50%">
+                    <Setter Property="Opacity" Value="0.3" />
+                </KeyFrame>
+                <KeyFrame Cue="100%">
+                    <Setter Property="Opacity" Value="1" />
+                </KeyFrame>
+            </Animation>
+        </Style.Animations>
+    </Style>
+
+    <Style Selector="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AppLine}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="Padding" Value="16,9" />
+        <Setter Property="Foreground" Value="{DynamicResource AppText}" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Cursor" Value="Hand" />
+    </Style>
+    <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter, Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource AppCard}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AppLine}" />
+        <Setter Property="Foreground" Value="{DynamicResource AppText}" />
+    </Style>
+
+    <Style Selector="Button.sm">
+        <Setter Property="Padding" Value="12,6" />
+        <Setter Property="FontSize" Value="13" />
+    </Style>
+    <Style Selector="Button.lg">
+        <Setter Property="Padding" Value="44,14" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="CornerRadius" Value="12" />
+    </Style>
+
+    <Style Selector="Button.pri">
+        <Setter Property="Background" Value="{DynamicResource AppAccent}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AppAccent}" />
+        <Setter Property="Foreground" Value="{DynamicResource AppOnAccent}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="Button.pri:pointerover /template/ ContentPresenter#PART_ContentPresenter, Button.pri:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource AppAccentHover}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AppAccentHover}" />
+        <Setter Property="Foreground" Value="{DynamicResource AppOnAccent}" />
+    </Style>
+
+    <Style Selector="Button.err">
+        <Setter Property="BorderBrush" Value="#8CEF4444" />
+        <Setter Property="Foreground" Value="#FECACA" />
+    </Style>
+    <Style Selector="Button.err:pointerover /template/ ContentPresenter#PART_ContentPresenter, Button.err:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource AppErrSoft}" />
+        <Setter Property="BorderBrush" Value="#8CEF4444" />
+        <Setter Property="Foreground" Value="#FECACA" />
+    </Style>
+
+    <Style Selector="Button.icon">
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Foreground" Value="{DynamicResource AppMuted}" />
+    </Style>
+    <Style Selector="Button.icon:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Foreground" Value="{DynamicResource AppText}" />
+    </Style>
+    <Style Selector="Button.icon:active">
+        <Setter Property="Background" Value="{DynamicResource AppAccentSoft}" />
+        <Setter Property="Foreground" Value="{DynamicResource AppAccent}" />
+    </Style>
+    <Style Selector="Button.icon:active /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource AppAccentSoft}" />
+        <Setter Property="Foreground" Value="{DynamicResource AppAccent}" />
+    </Style>
+
+    <Style Selector="Button.icon.close:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource AppErrSoft}" />
+        <Setter Property="Foreground" Value="{DynamicResource AppErrText}" />
+    </Style>
+
+    <Style Selector="Button.drive">
+        <Setter Property="Background" Value="{DynamicResource AppCard}" />
+        <Setter Property="CornerRadius" Value="14" />
+        <Setter Property="Padding" Value="18,22" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+    </Style>
+    <Style Selector="Button.drive:pointerover /template/ ContentPresenter#PART_ContentPresenter, Button.drive:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource AppCard}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AppLineHover}" />
+    </Style>
+    <Style Selector="Button.drive.sel">
+        <Setter Property="Background" Value="{DynamicResource AppSelected}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AppAccent}" />
+    </Style>
+    <Style Selector="Button.drive.sel:pointerover /template/ ContentPresenter#PART_ContentPresenter, Button.drive.sel:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource AppSelected}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AppAccent}" />
+    </Style>
+
+    <Style Selector="Button.row">
+        <Setter Property="Background" Value="{DynamicResource AppCard}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="Padding" Value="16,10" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    </Style>
+    <Style Selector="Button.row:pointerover /template/ ContentPresenter#PART_ContentPresenter, Button.row:pressed /template/ ContentPresenter#PART_ContentPresenter">
+        <Setter Property="Background" Value="#3E3C3C" />
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+
+    <Style Selector="ProgressBar">
+        <Setter Property="Height" Value="6" />
+        <Setter Property="MinHeight" Value="6" />
+        <Setter Property="CornerRadius" Value="3" />
+        <Setter Property="Background" Value="{DynamicResource AppCard}" />
+        <Setter Property="Foreground" Value="{DynamicResource AppAccent}" />
+    </Style>
+    <Style Selector="ProgressBar /template/ Border#PART_Indicator">
+        <Setter Property="CornerRadius" Value="3" />
+    </Style>
+    <Style Selector="ProgressBar.err">
+        <Setter Property="Foreground" Value="{DynamicResource AppErr}" />
+    </Style>
+
+    <Styles.Resources>
+    <ControlTheme x:Key="LogPanel" TargetType="HeaderedContentControl">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{DynamicResource AppLogBg}"
+                        BorderBrush="{DynamicResource AppLine}"
+                        BorderThickness="1"
+                        CornerRadius="12"
+                        ClipToBounds="True">
+                    <DockPanel>
+                        <Border DockPanel.Dock="Top"
+                                BorderBrush="{DynamicResource AppLine}"
+                                BorderThickness="0,0,0,1"
+                                Padding="14,9">
+                            <ContentPresenter Content="{TemplateBinding Header}" TextElement.FontSize="12" />
+                        </Border>
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <ContentPresenter Content="{TemplateBinding Content}" />
+                        </ScrollViewer>
+                    </DockPanel>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+    </Styles.Resources>
+</Styles>

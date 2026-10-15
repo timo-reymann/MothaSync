@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=SyncMotha
+Comment=Back up the 3D schoolwork folder to two external SSDs
+Exec=MothaSync.Client
+Icon=syncmotha
+Categories=Utility;
+Terminal=false

@@ -1,0 +1,34 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <FontFamily x:Key="UiFont">avares://MothaSync.Client/Assets/Fonts#Open Sans</FontFamily>
+    <FontFamily x:Key="MonoFont">avares://MothaSync.Client/Assets/Fonts#JetBrains Mono</FontFamily>
+
+    <SolidColorBrush x:Key="AppBg" Color="#282727" />
+    <SolidColorBrush x:Key="AppCard" Color="#343232" />
+    <SolidColorBrush x:Key="AppLine" Color="#494646" />
+    <SolidColorBrush x:Key="AppLineHover" Color="#615D5D" />
+    <SolidColorBrush x:Key="AppText" Color="#F1F5F9" />
+    <SolidColorBrush x:Key="AppMuted" Color="#94A3B8" />
+    <SolidColorBrush x:Key="AppOnAccent" Color="#282727" />
+
+    <SolidColorBrush x:Key="AppAccent" Color="#F97316" />
+    <SolidColorBrush x:Key="AppAccentHover" Color="#FB8A3C" />
+    <SolidColorBrush x:Key="AppAccentSoft" Color="#1FF97316" />
+    <SolidColorBrush x:Key="AppAccentBorder" Color="#66F97316" />
+    <SolidColorBrush x:Key="AppSelected" Color="#4C392F" />
+
+    <SolidColorBrush x:Key="AppOk" Color="#10B981" />
+    <SolidColorBrush x:Key="AppOkSoft" Color="#1F10B981" />
+    <SolidColorBrush x:Key="AppErr" Color="#EF4444" />
+    <SolidColorBrush x:Key="AppErrSoft" Color="#1AEF4444" />
+    <SolidColorBrush x:Key="AppErrBorder" Color="#73EF4444" />
+    <SolidColorBrush x:Key="AppErrText" Color="#FCA5A5" />
+    <SolidColorBrush x:Key="AppWarn" Color="#F59E0B" />
+    <SolidColorBrush x:Key="AppRun" Color="#FACC15" />
+    <SolidColorBrush x:Key="AppIdle" Color="#94A3B8" />
+
+    <SolidColorBrush x:Key="AppLogBg" Color="#1F1E1E" />
+    <SolidColorBrush x:Key="AppLogTime" Color="#64748B" />
+    <SolidColorBrush x:Key="AppRowHover" Color="#0AFFFFFF" />
+</ResourceDictionary>

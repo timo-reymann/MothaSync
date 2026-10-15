@@ -1,0 +1,18 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:MothaSync.Client.Controls"
+             x:Class="MothaSync.Client.Controls.Icon"
+             HorizontalAlignment="Center"
+             VerticalAlignment="Center">
+    <Viewbox Stretch="Uniform"
+             Width="{Binding Size, RelativeSource={RelativeSource AncestorType=local:Icon}}"
+             Height="{Binding Size, RelativeSource={RelativeSource AncestorType=local:Icon}}">
+        <Canvas Width="24" Height="24">
+            <Path Data="{Binding Data, RelativeSource={RelativeSource AncestorType=local:Icon}}"
+                  Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=local:Icon}}"
+                  StrokeThickness="{Binding StrokeThickness, RelativeSource={RelativeSource AncestorType=local:Icon}}"
+                  StrokeLineCap="Round"
+                  StrokeJoin="Round" />
+        </Canvas>
+    </Viewbox>
+</UserControl>
