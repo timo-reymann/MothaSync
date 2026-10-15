@@ -137,6 +137,8 @@ Two large clickable drive cards, "Drive A · Source" and "Drive B · Destination
 with the big orange sync arrow between them.
 Clicking a card opens a folder picker.
 A muted note says files only flow from A to B and that changes on Drive B are overwritten at the next sync.
+Below the note is a **Server URL** text field, in monospace with an orange focus border.
+It sets where sync metrics and logs are sent, and an empty value keeps them on the device.
 **Cancel** and **Save** sit bottom right.
 
 ### History
