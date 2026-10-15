@@ -1,0 +1,57 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:MothaSync.Client.Controls"
+             x:Class="MothaSync.Client.Views.SyncingView">
+    <DockPanel>
+        <c:AppHeader DockPanel.Dock="Top" Status="Running" />
+        <Grid RowDefinitions="Auto,Auto,*" Margin="24" RowSpacing="20">
+            <Grid Grid.Row="0" ColumnDefinitions="Auto,Auto,*,Auto" ColumnSpacing="12">
+                <Ellipse Grid.Column="0" Classes="dot run" />
+                <TextBlock Grid.Column="1" Text="Syncing…" FontWeight="SemiBold" VerticalAlignment="Center" />
+                <TextBlock Grid.Column="2"
+                           Classes="muted mono"
+                           Text="modules/week-07/rigging/char_rig_final_v3.blend"
+                           FontSize="12"
+                           VerticalAlignment="Center"
+                           TextTrimming="PrefixCharacterEllipsis" />
+                <Button Grid.Column="3" Classes="sm">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <c:Icon Data="{StaticResource IconPause}" Size="14" />
+                        <TextBlock Text="Pause" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+            <StackPanel Grid.Row="1" Spacing="8">
+                <ProgressBar Minimum="0" Maximum="100" Value="62" />
+                <Grid ColumnDefinitions="*,Auto">
+                    <TextBlock Grid.Column="0" Text="62%" FontSize="12" FontWeight="SemiBold" />
+                    <TextBlock Grid.Column="1"
+                               Classes="muted"
+                               Text="1284 files · 3.2 GB · ETA 0m 41s"
+                               FontSize="12" />
+                </Grid>
+            </StackPanel>
+            <HeaderedContentControl Grid.Row="2" Theme="{StaticResource LogPanel}">
+                <HeaderedContentControl.Header>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Grid.Column="0" Text="rclone log" />
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6">
+                            <Ellipse Classes="dot ok" Width="6" Height="6" />
+                            <TextBlock Classes="muted mono" Text="auto-scroll: on" FontSize="11" />
+                        </StackPanel>
+                    </Grid>
+                </HeaderedContentControl.Header>
+                <TextBlock Classes="log">
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:11" /><Run Text=" INFO  Transferred: modules/week-06/uv/body_uv.png" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:12" /><Run Text=" INFO  Transferred: modules/week-06/uv/head_uv.png" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:14" /><Run Text=" INFO  Transferred: modules/week-07/sculpt/torso_hi.obj" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:19" /><Run Text=" INFO  Transferred: modules/week-07/sculpt/torso_lo.obj" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:19" /><Run Text=" INFO  Unchanged:   modules/week-07/refs/anatomy_01.jpg" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:20" /><Run Text=" INFO  Unchanged:   modules/week-07/refs/anatomy_02.jpg" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:24" /><Run Text=" INFO  Transferred: modules/week-07/rigging/char_rig_v2.blend" /><LineBreak />
+                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:31" /><Run Text=" INFO  Copying:     modules/week-07/rigging/char_rig_final_v3.blend" />
+                </TextBlock>
+            </HeaderedContentControl>
+        </Grid>
+    </DockPanel>
+</UserControl>

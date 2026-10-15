@@ -1,0 +1,39 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:MothaSync.Client.Controls"
+             xmlns:views="using:MothaSync.Client.Views"
+             x:Class="MothaSync.Client.Views.HistoryRow">
+    <Button Classes="row" Click="OnClick">
+        <Grid ColumnDefinitions="8,1.5*,*,*,0.8*,18" ColumnSpacing="12">
+            <Ellipse x:Name="OkDot" Grid.Column="0" Classes="dot ok" />
+            <Ellipse x:Name="ErrDot" Grid.Column="0" Classes="dot err" IsVisible="False" />
+            <TextBlock Grid.Column="1"
+                       Classes="mono"
+                       FontSize="12"
+                       VerticalAlignment="Center"
+                       Text="{Binding Date, RelativeSource={RelativeSource AncestorType=views:HistoryRow}}" />
+            <TextBlock Grid.Column="2"
+                       VerticalAlignment="Center"
+                       Text="{Binding Files, RelativeSource={RelativeSource AncestorType=views:HistoryRow}}" />
+            <TextBlock Grid.Column="3"
+                       Classes="muted"
+                       VerticalAlignment="Center"
+                       Text="{Binding Size, RelativeSource={RelativeSource AncestorType=views:HistoryRow}}" />
+            <TextBlock Grid.Column="4"
+                       Classes="muted"
+                       VerticalAlignment="Center"
+                       Text="{Binding Duration, RelativeSource={RelativeSource AncestorType=views:HistoryRow}}" />
+            <c:Icon x:Name="OkIcon"
+                    Grid.Column="5"
+                    Data="{StaticResource IconCheck}"
+                    Size="16"
+                    Foreground="{DynamicResource AppOk}" />
+            <c:Icon x:Name="WarnIcon"
+                    Grid.Column="5"
+                    Data="{StaticResource IconWarn}"
+                    Size="16"
+                    Foreground="{DynamicResource AppWarn}"
+                    IsVisible="False" />
+        </Grid>
+    </Button>
+</UserControl>

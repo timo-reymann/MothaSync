@@ -1,0 +1,29 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:MothaSync.Client.Controls"
+             x:Class="MothaSync.Client.Views.NotConfiguredView">
+    <DockPanel>
+        <c:AppHeader DockPanel.Dock="Top" Status="Idle" />
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="16" Margin="24">
+            <Border Width="84" Height="84" CornerRadius="42" HorizontalAlignment="Center"
+                    Background="{DynamicResource AppAccentSoft}"
+                    BorderBrush="{DynamicResource AppAccentBorder}"
+                    BorderThickness="1">
+                <c:Icon Data="{StaticResource IconDrive}"
+                        Size="38"
+                        StrokeThickness="1.7"
+                        Foreground="{DynamicResource AppAccent}" />
+            </Border>
+            <TextBlock Text="Set up your drives"
+                       FontSize="22"
+                       FontWeight="SemiBold"
+                       HorizontalAlignment="Center" />
+            <TextBlock Classes="muted"
+                       Text="Choose the folder to back up and the drive to copy it to. Syncing starts once both are configured and connected."
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"
+                       MaxWidth="380" />
+            <Button Classes="pri lg" Content="Configure" HorizontalAlignment="Center" Margin="0,8,0,0" Click="OnConfigure" />
+        </StackPanel>
+    </DockPanel>
+</UserControl>
