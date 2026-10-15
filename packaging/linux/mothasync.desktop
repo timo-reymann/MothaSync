@@ -3,6 +3,6 @@ Type=Application
 Name=MothaSync
 Comment=Back up the 3D schoolwork folder to two external SSDs
 Exec=MothaSync.Client
-Icon=syncmotha
+Icon=mothasync
 Categories=Utility;
 Terminal=false

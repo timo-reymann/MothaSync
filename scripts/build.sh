@@ -11,12 +11,12 @@ rm -rf "$OUT"
 mkdir -p "$OUT"
 
 for rid in win-x64 linux-x64 linux-arm64; do
-  dir="$OUT/syncmotha-$VERSION-$rid"
+  dir="$OUT/mothasync-$VERSION-$rid"
   dotnet publish "$PROJECT" -c Release -r "$rid" --self-contained -o "$dir"
   if [[ $rid == linux-* ]]; then
-    cp packaging/linux/syncmotha.desktop packaging/linux/syncmotha.png "$dir/"
+    cp packaging/linux/mothasync.desktop packaging/linux/mothasync.png "$dir/"
   fi
-  (cd "$OUT" && zip -qr "syncmotha-$VERSION-$rid.zip" "syncmotha-$VERSION-$rid")
+  (cd "$OUT" && zip -qr "mothasync-$VERSION-$rid.zip" "mothasync-$VERSION-$rid")
   rm -rf "$dir"
 done
 
@@ -27,7 +27,7 @@ for rid in osx-arm64 osx-x64; do
   if command -v codesign >/dev/null; then
     codesign --force --deep -s - "$app"
   fi
-  ditto -c -k --keepParent "$app" "$OUT/syncmotha-$VERSION-$rid.zip"
+  ditto -c -k --keepParent "$app" "$OUT/mothasync-$VERSION-$rid.zip"
 done
 
 ls -lh "$OUT"

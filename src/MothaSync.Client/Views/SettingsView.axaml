@@ -49,7 +49,7 @@
             <StackPanel Spacing="8">
                 <TextBlock Classes="muted" Text="SERVER URL" FontSize="11" LetterSpacing="0.8" />
                 <TextBox x:Name="ServerUrl"
-                         Text="https://syncmotha.example.com"
+                         Text="https://mothasync.example.com"
                          PlaceholderText="https://…" />
                 <TextBlock Classes="muted"
                            Text="Sync metrics and logs are sent to this server. Leave empty to keep them on this device."
