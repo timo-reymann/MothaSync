@@ -1,20 +1,21 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:c="using:MothaSync.Client.Controls"
              x:Class="MothaSync.Client.Controls.SyncArrow"
-             Width="84"
+             Width="180"
              VerticalAlignment="Center">
     <StackPanel Spacing="6" HorizontalAlignment="Center">
-        <c:Icon Data="{StaticResource IconArrow}"
-                Size="44"
-                StrokeThickness="2.4"
-                Foreground="{DynamicResource AppAccent}" />
+        <Path Width="180"
+              Height="24"
+              Data="M 4 12 h 164 M 154 4 l 12 8 -12 8"
+              Stroke="{DynamicResource AppAccent}"
+              StrokeThickness="2.4"
+              StrokeLineCap="Round"
+              StrokeJoin="Round" />
         <TextBlock Text="SYNC DIRECTION"
                    Classes="muted"
                    FontSize="10"
                    LetterSpacing="0.6"
                    TextAlignment="Center"
-                   TextWrapping="Wrap"
-                   Width="60" />
+                   HorizontalAlignment="Center" />
     </StackPanel>
 </UserControl>

@@ -7,23 +7,14 @@ public class ChromelessWindow : Window
 {
     public ChromelessWindow()
     {
-        Width = 640;
-        Height = 600;
+        Width = 700;
+        Height = 700;
         CanResize = false;
         WindowDecorations = WindowDecorations.None;
         WindowStartupLocation = WindowStartupLocation.CenterScreen;
     }
 
     public bool CloseOnEscape { get; set; }
-
-    protected override void OnPointerPressed(PointerPressedEventArgs e)
-    {
-        base.OnPointerPressed(e);
-        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
-        {
-            BeginMoveDrag(e);
-        }
-    }
 
     protected override void OnKeyDown(KeyEventArgs e)
     {

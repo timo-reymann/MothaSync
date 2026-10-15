@@ -5,6 +5,7 @@
     <StreamGeometry x:Key="IconDrive">M 6 6 h 12 a 3 3 0 0 1 3 3 v 6 a 3 3 0 0 1 -3 3 H 6 a 3 3 0 0 1 -3 -3 V 9 a 3 3 0 0 1 3 -3 z M 7 14 h 5 M 17 14 h .01</StreamGeometry>
     <StreamGeometry x:Key="IconArrow">M 4 12 h 15 M 13 6 l 6 6 -6 6</StreamGeometry>
     <StreamGeometry x:Key="IconPause">M 9 5 v 14 M 15 5 v 14</StreamGeometry>
+    <StreamGeometry x:Key="IconPlay">M 8 5 l 11 7 -11 7 z</StreamGeometry>
     <StreamGeometry x:Key="IconWarn">M 12 3 L 2 20 h 20 L 12 3 z M 12 10 v 4 M 12 17.2 v .1</StreamGeometry>
     <StreamGeometry x:Key="IconCheck">M 5 12.5 L 10 17.5 L 19 7</StreamGeometry>
     <StreamGeometry x:Key="IconBack">M 15 6 l -6 6 6 6</StreamGeometry>

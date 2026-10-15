@@ -2,9 +2,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:c="using:MothaSync.Client.Controls"
              x:Class="MothaSync.Client.Controls.AppHeader">
-    <Border BorderBrush="{DynamicResource AppLine}" BorderThickness="0,0,0,1" Padding="20,12">
+    <Border x:Name="HeaderBorder"
+            BorderBrush="{DynamicResource AppLine}"
+            BorderThickness="0,0,0,1"
+            Background="Transparent"
+            Padding="20,12">
         <DockPanel>
-            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+            <StackPanel x:Name="HeaderActions"
+                        DockPanel.Dock="Right"
+                        Orientation="Horizontal"
+                        Spacing="4"
+                        VerticalAlignment="Center">
                 <Button x:Name="HistoryButton" Classes="icon" Click="OnHistory" ToolTip.Tip="History">
                     <c:Icon Data="{StaticResource IconHistory}" />
                 </Button>
@@ -19,11 +27,19 @@
                     <c:Icon Data="{StaticResource IconClose}" />
                 </Button>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
-                <c:AppLogo />
-                <TextBlock Text="MothaSync" FontWeight="SemiBold" VerticalAlignment="Center" />
-                <Ellipse x:Name="Dot" Classes="dot idle" />
-            </StackPanel>
+            <Grid>
+                <StackPanel x:Name="HeaderIdentity"
+                            HorizontalAlignment="Left"
+                            Orientation="Horizontal"
+                            Spacing="10"
+                            VerticalAlignment="Center"
+                            Background="Transparent"
+                            Cursor="Hand">
+                    <c:AppLogo />
+                    <TextBlock Text="MothaSync" FontWeight="SemiBold" VerticalAlignment="Center" />
+                    <Ellipse x:Name="Dot" Classes="dot idle" />
+                </StackPanel>
+            </Grid>
         </DockPanel>
     </Border>
 </UserControl>

@@ -3,48 +3,56 @@
                 xmlns:c="using:MothaSync.Client.Controls"
                 x:Class="MothaSync.Client.Views.WaitingView">
     <DockPanel>
-        <c:AppHeader DockPanel.Dock="Top" Status="Idle" />
+        <c:AppHeader DockPanel.Dock="Top" />
         <StackPanel VerticalAlignment="Center" Margin="24" Spacing="24">
             <TextBlock Classes="muted"
-                       Text="Waiting for both drives. Sync starts automatically 3 seconds after both are connected and writable."
+                       Text="Waiting for both drives. Sync starts automatically when both are connected and writable, unless the last sync ran less than an hour ago."
                        TextWrapping="Wrap" />
             <Grid ColumnDefinitions="*,Auto,*">
-                <Border Grid.Column="0" Classes="card">
+                <Border Grid.Column="0" Classes="card" Padding="12">
                     <DockPanel>
-                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="10">
-                            <c:Icon Data="{StaticResource IconDrive}" Size="22" Foreground="{DynamicResource AppAccent}" />
-                            <TextBlock Text="Drive A · Source" FontWeight="SemiBold" VerticalAlignment="Center" />
+                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="8">
+                            <c:Icon Data="{StaticResource IconDrive}" Size="18" Foreground="{DynamicResource AppAccent}" />
+                            <TextBlock x:Name="SourceTitle" Text="Drive A" FontWeight="SemiBold" VerticalAlignment="Center" />
                         </StackPanel>
                         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Spacing="8" Margin="0,14,0,0">
-                            <Ellipse Classes="dot ok" />
-                            <TextBlock Classes="muted" Text="connected" FontSize="12" />
+                            <Ellipse x:Name="SourceDot" Classes="dot" />
+                            <TextBlock x:Name="SourceStatusText" Classes="muted" Text="waiting for drive" FontSize="12" />
                         </StackPanel>
-                        <TextBlock Classes="muted mono"
-                                   Text="/home/user/projects"
+                        <TextBlock x:Name="SourcePathText"
+                                   Classes="muted mono"
+                                   Text="not set"
                                    FontSize="12"
                                    TextWrapping="Wrap"
                                    Margin="0,10,0,0" />
                     </DockPanel>
                 </Border>
                 <c:SyncArrow Grid.Column="1" />
-                <Border Grid.Column="2" Classes="card">
+                <Border Grid.Column="2" Classes="card" Padding="12">
                     <DockPanel>
-                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="10">
-                            <c:Icon Data="{StaticResource IconDrive}" Size="22" Foreground="{DynamicResource AppAccent}" />
-                            <TextBlock Text="Drive B · Backup" FontWeight="SemiBold" VerticalAlignment="Center" />
+                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="8">
+                            <c:Icon Data="{StaticResource IconDrive}" Size="18" Foreground="{DynamicResource AppAccent}" />
+                            <TextBlock x:Name="DestinationTitle" Text="Drive B" FontWeight="SemiBold" VerticalAlignment="Center" />
                         </StackPanel>
                         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Spacing="8" Margin="0,14,0,0">
-                            <Ellipse Classes="dot" />
-                            <TextBlock Classes="muted" Text="waiting for drive" FontSize="12" />
+                            <Ellipse x:Name="DestinationDot" Classes="dot" />
+                            <TextBlock x:Name="DestinationStatusText" Classes="muted" Text="waiting for drive" FontSize="12" />
                         </StackPanel>
-                        <TextBlock Classes="muted mono"
-                                   Text="/Volumes/Backup"
+                        <TextBlock x:Name="DestinationPathText"
+                                   Classes="muted mono"
+                                   Text="not set"
                                    FontSize="12"
                                    TextWrapping="Wrap"
                                    Margin="0,10,0,0" />
                     </DockPanel>
                 </Border>
             </Grid>
+            <Button x:Name="SyncNowButton"
+                    Classes="pri"
+                    Content="Sync now"
+                    HorizontalAlignment="Center"
+                    IsVisible="False"
+                    Click="OnSyncNow" />
         </StackPanel>
     </DockPanel>
 </UserControl>

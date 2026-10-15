@@ -69,8 +69,8 @@ public partial class HistoryRow : UserControl
         WarnIcon.IsVisible = Failed;
     }
 
-    private async void OnClick(object? sender, RoutedEventArgs e)
+    private void OnClick(object? sender, RoutedEventArgs e)
     {
-        await Dialogs.ShowHistoryDetail(this, new RunInfo(Date, Files, Size, Duration, Failed));
+        Navigation.ShowHistoryDetail(this, new RunInfo(Date, Files, Size, Duration, Failed));
     }
 }
