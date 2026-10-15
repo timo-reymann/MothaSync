@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package mothasync.v1;
+
+option csharp_namespace = "MothaSync.Shared.Contracts";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+
+enum SyncRunStatus {
+  SYNC_RUN_STATUS_UNSPECIFIED = 0;
+  SYNC_RUN_STATUS_RUNNING = 1;
+  SYNC_RUN_STATUS_COMPLETED = 2;
+  SYNC_RUN_STATUS_FAILED = 3;
+  SYNC_RUN_STATUS_CANCELLED = 4;
+}
+
+// A single sync run as reported by a client.
+message SyncRun {
+  // Client-generated UUID; makes reporting idempotent (retries/updates upsert).
+  string id = 1;
+  SyncRunStatus status = 2;
+  // When the run started.
+  google.protobuf.Timestamp started_at = 3;
+  // Wall-clock time the run took; unset while running.
+  google.protobuf.Duration duration = 4;
+  // Number of files added, updated or deleted.
+  int64 files_changed = 5;
+  // Total size of the changed files in bytes.
+  int64 bytes_transferred = 6;
+  // Failure reason; set when status is FAILED.
+  string error_message = 7;
+  // Set by the server from the bearer token (see device.proto); any value
+  // sent by the client is ignored.
+  string device_id = 8;
+}
+
+// Client -> server: create or update a run.
+message ReportSyncRunRequest {
+  SyncRun run = 1;
+}
+
+message ReportSyncRunResponse {}
+
+message ListSyncRunsRequest {
+  int32 page_size = 1;
+  // Opaque token from a previous response; empty for the first page.
+  string page_token = 2;
+  // Restrict to a status; UNSPECIFIED returns all.
+  SyncRunStatus status = 3;
+}
+
+message ListSyncRunsResponse {
+  // Newest first.
+  repeated SyncRun runs = 1;
+  string next_page_token = 2;
+}
