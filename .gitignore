@@ -483,3 +483,11 @@ $RECYCLE.BIN/
 
 # Release builds
 dist/
+
+# rclone binaries fetched by scripts/download-rclone.sh
+src/MothaSync.Client/Assets/rclone/
+
+# Local SQLite databases
+*.db
+*.db-wal
+*.db-shm
