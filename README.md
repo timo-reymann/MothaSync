@@ -30,14 +30,14 @@ dotnet run --project src/MothaSync.Server
 
 | Platform | Archive |
 | --- | --- |
-| Windows x64 | `syncmotha-1.0.0-win-x64.zip` |
-| Linux x64 | `syncmotha-1.0.0-linux-x64.zip` |
-| Linux arm64 | `syncmotha-1.0.0-linux-arm64.zip` |
-| macOS Apple Silicon | `syncmotha-1.0.0-osx-arm64.zip` |
-| macOS Intel | `syncmotha-1.0.0-osx-x64.zip` |
+| Windows x64 | `mothasync-1.0.0-win-x64.zip` |
+| Linux x64 | `mothasync-1.0.0-linux-x64.zip` |
+| Linux arm64 | `mothasync-1.0.0-linux-arm64.zip` |
+| macOS Apple Silicon | `mothasync-1.0.0-osx-arm64.zip` |
+| macOS Intel | `mothasync-1.0.0-osx-x64.zip` |
 
 The Windows executable embeds `src/MothaSync.Client/MothaSync.ico`.
-The Linux archives include `syncmotha.desktop` and `syncmotha.png` from `packaging/linux/` for desktop integration.
+The Linux archives include `mothasync.desktop` and `mothasync.png` from `packaging/linux/` for desktop integration.
 The build needs network access once to download the runtime packs.
 
 ## macOS app bundle
@@ -51,7 +51,7 @@ dotnet msbuild src/MothaSync.Client -t:BundleApp -p:RuntimeIdentifier=osx-arm64 
 codesign --force --deep -s - src/MothaSync.Client/bin/Release/net10.0/osx-arm64/publish/MothaSync.app
 ```
 
-The bundle identifier is `de.timo_reymann.syncmotha`.
+The bundle identifier is `de.timo_reymann.mothasync`.
 The icon is `src/MothaSync.Client/MothaSync.icns`, generated from the logo.
 
 ## Design

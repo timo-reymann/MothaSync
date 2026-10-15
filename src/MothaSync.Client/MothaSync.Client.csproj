@@ -10,7 +10,7 @@
   <PropertyGroup>
     <CFBundleName>MothaSync</CFBundleName>
     <CFBundleDisplayName>MothaSync</CFBundleDisplayName>
-    <CFBundleIdentifier>de.timo_reymann.syncmotha</CFBundleIdentifier>
+    <CFBundleIdentifier>de.timo_reymann.mothasync</CFBundleIdentifier>
     <CFBundleVersion>1.0.0</CFBundleVersion>
     <CFBundleShortVersionString>1.0.0</CFBundleShortVersionString>
     <CFBundlePackageType>APPL</CFBundlePackageType>
