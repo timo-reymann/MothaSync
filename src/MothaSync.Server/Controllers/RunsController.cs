@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MothaSync.Server.Auth;
 using MothaSync.Server.Data;
+using MothaSync.Server.Metrics;
 using MothaSync.Shared.Contracts;
 
 namespace MothaSync.Server.Controllers;
@@ -10,7 +11,7 @@ namespace MothaSync.Server.Controllers;
 [ApiController]
 [Authorize]
 [Route("api/runs")]
-public sealed class RunsController(SyncDb db) : ControllerBase
+public sealed class RunsController(SyncDb db, SyncMetrics metrics) : ControllerBase
 {
     private const int DefaultPageSize = 50;
     private const int MaxPageSize = 200;
@@ -28,7 +29,13 @@ public sealed class RunsController(SyncDb db) : ControllerBase
         }
 
         // device_id always comes from the token, never from the body.
-        return db.UpsertRun(DeviceId, run) ? new ReportSyncRunResponse() : Conflict();
+        if (!db.UpsertRun(DeviceId, run))
+        {
+            return Conflict();
+        }
+
+        metrics.RunReported(DeviceId, run);
+        return new ReportSyncRunResponse();
     }
 
     [HttpGet]

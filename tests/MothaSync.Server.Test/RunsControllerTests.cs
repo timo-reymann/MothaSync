@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using MothaSync.Server.Auth;
 using MothaSync.Server.Controllers;
 using MothaSync.Server.Data;
+using MothaSync.Server.Metrics;
 using MothaSync.Shared.Contracts;
 using ProtoSyncRunStatus = MothaSync.Shared.Contracts.SyncRunStatus;
 
@@ -16,13 +17,13 @@ public sealed class RunsControllerTests : IDisposable
 
     public void Dispose() => _db.Dispose();
 
-    private RunsController CreateController(string deviceId)
+    private RunsController CreateController(string deviceId, SyncMetrics? metrics = null)
     {
         var identity = new ClaimsIdentity(
             [new Claim(DeviceAuthentication.DeviceIdClaim, deviceId)],
             "Test");
 
-        return new RunsController(_db.Db)
+        return new RunsController(_db.Db, metrics ?? new SyncMetrics(Prometheus.Metrics.NewCustomRegistry()))
         {
             ControllerContext = new ControllerContext
             {
@@ -146,6 +147,22 @@ public sealed class RunsControllerTests : IDisposable
         var stored = Assert.Single(runs);
         Assert.Equal(ProtoSyncRunStatus.Completed, stored.Status);
         Assert.Equal(9, stored.FilesChanged);
+    }
+
+    [Fact]
+    public async Task Report_ValidRun_IncrementsRunsCounterForDevice()
+    {
+        var registry = Prometheus.Metrics.NewCustomRegistry();
+        var metrics = new SyncMetrics(registry);
+        var deviceId = RegisterDevice();
+        var controller = CreateController(deviceId, metrics);
+
+        Assert.Null(controller.Report(new ReportSyncRunRequest { Run = NewRun() }).Result);
+
+        var text = await MetricsTestHelpers.ExportToTextAsync(registry);
+        var line = MetricsTestHelpers.FindLine(text, "mothasync_sync_runs_total", ("device_id", deviceId), ("status", "completed"));
+        Assert.NotNull(line);
+        Assert.Equal(1, MetricsTestHelpers.ParseValue(line));
     }
 
     [Fact]

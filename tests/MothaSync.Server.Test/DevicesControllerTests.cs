@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MothaSync.Server.Controllers;
 using MothaSync.Server.Data;
+using MothaSync.Server.Metrics;
 using MothaSync.Shared.Contracts;
 
 namespace MothaSync.Server.Test;
@@ -25,7 +26,7 @@ public sealed class DevicesControllerTests : IDisposable
                 ["Server:EnrollmentToken"] = configuredToken,
             })
             .Build();
-        return new DevicesController(_db.Db, configuration);
+        return new DevicesController(_db.Db, configuration, new SyncMetrics(Prometheus.Metrics.NewCustomRegistry()));
     }
 
     [Fact]
@@ -36,6 +37,28 @@ public sealed class DevicesControllerTests : IDisposable
         var result = controller.VerifyEnrollment(new RegisterDeviceRequest { EnrollmentToken = EnrollmentToken });
 
         Assert.IsType<NoContentResult>(result);
+    }
+
+    [Fact]
+    public async Task Register_ValidEnrollment_IncrementsDevicesCounter()
+    {
+        var registry = Prometheus.Metrics.NewCustomRegistry();
+        var metrics = new SyncMetrics(registry);
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["Server:DatabasePath"] = _db.Path,
+                ["Server:EnrollmentToken"] = EnrollmentToken,
+            })
+            .Build();
+        var controller = new DevicesController(_db.Db, configuration, metrics);
+
+        controller.Register(new RegisterDeviceRequest { EnrollmentToken = EnrollmentToken, DeviceName = "laptop" });
+
+        var text = await MetricsTestHelpers.ExportToTextAsync(registry);
+        var line = MetricsTestHelpers.FindLine(text, "mothasync_devices_registered_total");
+        Assert.NotNull(line);
+        Assert.Equal(1, MetricsTestHelpers.ParseValue(line));
     }
 
     [Fact]
