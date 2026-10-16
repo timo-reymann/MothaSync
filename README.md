@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.png" alt="MothaSync logo: a pink mother figure holding a drive in each hand" width="160">
+  <img src="assets/logo.png" alt="MothaSync logo: an orange winged mother figure holding a drive in each hand" width="160">
 </p>
 
 <h1 align="center">MothaSync</h1>
@@ -103,7 +103,7 @@ Screens, colors, typography and components are documented in [DESIGN.md](DESIGN.
 `assets/logo.png` (512px, transparent) is the logo used in this README,
 `assets/drive.png` is the hard drive artwork,
 and `assets/trays/` holds the tray icon states (`idle`, `waiting`, `syncing`, `paused`, `ok`, `error`).
-A 256px logo and the tray icons ship inside the client under `src/MothaSync.Client/Assets/`.
+A 256px logo, a tight-cropped header logo and the tray icons ship inside the client under `src/MothaSync.Client/Assets/`.
 `MothaSync.ico`, `MothaSync.icns` and `packaging/linux/mothasync.png` are generated from `assets/logo.png`.
 
 ## Fonts

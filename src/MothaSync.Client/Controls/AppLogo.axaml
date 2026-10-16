@@ -1,7 +1,6 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="MothaSync.Client.Controls.AppLogo"
-             Width="48"
-             Height="48">
-    <Image Source="avares://MothaSync.Client/Assets/logo.png" Stretch="Uniform" />
+             Height="64">
+    <Image Source="avares://MothaSync.Client/Assets/logo-header.png" Stretch="Uniform" />
 </UserControl>

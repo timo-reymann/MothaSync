@@ -16,7 +16,7 @@ It should feel trustworthy, with no playful decoration.
 
 ## Header
 
-Left to right: logo (48 px), app name "MothaSync" in semibold, a status dot, then a spacer
+Left to right: logo (64 px high, almost the full bar height, with the buttons and title padded), app name "MothaSync" in semibold, a status dot, then a spacer
 and 30 px icon buttons: history, settings, a thin divider, then minimize and close.
 The status dot shows the app's current status on every screen, including Settings and History.
 Minimize minimizes the main window.
@@ -55,9 +55,9 @@ On Linux the tray needs a StatusNotifier host, which GNOME only provides with th
 
 ## Logo
 
-The logo is a friendly pink mother figure holding one drive in each hand (`assets/logo.png`,
+The logo is a friendly orange, winged mother figure holding one drive in each hand (`assets/logo.png`,
 source sheet in `assets/logo-original.jpg`), with a transparent background.
-It uses a pink, magenta and cream palette.
+It uses an orange, crimson and cream palette.
 The header shows it directly on the dark surface, without a tile.
 
 ## Color

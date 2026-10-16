@@ -6,12 +6,13 @@
             BorderBrush="{DynamicResource AppLine}"
             BorderThickness="0,0,0,1"
             Background="Transparent"
-            Padding="20,10">
+            Padding="20,0">
         <DockPanel>
             <StackPanel x:Name="HeaderActions"
                         DockPanel.Dock="Right"
                         Orientation="Horizontal"
                         Spacing="4"
+                        Margin="0,14"
                         VerticalAlignment="Center">
                 <Button x:Name="HistoryButton" Classes="icon" Click="OnHistory" ToolTip.Tip="History">
                     <c:Icon Data="{StaticResource IconHistory}" />
@@ -32,6 +33,7 @@
                             HorizontalAlignment="Left"
                             Orientation="Horizontal"
                             Spacing="10"
+                            Margin="0,4"
                             VerticalAlignment="Center"
                             Background="Transparent"
                             Cursor="Hand">
