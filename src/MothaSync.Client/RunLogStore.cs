@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 using Duration = Google.Protobuf.WellKnownTypes.Duration;
 using Timestamp = Google.Protobuf.WellKnownTypes.Timestamp;
@@ -62,12 +63,6 @@ public sealed class RunLogStore
             runId = (long)(command.ExecuteScalar() ?? throw new InvalidOperationException("Could not create sync run."));
         }
 
-        _ = ServerReporter.ReportRunAsync(new SyncRun
-        {
-            Id = remoteId,
-            Status = ContractStatus.Running,
-            StartedAt = Timestamp.FromDateTimeOffset(startedAt)
-        });
         return runId;
     }
 
@@ -77,6 +72,18 @@ public sealed class RunLogStore
         long filesProcessed,
         long bytesTransferred,
         string logText)
+    {
+        CompleteRunAsync(runId, status, filesProcessed, bytesTransferred, logText, reportToServer: false)
+            .GetAwaiter().GetResult();
+    }
+
+    public async Task<bool> CompleteRunAsync(
+        long runId,
+        SyncRunStatus status,
+        long filesProcessed,
+        long bytesTransferred,
+        string logText,
+        bool reportToServer = true)
     {
         var completedAt = DateTimeOffset.UtcNow;
         SyncRun report;
@@ -107,10 +114,39 @@ public sealed class RunLogStore
             TrimRuns(connection);
         }
 
-        if (report.Id.Length > 0)
+        if (!reportToServer || report.Id.Length == 0 || !ServerReporter.IsConfigured)
         {
-            _ = ServerReporter.ReportRunAsync(report);
+            return true;
         }
+
+        var reported = await ServerReporter.ReportRunAsync(report);
+        var reportLine = reported
+            ? $"{DateTime.Now:HH:mm:ss} INFO  Server report accepted"
+            : $"{DateTime.Now:HH:mm:ss} ERROR Server report failed; the configured server did not accept the run";
+        var finalStatus = reported ? status : SyncRunStatus.Failed;
+        if (!reported)
+        {
+            AddError(new SyncErrorRecord(
+                runId,
+                string.Empty,
+                "Configured server did not accept the sync report.",
+                DateTimeOffset.UtcNow));
+        }
+
+        using var reportConnection = OpenConnection();
+        using var reportCommand = reportConnection.CreateCommand();
+        reportCommand.CommandText = """
+                              UPDATE SyncRuns
+                              SET Status = $status,
+                                  ErrorCount = (SELECT COUNT(*) FROM SyncErrors WHERE RunId = $runId),
+                                  LogText = $logText
+                              WHERE Id = $runId;
+                              """;
+        reportCommand.Parameters.AddWithValue("$status", finalStatus.ToString());
+        reportCommand.Parameters.AddWithValue("$logText", $"{logText}\n{reportLine}");
+        reportCommand.Parameters.AddWithValue("$runId", runId);
+        reportCommand.ExecuteNonQuery();
+        return reported;
     }
 
     private static SyncRun BuildReport(
