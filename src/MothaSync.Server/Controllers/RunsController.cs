@@ -18,6 +18,16 @@ public sealed class RunsController(SyncDb db, SyncMetrics metrics) : ControllerB
 
     private string DeviceId => User.FindFirst(DeviceAuthentication.DeviceIdClaim)!.Value;
 
+    /// <summary>Creates or updates a run for the authenticated device and records its metrics.</summary>
+    /// <remarks>
+    /// Ignores the run's device ID. Each accepted report, including retries and updates, adds to the metrics.
+    /// Persistence precedes metric recording, so a metrics error can occur after the run has been stored.
+    /// </remarks>
+    /// <returns>An empty response on success, 400 for a missing run, invalid UUID, missing start time, or unspecified status,
+    /// or 409 if the run ID belongs to another device.</returns>
+    /// <exception cref="Microsoft.Data.Sqlite.SqliteException">A database error prevents storing the run.</exception>
+    /// <exception cref="InvalidOperationException">The start time or supplied duration is not a valid normalized protobuf value.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The start time plus duration is outside the DateTimeOffset range.</exception>
     [HttpPost]
     public ActionResult<ReportSyncRunResponse> Report(ReportSyncRunRequest request)
     {

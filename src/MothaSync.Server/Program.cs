@@ -11,6 +11,12 @@ await app.RunAsync();
 
 public static partial class Program
 {
+    /// <summary>Creates a builder with server services and the optional metrics listener URL.</summary>
+    /// <param name="args">Command-line configuration arguments; null is treated as an empty array.</param>
+    /// <remarks>
+    /// When Metrics:Enabled is true (the default), appends http://0.0.0.0:{Metrics:Port} to configured URLs.
+    /// The metrics port defaults to 9100.
+    /// </remarks>
     internal static WebApplicationBuilder CreateWebApplicationBuilder(string[]? args = null)
     {
         var builder = WebApplication.CreateBuilder(args ?? []);
@@ -46,6 +52,13 @@ public static partial class Program
         return builder;
     }
 
+    /// <summary>Builds the server pipeline with controller routes, authentication, and optional metrics.</summary>
+    /// <remarks>
+    /// When metrics are enabled, serves metrics under /metrics on Metrics:Port (default 9100).
+    /// Unmatched paths on that port return 404, and controller routes are inaccessible there.
+    /// Enables HTTP request metrics and initializes business metric collectors.
+    /// </remarks>
+    /// <returns>The configured application, which has not been started.</returns>
     internal static WebApplication BuildApplication(WebApplicationBuilder builder)
     {
         var app = builder.Build();
