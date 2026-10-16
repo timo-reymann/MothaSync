@@ -491,3 +491,6 @@ src/MothaSync.Client/Assets/rclone/
 *.db
 *.db-wal
 *.db-shm
+
+# Generated end-to-end sync fixtures
+e2e-data/
