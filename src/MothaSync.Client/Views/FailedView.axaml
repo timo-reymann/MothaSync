@@ -24,7 +24,7 @@
                                    Foreground="{DynamicResource AppErrText}"
                                    TextWrapping="Wrap" />
                     </StackPanel>
-                    <Button Grid.Column="2" Classes="err sm" Content="Retry sync" />
+                    <Button Grid.Column="2" Classes="err sm" Content="Retry sync" Click="OnRetry" />
                 </Grid>
             </Border>
             <StackPanel Grid.Row="1" Spacing="8">

@@ -26,6 +26,11 @@ public static class Navigation
         GetMainWindow(from)?.NavigateTo(new DoneView());
     }
 
+    public static void ShowFailed(Visual from)
+    {
+        GetMainWindow(from)?.NavigateTo(new FailedView());
+    }
+
     public static void ShowHistory(Visual from)
     {
         GetMainWindow(from)?.NavigateTo(new HistoryView());
