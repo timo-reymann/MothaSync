@@ -18,6 +18,9 @@ public sealed class DevicesController(SyncDb db, IConfiguration configuration, S
     public IActionResult VerifyEnrollment(RegisterDeviceRequest request) =>
         IsValidEnrollmentToken(request.EnrollmentToken) ? NoContent() : Unauthorized();
 
+    /// <summary>Registers a device, stores its token hash, and increments the registration counter.</summary>
+    /// <returns>New device credentials, 401 if enrollment is invalid or unconfigured, or 400 if the device name is blank.</returns>
+    /// <exception cref="Microsoft.Data.Sqlite.SqliteException">A database error prevents registration.</exception>
     [HttpPost("register")]
     [AllowAnonymous]
     public ActionResult<RegisterDeviceResponse> Register(RegisterDeviceRequest request)

@@ -16,10 +16,12 @@ public sealed class SyncMetrics
     private readonly P.Gauge _lastRunResult;
     private readonly P.Counter _devicesRegistered;
 
+    /// <summary>Registers business metric collectors in the default Prometheus registry.</summary>
     public SyncMetrics() : this(P.Metrics.DefaultRegistry)
     {
     }
 
+    /// <summary>Registers business metric collectors in the supplied Prometheus registry.</summary>
     public SyncMetrics(P.CollectorRegistry registry)
     {
         var factory = P.Metrics.WithCustomRegistry(registry);
@@ -36,6 +38,17 @@ public sealed class SyncMetrics
         _devicesRegistered = factory.CreateCounter("mothasync_devices_registered_total", "Devices registered with the server.");
     }
 
+    /// <summary>Records a report in the device's counters, duration histogram, and last-run gauges.</summary>
+    /// <remarks>
+    /// Each call counts a report by status and adds positive file and byte totals, even for a repeated run ID.
+    /// A supplied duration is observed in seconds. The last-run timestamp is the start time plus duration,
+    /// or just the start time when duration is absent, in Unix seconds. The result is 1 only for Completed, otherwise 0.
+    /// Counters already updated are not rolled back if time conversion fails.
+    /// </remarks>
+    /// <param name="deviceId">The metric label identifying the reporting device; the run's device ID is ignored.</param>
+    /// <param name="run">The report, with a required start time and optional duration.</param>
+    /// <exception cref="InvalidOperationException">The start time or supplied duration is not a valid normalized protobuf value.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The start time plus duration is outside the DateTimeOffset range.</exception>
     public void RunReported(string deviceId, SyncRun run)
     {
         var status = run.Status.ToString().ToLowerInvariant();
@@ -63,5 +76,6 @@ public sealed class SyncMetrics
         _lastRunResult.Labels(deviceId).Set(run.Status == SyncRunStatus.Completed ? 1 : 0);
     }
 
+    /// <summary>Records one device registration in the server-wide counter.</summary>
     public void DeviceRegistered() => _devicesRegistered.Inc();
 }
