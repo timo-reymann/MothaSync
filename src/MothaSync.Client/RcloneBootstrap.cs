@@ -12,6 +12,23 @@ public static class RcloneBootstrap
         "bin",
         OperatingSystem.IsWindows() ? "rclone.exe" : "rclone");
 
+    public static string ExecutablePath
+    {
+        get
+        {
+            if (File.Exists(InstalledPath))
+            {
+                return InstalledPath;
+            }
+
+            var bundledPath = Path.Combine(
+                AppContext.BaseDirectory,
+                "rclone",
+                OperatingSystem.IsWindows() ? "rclone.exe" : "rclone");
+            return File.Exists(bundledPath) ? bundledPath : "rclone";
+        }
+    }
+
     public static void EnsureInstalled()
     {
         var bundledPath = Path.Combine(

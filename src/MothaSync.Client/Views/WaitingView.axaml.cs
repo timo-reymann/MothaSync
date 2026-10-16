@@ -82,9 +82,9 @@ public partial class WaitingView : UserControl
         var autoSync = due && !samePaths;
 
         LastSyncText.Text = SyncSchedule.FormatLastSync(lastSync, now);
-        SyncNowButton.IsVisible = bothConnected && !DummySyncEngine.IsRunning && !autoSync;
+        SyncNowButton.IsVisible = bothConnected && !RcloneSyncEngine.IsRunning && !autoSync;
         SyncNowButton.Content = due ? "Sync" : $"Sync ({SyncSchedule.FormatCountdown(SyncSchedule.Remaining(lastSync, now))})";
-        if (!bothConnected || DummySyncEngine.IsRunning || !autoSync)
+        if (!bothConnected || RcloneSyncEngine.IsRunning || !autoSync)
         {
             return;
         }
@@ -96,7 +96,7 @@ public partial class WaitingView : UserControl
     {
         if (DriveStatusMonitor.SourceConnected &&
             DriveStatusMonitor.DestinationConnected &&
-            !DummySyncEngine.IsRunning)
+            !RcloneSyncEngine.IsRunning)
         {
             StartSync();
         }
@@ -106,7 +106,7 @@ public partial class WaitingView : UserControl
     {
         SyncNowButton.IsVisible = false;
         Navigation.ShowSyncing(this);
-        DummySyncEngine.Start();
+        RcloneSyncEngine.Start();
     }
 
     private void ApplySettings()
