@@ -20,6 +20,11 @@ declare -A RID_ARCH=(
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 
+mkdir -p "$OUT_DIR"
+curl -fsSL "https://raw.githubusercontent.com/rclone/rclone/$RCLONE_VERSION/COPYING" -o "$TMP/COPYING"
+grep -Fq "Copyright (C) 2012 by Nick Craig-Wood" "$TMP/COPYING"
+cp "$TMP/COPYING" "$OUT_DIR/COPYING"
+
 curl -fsSL "$BASE_URL/SHA256SUMS" -o "$TMP/SHA256SUMS"
 
 for rid in win-x64 linux-x64 linux-arm64 osx-arm64 osx-x64; do
