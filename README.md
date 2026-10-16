@@ -33,6 +33,25 @@ runtime identifier and on startup copies it to the AppData `MothaSync/bin` folde
 whenever the bundled checksum differs from the installed copy. Renovate bumps the
 version pin in the script through the regex custom manager in `renovate.json`.
 
+The client starts the bundled rclone binary locally and uses its loopback REST API
+(`sync/sync`, `job/status`, and `core/stats`) for real sync runs. For an end-to-end
+local test, generate ignored fixtures and point Drive A and Drive B at the two
+created folders:
+
+```bash
+scripts/generate-test-data.sh
+# Configure the app with e2e-data/source and e2e-data/destination
+```
+
+The generator creates 10 random files between 5 MiB and 20 MiB by default. Pass a
+file count as the second argument to change it; it rejects requests whose minimum
+size would exceed the 1 GiB total cap. The generated `e2e-data/` directory is
+gitignored.
+
+On macOS, install `terminal-notifier` if you want native error notifications to
+use the MothaSync logo: `brew install terminal-notifier`. Without it, notifications
+fall back to the built-in macOS notification script.
+
 ## Release builds
 
 `scripts/build.sh` builds self-contained zips for every platform into `dist/`:
