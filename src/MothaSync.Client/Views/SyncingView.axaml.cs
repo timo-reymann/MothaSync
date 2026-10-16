@@ -21,16 +21,16 @@ public partial class SyncingView : UserControl
     {
         base.OnAttachedToVisualTree(e);
         SyncStatusStore.Set(SyncStatus.Running);
-        DummySyncEngine.Tick += OnTick;
-        DummySyncEngine.Completed += OnCompleted;
-        DummySyncEngine.Failed += OnFailed;
+        RcloneSyncEngine.Tick += OnTick;
+        RcloneSyncEngine.Completed += OnCompleted;
+        RcloneSyncEngine.Failed += OnFailed;
     }
 
     protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
     {
-        DummySyncEngine.Tick -= OnTick;
-        DummySyncEngine.Completed -= OnCompleted;
-        DummySyncEngine.Failed -= OnFailed;
+        RcloneSyncEngine.Tick -= OnTick;
+        RcloneSyncEngine.Completed -= OnCompleted;
+        RcloneSyncEngine.Failed -= OnFailed;
         base.OnDetachedFromVisualTree(e);
     }
 
@@ -39,20 +39,17 @@ public partial class SyncingView : UserControl
         CurrentFile.Text = tick.FileName;
         ProgressBar.Value = tick.Percent;
         PercentText.Text = $"{tick.Percent:F0}%";
-        var etaSeconds = (tick.TotalLines - tick.LinesDone) * 0.1;
-        StatsText.Text = $"{tick.LinesDone}/{tick.TotalLines} lines · ETA {etaSeconds:F0}s";
-
-        var timeRun = new Run(tick.Timestamp);
-        if (this.TryFindResource("AppLogTime", out var resource) && resource is IBrush brush)
-        {
-            timeRun.Foreground = brush;
-        }
+        var progress = tick.TotalLines > 0 ? $"{tick.LinesDone}/{tick.TotalLines} files" : "Checking files";
+        var eta = tick.EtaSeconds is { } etaSeconds ? $" · ETA {etaSeconds:F0}s" : string.Empty;
+        StatsText.Text = progress + eta;
 
         if (LogText.Inlines is { } inlines)
         {
-            inlines.Add(timeRun);
-            inlines.Add(new Run($" {tick.Message}"));
-            inlines.Add(new LineBreak());
+            foreach (var line in tick.LogLines)
+            {
+                LogTextRenderer.Append(this, inlines, line);
+                inlines.Add(new LineBreak());
+            }
         }
 
         Dispatcher.UIThread.Post(ScrollLogToEnd);
@@ -74,8 +71,8 @@ public partial class SyncingView : UserControl
 
     private void OnPause(object? sender, RoutedEventArgs e)
     {
-        DummySyncEngine.TogglePause();
-        var paused = DummySyncEngine.IsPaused;
+        RcloneSyncEngine.TogglePause();
+        var paused = RcloneSyncEngine.IsPaused;
         SyncStatusStore.Set(paused ? SyncStatus.Paused : SyncStatus.Running);
         PauseLabel.Text = paused ? "Resume" : "Pause";
         if (this.TryFindResource(paused ? "IconPlay" : "IconPause", out var resource))
