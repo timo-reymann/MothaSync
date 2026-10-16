@@ -27,6 +27,7 @@ public partial class AppHeader : UserControl
     public AppHeader()
     {
         InitializeComponent();
+        VersionText.Text = $"v{AppVersion.Current}";
         HeaderBorder.AddHandler(
             InputElement.PointerPressedEvent,
             OnHeaderPointerPressed,
@@ -109,7 +110,8 @@ public partial class AppHeader : UserControl
             return;
         }
 
-        if (IsDescendantOf(e.Source as Visual, HeaderIdentity))
+        if (IsDescendantOf(e.Source as Visual, HeaderIdentity) &&
+            !IsDescendantOf(e.Source as Visual, VersionText))
         {
             Navigation.ShowOverview(this);
             return;

@@ -1,5 +1,6 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:MothaSync.Client"
              x:Class="MothaSync.Client.App"
              RequestedThemeVariant="Dark">
 
@@ -25,6 +26,8 @@
                 <TrayIcon.Menu>
                     <NativeMenu>
                         <NativeMenuItem Header="Open MothaSync" Click="OnOpen" />
+                        <NativeMenuItemSeparator />
+                        <NativeMenuItem Header="{x:Static local:AppVersion.MenuHeader}" IsEnabled="False" />
                         <NativeMenuItemSeparator />
                         <NativeMenuItem Header="Exit" Click="OnExit" />
                     </NativeMenu>

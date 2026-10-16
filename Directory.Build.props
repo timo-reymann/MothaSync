@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <!-- CI replaces this value when producing a release. -->
+    <Version>0.1.0</Version>
+  </PropertyGroup>
+</Project>

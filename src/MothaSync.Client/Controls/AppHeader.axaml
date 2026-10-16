@@ -39,6 +39,12 @@
                             Cursor="Hand">
                     <c:AppLogo />
                     <TextBlock Text="MothaSync" FontWeight="SemiBold" VerticalAlignment="Center" />
+                    <TextBlock x:Name="VersionText"
+                               Text="v0.0.0"
+                               FontSize="10"
+                               Foreground="{DynamicResource AppMuted}"
+                               VerticalAlignment="Center"
+                               Margin="-6,3,0,0" />
                     <Ellipse x:Name="Dot" Classes="dot idle" />
                 </StackPanel>
             </Grid>
