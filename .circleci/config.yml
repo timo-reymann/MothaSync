@@ -1,0 +1,22 @@
+version: 2.1
+
+jobs:
+  test:
+    docker:
+      - image: mcr.microsoft.com/dotnet/sdk:10.0
+    steps:
+      - checkout
+      - run:
+          name: Restore
+          command: dotnet restore
+      - run:
+          name: Build
+          command: dotnet build --no-restore
+      - run:
+          name: Test
+          command: dotnet test --no-build
+
+workflows:
+  build-and-test:
+    jobs:
+      - test

@@ -1,112 +1,102 @@
+# MothaSync
+
+[![License](https://img.shields.io/github/license/timo-reymann/MothaSync)](https://github.com/timo-reymann/MothaSync/blob/main/LICENSE)
+[![CircleCI](https://circleci.com/gh/timo-reymann/MothaSync.svg?style=shield)](https://app.circleci.com/pipelines/github/timo-reymann/MothaSync)
+[![GitHub Release](https://img.shields.io/github/v/tag/timo-reymann/MothaSync?label=version)](https://github.com/timo-reymann/MothaSync/releases)
+[![Renovate](https://img.shields.io/badge/renovate-enabled-green?logo=renovate)](https://renovatebot.com)
+
 <p align="center">
-  <img src="assets/logo.png" alt="MothaSync logo: an orange winged mother figure holding a drive in each hand" width="160">
+  <img width="300" src="./assets/logo.png" alt="MothaSync logo">
+  <br>
+  A system tray tool that syncs a folder from disk A to disk B.
 </p>
 
-<h1 align="center">MothaSync</h1>
+## Features
 
-<p align="center">A system tray tool that syncs a folder from disk A to disk B.</p>
+- Sync folders through a desktop system tray application.
+- Run the same self-contained client on Windows, Linux, and macOS.
+- Use the bundled rclone binary for local sync operations.
+- Start automatically when on user login and snychronizes when all drives are connected
 
-## Projects
+## Requirements
 
-| Project | Description |
-| --- | --- |
-| `src/MothaSync.Shared` | Contracts and models shared by client and server. |
-| `src/MothaSync.Client` | Avalonia desktop app. |
-| `src/MothaSync.Server` | ASP.NET Core Web API. |
+- Windows 10 or later, macOS 12 or later, or a recent 64-bit Linux distribution.
+- Two accessible local folders or drives to synchronize.
+- `terminal-notifier` on macOS is optional; without it, MothaSync uses the built-in notification fallback.
 
-## Getting started
+## Installation
 
-Requires the .NET SDK pinned in `global.json`.
+Download the archive for your platform from the [GitHub Releases](https://github.com/timo-reymann/MothaSync/releases) page, extract it, and start MothaSync.
 
-```bash
-dotnet build
-dotnet run --project src/MothaSync.Client
-dotnet run --project src/MothaSync.Server
-```
+Release archives are available for Windows x64, Linux x64, Linux arm64, macOS Apple Silicon, and macOS Intel.
 
-## Bundled rclone
+## Usage
 
-`scripts/download-rclone.sh` downloads a pinned rclone release for every supported
-platform into `src/MothaSync.Client/Assets/rclone/` (gitignored), verifying each zip
-against the upstream `SHA256SUMS`. The client bundles the binary for the build's
-runtime identifier and on startup copies it to the AppData `MothaSync/bin` folder
-whenever the bundled checksum differs from the installed copy. Renovate bumps the
-version pin in the script through the regex custom manager in `renovate.json`.
+Configure Drive A and Drive B in the client, then start a sync from the tray application.
 
-## Autostart
-
-Release builds register MothaSync to start at user login on the current platform:
-
-- Windows: `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`
-- macOS: `~/Library/LaunchAgents/de.timo_reymann.mothasync.plist`
-- Linux: `~/.config/autostart/mothasync.desktop` (or `$XDG_CONFIG_HOME/autostart`)
-
-Debug builds do not modify the operating system autostart configuration. The
-registration launches the same executable with `--mothasync-autostart`.
-
-The client starts the bundled rclone binary locally and uses its loopback REST API
-(`sync/sync`, `job/status`, and `core/stats`) for real sync runs. For an end-to-end
-local test, generate ignored fixtures and point Drive A and Drive B at the two
-created folders:
+For an end-to-end local test, generate fixtures and point Drive A and Drive B at the two created folders:
 
 ```bash
 scripts/generate-test-data.sh
 # Configure the app with e2e-data/source and e2e-data/destination
 ```
 
-The generator creates 10 random files between 5 MiB and 20 MiB by default. Pass a
-file count as the second argument to change it; it rejects requests whose minimum
-size would exceed the 1 GiB total cap. The generated `e2e-data/` directory is
-gitignored.
+## Motivation
 
-On macOS, install `terminal-notifier` if you want native error notifications to
-use the MothaSync logo: `brew install terminal-notifier`. Without it, notifications
-fall back to the built-in macOS notification script.
+MothaSync provides a focused desktop interface for keeping a folder mirrored between two local drives without requiring users to operate rclone directly.
 
-## Release builds
+## Documentation
 
-`scripts/build.sh` builds self-contained zips for every platform into `dist/`:
+- [Design documentation](DESIGN.md)
+- [Release build instructions](#build)
+- [GitHub Releases](https://github.com/timo-reymann/MothaSync/releases)
 
-| Platform | Archive |
-| --- | --- |
-| Windows x64 | `mothasync-1.0.0-win-x64.zip` |
-| Linux x64 | `mothasync-1.0.0-linux-x64.zip` |
-| Linux arm64 | `mothasync-1.0.0-linux-arm64.zip` |
-| macOS Apple Silicon | `mothasync-1.0.0-osx-arm64.zip` |
-| macOS Intel | `mothasync-1.0.0-osx-x64.zip` |
+## Contributing
 
-The Windows executable embeds `src/MothaSync.Client/MothaSync.ico`.
-The Linux archives include `mothasync.desktop` and `mothasync.png` from `packaging/linux/` for desktop integration.
-The build needs network access once to download the runtime packs.
+I welcome contributions, including bug reports, documentation improvements, fixes, and feature proposals.
 
-## macOS app bundle
+Please read the [Contribution Guidelines](CONTRIBUTING.md) before opening an issue or pull request.
 
-The Dock and Finder icon comes from the `.app` bundle, so `dotnet run` always shows the generic icon.
-Build the bundle with:
+## Development
+
+### Requirements
+
+- [.NET SDK 10](https://dotnet.microsoft.com/download/dotnet/10.0)
+- [Docker](https://docs.docker.com/get-docker/) when running ORT locally
+
+### Test
 
 ```bash
-dotnet restore src/MothaSync.Client -r osx-arm64
-dotnet msbuild src/MothaSync.Client -t:BundleApp -p:RuntimeIdentifier=osx-arm64 -p:Configuration=Release -p:SelfContained=true
-codesign --force --deep -s - src/MothaSync.Client/bin/Release/net10.0/osx-arm64/publish/MothaSync.app
+dotnet test
 ```
 
-The bundle identifier is `de.timo_reymann.mothasync`.
-The icon is `src/MothaSync.Client/MothaSync.icns`, generated from the logo.
+### Build
 
-## Design
+Build the solution with:
 
-Screens, colors, typography and components are documented in [DESIGN.md](DESIGN.md).
+```bash
+dotnet build
+```
 
-## Logo
+Release archives for all supported platforms are created with:
 
-`assets/logo-original.jpg` is the source sheet.
-`assets/logo.png` (512px, transparent) is the logo used in this README,
-`assets/drive.png` is the hard drive artwork,
-and `assets/trays/` holds the tray icon states (`idle`, `waiting`, `syncing`, `paused`, `ok`, `error`).
-A 256px logo, a tight-cropped header logo and the tray icons ship inside the client under `src/MothaSync.Client/Assets/`.
-`MothaSync.ico`, `MothaSync.icns` and `packaging/linux/mothasync.png` are generated from `assets/logo.png`.
+```bash
+scripts/build.sh
+```
 
-## Fonts
+The build output is written to `dist/`. The script downloads the pinned rclone release into the client assets and verifies it against the upstream SHA256 checksum.
 
-The client bundles Open Sans and JetBrains Mono, both under the SIL Open Font License.
-The license texts sit next to the font files in `src/MothaSync.Client/Assets/Fonts/`.
+### Credits
+
+- [rclone](https://rclone.org/) provides the sync engine.
+- [Open Sans](https://github.com/googlefonts/opensans) and [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono) are bundled under the [SIL Open Font License 1.1](https://openfontlicense.org).
+
+### Alternatives
+
+- [rclone](https://rclone.org/) can be used directly from the command line.
+
+## License
+
+MothaSync source code and original project assets are released under the [MIT License](LICENSE).
+
+The bundled Open Sans and JetBrains Mono font files are separate works and remain licensed under [OFL-1.1](https://spdx.org/licenses/OFL-1.1.html). Their license texts are stored next to the font files in `src/MothaSync.Client/Assets/Fonts/` and must be preserved when redistributing them.
