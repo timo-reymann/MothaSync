@@ -45,7 +45,7 @@
                         </StackPanel>
                     </Grid>
                 </HeaderedContentControl.Header>
-                <TextBlock x:Name="LogText" Classes="log" />
+                <TextBlock x:Name="LogText" Classes="log"><Run Text="" /></TextBlock>
             </HeaderedContentControl>
         </Grid>
     </DockPanel>

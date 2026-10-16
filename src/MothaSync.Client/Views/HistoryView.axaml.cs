@@ -20,11 +20,13 @@ public partial class HistoryView : UserControl
         {
             RunList.Children.Add(new HistoryRow
             {
-                Date = run.StartedAtUtc.ToLocalTime().ToString("MMM dd · HH:mm", CultureInfo.InvariantCulture),
+                RunId = run.Id,
+                Date = run.StartedAtUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture),
                 Files = $"{run.FilesProcessed:N0} files",
                 Size = FormatBytes(run.BytesTransferred),
                 Duration = FormatDuration(run.StartedAtUtc, run.CompletedAtUtc),
-                Failed = run.Status is SyncRunStatus.Failed or SyncRunStatus.Cancelled
+                Failed = run.Status is SyncRunStatus.Failed or SyncRunStatus.Cancelled,
+                LogText = run.LogText
             });
         }
 

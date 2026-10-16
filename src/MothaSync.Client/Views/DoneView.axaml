@@ -17,13 +17,13 @@
             <TextBlock Text="Sync complete" FontSize="22" FontWeight="SemiBold" HorizontalAlignment="Center" />
             <WrapPanel HorizontalAlignment="Center">
                 <Border Classes="pill">
-                    <TextBlock Text="1284 files" FontSize="13" />
+                    <TextBlock x:Name="FilesText" FontSize="13" />
                 </Border>
                 <Border Classes="pill">
-                    <TextBlock Text="3.2 GB" FontSize="13" />
+                    <TextBlock x:Name="SizeText" FontSize="13" />
                 </Border>
                 <Border Classes="pill">
-                    <TextBlock Text="2m 41s" FontSize="13" />
+                    <TextBlock x:Name="DurationText" FontSize="13" />
                 </Border>
             </WrapPanel>
             <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center" Margin="0,8,0,0">
