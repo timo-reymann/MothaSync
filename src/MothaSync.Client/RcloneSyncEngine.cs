@@ -159,6 +159,13 @@ public static class RcloneSyncEngine
         var newLogLines = new List<string>();
         foreach (var transfer in transferred)
         {
+            // core/transferred also contains rclone's comparison/check records.
+            // They are not file transfers and can appear before an initial copy.
+            if (transfer.Checked)
+            {
+                continue;
+            }
+
             var key = $"{transfer.Timestamp}:{transfer.Name}";
             if (!loggedTransfers.Add(key))
             {
@@ -167,7 +174,7 @@ public static class RcloneSyncEngine
 
             var level = string.IsNullOrWhiteSpace(transfer.Error) ? "INFO" : "ERROR";
             var transferMessage = string.IsNullOrWhiteSpace(transfer.Error)
-                ? $"{level}  Transferred: {transfer.Name} ({FormatBytes(transfer.Bytes)})"
+                ? $"{level}  Copied: {transfer.Name} ({FormatBytes(transfer.Bytes)} / {FormatBytes(transfer.Size)})"
                 : $"{level}  Transfer failed: {transfer.Name}: {transfer.Error}";
             var logLine = $"{DateTime.Now:HH:mm:ss} {transferMessage}";
             logLines.Add(logLine);
