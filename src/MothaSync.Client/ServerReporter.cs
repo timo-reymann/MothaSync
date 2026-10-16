@@ -11,13 +11,22 @@ namespace MothaSync.Client;
 
 /// <summary>
 /// Registers this device with the server (once) and reports sync runs to it.
-/// Reporting is best effort: it is skipped when no server is configured and failures are swallowed.
+/// Reporting is skipped when no server is configured. Configured reporting returns false on failure.
 /// </summary>
 public static class ServerReporter
 {
     private const string ProtobufContentType = "application/x-protobuf";
     private static readonly HttpClient Http = new() { Timeout = TimeSpan.FromSeconds(15) };
     private static readonly SemaphoreSlim RegistrationLock = new(1, 1);
+
+    public static bool IsConfigured
+    {
+        get
+        {
+            var url = SettingsStore.Load().ServerUrl;
+            return Uri.TryCreate(url, UriKind.Absolute, out _);
+        }
+    }
 
     public enum EnrollmentCheck
     {

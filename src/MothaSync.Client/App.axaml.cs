@@ -3,6 +3,7 @@ using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Controls.Notifications;
 using Avalonia.Markup.Xaml;
 using Avalonia.Platform;
 using Avalonia.Threading;
@@ -12,6 +13,8 @@ namespace MothaSync.Client;
 
 public partial class App : Application
 {
+    private WindowNotificationManager? _notifications;
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -26,9 +29,22 @@ public partial class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow();
+            _notifications = new WindowNotificationManager(desktop.MainWindow)
+            {
+                Position = NotificationPosition.BottomRight
+            };
         }
 
+        UserNotifications.Error += OnError;
+
         base.OnFrameworkInitializationCompleted();
+    }
+
+    private void OnError(string title, string message)
+    {
+        SystemNotifier.ShowError(title, message);
+        Dispatcher.UIThread.Post(() =>
+            _notifications?.Show(new Notification(title, message, NotificationType.Error, TimeSpan.FromSeconds(8))));
     }
 
     private static string TrayIconName(SyncStatus status) => status switch
