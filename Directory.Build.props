@@ -3,4 +3,11 @@
     <!-- CI replaces this value when producing a release. -->
     <Version>0.1.0</Version>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Pin resolved NuGet versions in packages.lock.json (committed per project). -->
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <!-- CI must fail when csproj and lock file drift apart. -->
+    <RestoreLockedMode Condition="'$(CI)' == 'true'">true</RestoreLockedMode>
+  </PropertyGroup>
 </Project>
