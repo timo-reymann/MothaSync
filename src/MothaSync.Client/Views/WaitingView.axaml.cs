@@ -2,14 +2,19 @@ using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Threading;
 using Ellipse = Avalonia.Controls.Shapes.Ellipse;
 
 namespace MothaSync.Client.Views;
 
 public partial class WaitingView : UserControl
 {
+    private static readonly TimeSpan TickInterval = TimeSpan.FromSeconds(1);
+    private readonly DispatcherTimer _timer = new() { Interval = TickInterval };
+
     public WaitingView()
     {
+        _timer.Tick += (_, _) => RefreshSyncState();
         InitializeComponent();
     }
 
@@ -22,10 +27,12 @@ public partial class WaitingView : UserControl
         ApplyDriveStatus();
         PublishStatus();
         RefreshSyncState();
+        _timer.Start();
     }
 
     protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
     {
+        _timer.Stop();
         SettingsStore.Changed -= OnSettingsChanged;
         DriveStatusMonitor.Changed -= OnDriveStatusChanged;
         base.OnDetachedFromVisualTree(e);
@@ -49,21 +56,19 @@ public partial class WaitingView : UserControl
     private void RefreshSyncState()
     {
         var bothConnected = DriveStatusMonitor.SourceConnected && DriveStatusMonitor.DestinationConnected;
-        var shouldAutoSync = ShouldAutoSync();
+        var lastSync = LastSyncStore.GetLastCompleted();
+        var now = DateTimeOffset.UtcNow;
+        var due = SyncSchedule.IsDue(lastSync, now);
 
-        SyncNowButton.IsVisible = bothConnected && !DummySyncEngine.IsRunning && !shouldAutoSync;
-        if (!bothConnected || DummySyncEngine.IsRunning || !shouldAutoSync)
+        LastSyncText.Text = SyncSchedule.FormatLastSync(lastSync, now);
+        SyncNowButton.IsVisible = bothConnected && !DummySyncEngine.IsRunning && !due;
+        SyncNowButton.Content = due ? "Sync" : $"Sync ({SyncSchedule.FormatCountdown(SyncSchedule.Remaining(lastSync, now))})";
+        if (!bothConnected || DummySyncEngine.IsRunning || !due)
         {
             return;
         }
 
         StartSync();
-    }
-
-    private static bool ShouldAutoSync()
-    {
-        var lastSync = LastSyncStore.GetLastCompleted();
-        return lastSync is null || DateTimeOffset.UtcNow - lastSync.Value > TimeSpan.FromHours(1);
     }
 
     private void OnSyncNow(object? sender, RoutedEventArgs e)

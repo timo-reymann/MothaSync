@@ -6,7 +6,7 @@
             BorderBrush="{DynamicResource AppLine}"
             BorderThickness="0,0,0,1"
             Background="Transparent"
-            Padding="20,12">
+            Padding="20,10">
         <DockPanel>
             <StackPanel x:Name="HeaderActions"
                         DockPanel.Dock="Right"

@@ -7,6 +7,7 @@ public enum SyncStatus
     Idle,
     Waiting,
     Running,
+    Paused,
     Ok,
     Error,
 }

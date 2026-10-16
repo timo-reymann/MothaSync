@@ -74,6 +74,7 @@ public partial class SyncingView : UserControl
     {
         DummySyncEngine.TogglePause();
         var paused = DummySyncEngine.IsPaused;
+        SyncStatusStore.Set(paused ? SyncStatus.Paused : SyncStatus.Running);
         PauseLabel.Text = paused ? "Resume" : "Pause";
         if (this.TryFindResource(paused ? "IconPlay" : "IconPause", out var resource))
         {

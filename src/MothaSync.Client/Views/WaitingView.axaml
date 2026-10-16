@@ -10,49 +10,48 @@
                        TextWrapping="Wrap" />
             <Grid ColumnDefinitions="*,Auto,*">
                 <Border Grid.Column="0" Classes="card" Padding="12">
-                    <DockPanel>
-                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="8">
-                            <c:Icon Data="{StaticResource IconDrive}" Size="18" Foreground="{DynamicResource AppAccent}" />
-                            <TextBlock x:Name="SourceTitle" Text="Drive A" FontWeight="SemiBold" VerticalAlignment="Center" />
-                        </StackPanel>
-                        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Spacing="8" Margin="0,14,0,0">
-                            <Ellipse x:Name="SourceDot" Classes="dot" />
-                            <TextBlock x:Name="SourceStatusText" Classes="muted" Text="waiting for drive" FontSize="12" />
-                        </StackPanel>
+                    <StackPanel Spacing="10" HorizontalAlignment="Center">
+                        <TextBlock x:Name="SourceTitle" Text="Drive A" FontWeight="SemiBold" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" />
+                        <Image Source="avares://MothaSync.Client/Assets/drive.png" Height="96" Stretch="Uniform" />
                         <TextBlock x:Name="SourcePathText"
                                    Classes="muted mono"
                                    Text="not set"
                                    FontSize="12"
-                                   TextWrapping="Wrap"
-                                   Margin="0,10,0,0" />
-                    </DockPanel>
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap" />
+                        <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center">
+                            <Ellipse x:Name="SourceDot" Classes="dot" />
+                            <TextBlock x:Name="SourceStatusText" Classes="muted" Text="waiting for drive" FontSize="12" />
+                        </StackPanel>
+                    </StackPanel>
                 </Border>
                 <c:SyncArrow Grid.Column="1" />
                 <Border Grid.Column="2" Classes="card" Padding="12">
-                    <DockPanel>
-                        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="8">
-                            <c:Icon Data="{StaticResource IconDrive}" Size="18" Foreground="{DynamicResource AppAccent}" />
-                            <TextBlock x:Name="DestinationTitle" Text="Drive B" FontWeight="SemiBold" VerticalAlignment="Center" />
-                        </StackPanel>
-                        <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Spacing="8" Margin="0,14,0,0">
-                            <Ellipse x:Name="DestinationDot" Classes="dot" />
-                            <TextBlock x:Name="DestinationStatusText" Classes="muted" Text="waiting for drive" FontSize="12" />
-                        </StackPanel>
+                    <StackPanel Spacing="10" HorizontalAlignment="Center">
+                        <TextBlock x:Name="DestinationTitle" Text="Drive B" FontWeight="SemiBold" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" />
+                        <Image Source="avares://MothaSync.Client/Assets/drive.png" Height="96" Stretch="Uniform" />
                         <TextBlock x:Name="DestinationPathText"
                                    Classes="muted mono"
                                    Text="not set"
                                    FontSize="12"
-                                   TextWrapping="Wrap"
-                                   Margin="0,10,0,0" />
-                    </DockPanel>
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap" />
+                        <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center">
+                            <Ellipse x:Name="DestinationDot" Classes="dot" />
+                            <TextBlock x:Name="DestinationStatusText" Classes="muted" Text="waiting for drive" FontSize="12" />
+                        </StackPanel>
+                    </StackPanel>
                 </Border>
             </Grid>
-            <Button x:Name="SyncNowButton"
-                    Classes="pri"
-                    Content="Sync now"
-                    HorizontalAlignment="Center"
-                    IsVisible="False"
-                    Click="OnSyncNow" />
+            <StackPanel Spacing="8" HorizontalAlignment="Center">
+                <Button x:Name="SyncNowButton"
+                        Classes="pri"
+                        Content="Sync"
+                        HorizontalAlignment="Center"
+                        IsVisible="False"
+                        Click="OnSyncNow" />
+                <TextBlock x:Name="LastSyncText" Classes="muted" FontSize="12" HorizontalAlignment="Center" />
+            </StackPanel>
         </StackPanel>
     </DockPanel>
 </UserControl>
