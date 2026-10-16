@@ -8,6 +8,9 @@ internal static class Program
     [STAThread]
     public static void Main(string[] args)
     {
+#if !DEBUG
+        AutoStartRegistration.EnsureRegistered();
+#endif
         RcloneBootstrap.EnsureInstalled();
         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
     }

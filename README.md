@@ -33,6 +33,17 @@ runtime identifier and on startup copies it to the AppData `MothaSync/bin` folde
 whenever the bundled checksum differs from the installed copy. Renovate bumps the
 version pin in the script through the regex custom manager in `renovate.json`.
 
+## Autostart
+
+Release builds register MothaSync to start at user login on the current platform:
+
+- Windows: `HKCU\Software\Microsoft\Windows\CurrentVersion\Run`
+- macOS: `~/Library/LaunchAgents/de.timo_reymann.mothasync.plist`
+- Linux: `~/.config/autostart/mothasync.desktop` (or `$XDG_CONFIG_HOME/autostart`)
+
+Debug builds do not modify the operating system autostart configuration. The
+registration launches the same executable with `--mothasync-autostart`.
+
 The client starts the bundled rclone binary locally and uses its loopback REST API
 (`sync/sync`, `job/status`, and `core/stats`) for real sync runs. For an end-to-end
 local test, generate ignored fixtures and point Drive A and Drive B at the two
