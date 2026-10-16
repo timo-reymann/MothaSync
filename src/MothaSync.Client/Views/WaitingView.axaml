@@ -43,6 +43,19 @@
                     </StackPanel>
                 </Border>
             </Grid>
+            <StackPanel x:Name="SamePathMessage"
+                        Orientation="Horizontal"
+                        Spacing="6"
+                        HorizontalAlignment="Center"
+                        IsVisible="False">
+                <c:Icon Data="{StaticResource IconWarn}" Size="14" Foreground="{DynamicResource AppErr}"
+                        VerticalAlignment="Center" />
+                <TextBlock Text="Source and destination are the same folder. Change one in Settings."
+                           Foreground="{DynamicResource AppErrText}"
+                           FontSize="12"
+                           VerticalAlignment="Center"
+                           TextWrapping="Wrap" />
+            </StackPanel>
             <StackPanel Spacing="8" HorizontalAlignment="Center">
                 <Button x:Name="SyncNowButton"
                         Classes="pri"

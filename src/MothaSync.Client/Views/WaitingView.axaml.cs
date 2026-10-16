@@ -38,7 +38,12 @@ public partial class WaitingView : UserControl
         base.OnDetachedFromVisualTree(e);
     }
 
-    private void OnSettingsChanged() => ApplySettings();
+    private void OnSettingsChanged()
+    {
+        ApplySettings();
+        PublishStatus();
+        RefreshSyncState();
+    }
 
     private void OnDriveStatusChanged()
     {
@@ -47,23 +52,39 @@ public partial class WaitingView : UserControl
         RefreshSyncState();
     }
 
+    private static bool PathsAreSame()
+    {
+        var settings = SettingsStore.Load();
+        return SyncPaths.AreSame(settings.SourcePath, settings.DestinationPath);
+    }
+
     private static void PublishStatus()
     {
+        if (PathsAreSame())
+        {
+            SyncStatusStore.Set(SyncStatus.Error);
+            return;
+        }
+
         var ready = DriveStatusMonitor.SourceConnected && DriveStatusMonitor.DestinationConnected;
         SyncStatusStore.Set(ready ? SyncStatus.Ok : SyncStatus.Waiting);
     }
 
     private void RefreshSyncState()
     {
+        var samePaths = PathsAreSame();
+        SamePathMessage.IsVisible = samePaths;
         var bothConnected = DriveStatusMonitor.SourceConnected && DriveStatusMonitor.DestinationConnected;
         var lastSync = LastSyncStore.GetLastCompleted();
         var now = DateTimeOffset.UtcNow;
         var due = SyncSchedule.IsDue(lastSync, now);
+        // Same-folder configs never auto-sync; a manual sync fails with a logged error instead.
+        var autoSync = due && !samePaths;
 
         LastSyncText.Text = SyncSchedule.FormatLastSync(lastSync, now);
-        SyncNowButton.IsVisible = bothConnected && !DummySyncEngine.IsRunning && !due;
+        SyncNowButton.IsVisible = bothConnected && !DummySyncEngine.IsRunning && !autoSync;
         SyncNowButton.Content = due ? "Sync" : $"Sync ({SyncSchedule.FormatCountdown(SyncSchedule.Remaining(lastSync, now))})";
-        if (!bothConnected || DummySyncEngine.IsRunning || !due)
+        if (!bothConnected || DummySyncEngine.IsRunning || !autoSync)
         {
             return;
         }
