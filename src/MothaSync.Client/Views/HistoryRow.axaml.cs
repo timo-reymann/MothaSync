@@ -21,6 +21,12 @@ public partial class HistoryRow : UserControl
     public static readonly StyledProperty<bool> FailedProperty =
         AvaloniaProperty.Register<HistoryRow, bool>(nameof(Failed));
 
+    public static readonly StyledProperty<string> LogTextProperty =
+        AvaloniaProperty.Register<HistoryRow, string>(nameof(LogText), string.Empty);
+
+    public static readonly StyledProperty<long> RunIdProperty =
+        AvaloniaProperty.Register<HistoryRow, long>(nameof(RunId));
+
     static HistoryRow()
     {
         FailedProperty.Changed.AddClassHandler<HistoryRow>((row, _) => row.ApplyFailed());
@@ -61,6 +67,18 @@ public partial class HistoryRow : UserControl
         set => SetValue(FailedProperty, value);
     }
 
+    public string LogText
+    {
+        get => GetValue(LogTextProperty);
+        set => SetValue(LogTextProperty, value);
+    }
+
+    public long RunId
+    {
+        get => GetValue(RunIdProperty);
+        set => SetValue(RunIdProperty, value);
+    }
+
     private void ApplyFailed()
     {
         OkDot.IsVisible = !Failed;
@@ -71,6 +89,6 @@ public partial class HistoryRow : UserControl
 
     private void OnClick(object? sender, RoutedEventArgs e)
     {
-        Navigation.ShowHistoryDetail(this, new RunInfo(Date, Files, Size, Duration, Failed));
+        Navigation.ShowHistoryDetail(this, new RunInfo(Date, Files, Size, Duration, Failed, LogText, RunId));
     }
 }

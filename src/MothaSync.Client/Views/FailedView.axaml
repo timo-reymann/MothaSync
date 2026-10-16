@@ -18,8 +18,8 @@
                             StrokeThickness="2"
                             Foreground="{DynamicResource AppErr}" />
                     <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                        <TextBlock Text="Sync failed — 1 file could not be copied." TextWrapping="Wrap" />
-                        <TextBlock Text="Nothing was deleted from the destination."
+                        <TextBlock Text="Sync failed." TextWrapping="Wrap" />
+                        <TextBlock Text="The rclone job reported an error."
                                    FontSize="13"
                                    Foreground="{DynamicResource AppErrText}"
                                    TextWrapping="Wrap" />
@@ -27,16 +27,10 @@
                     <Button Grid.Column="2" Classes="err sm" Content="Retry sync" Click="OnRetry" />
                 </Grid>
             </Border>
-            <StackPanel Grid.Row="1" Spacing="8">
-                <ProgressBar Classes="err" Minimum="0" Maximum="100" Value="62" />
-                <Grid ColumnDefinitions="*,Auto">
-                    <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="4">
-                        <TextBlock Text="62%" FontSize="12" FontWeight="SemiBold" />
-                        <TextBlock Classes="muted" Text="· stopped" FontSize="12" />
-                    </StackPanel>
-                    <TextBlock Grid.Column="1" Classes="muted" Text="1284 files · 3.2 GB" FontSize="12" />
-                </Grid>
-            </StackPanel>
+            <TextBlock Grid.Row="1"
+                       Classes="muted"
+                       Text="See the rclone transfer log below for details."
+                       TextWrapping="Wrap" />
             <HeaderedContentControl Grid.Row="2" Theme="{StaticResource LogPanel}">
                 <HeaderedContentControl.Header>
                     <Grid ColumnDefinitions="*,Auto">
@@ -47,16 +41,7 @@
                         </StackPanel>
                     </Grid>
                 </HeaderedContentControl.Header>
-                <TextBlock Classes="log">
-                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:19" /><Run Text=" INFO  Unchanged:   modules/week-07/refs/anatomy_01.jpg" /><LineBreak />
-                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:24" /><Run Text=" INFO  Transferred: modules/week-07/rigging/char_rig_v2.blend" /><LineBreak />
-                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:31" /><Run Text=" INFO  Copying:     modules/week-07/rigging/char_rig_final_v3.blend" /><LineBreak />
-                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:38" /><Run Foreground="{DynamicResource AppWarn}" Text=" NOTICE" /><Run Text=" Retrying char_rig_final_v3.blend (1/3)" /><LineBreak />
-                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:45" /><Run Foreground="{DynamicResource AppWarn}" Text=" NOTICE" /><Run Text=" Retrying char_rig_final_v3.blend (2/3)" /><LineBreak />
-                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:52" /><Run Foreground="{DynamicResource AppErrText}" Text=" ERROR" /><Run Text=" char_rig_final_v3.blend: input/output error" /><LineBreak />
-                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:52" /><Run Foreground="{DynamicResource AppErrText}" Text=" ERROR" /><Run Text=" Attempt 3/3 failed with 1 error" /><LineBreak />
-                    <Run Foreground="{DynamicResource AppLogTime}" Text="14:02:52" /><Run Foreground="{DynamicResource AppErrText}" Text=" ERROR" /><Run Text=" Failed to sync: 1 file could not be copied" />
-                </TextBlock>
+                <TextBlock x:Name="LogText" Classes="log"><Run Text="" /></TextBlock>
             </HeaderedContentControl>
         </Grid>
     </DockPanel>
