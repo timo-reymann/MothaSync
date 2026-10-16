@@ -95,6 +95,27 @@
         "resolved": "13.0.3",
         "contentHash": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ=="
       },
+      "prometheus-net": {
+        "type": "Transitive",
+        "resolved": "8.2.1",
+        "contentHash": "3wVgdEPOCBF752s2xps5T+VH+c9mJK8S8GKEDg49084P6JZMumTZI5Te6aJ9MQpX0sx7om6JOnBpIi7ZBmmiDQ=="
+      },
+      "prometheus-net.AspNetCore": {
+        "type": "Transitive",
+        "resolved": "8.2.1",
+        "contentHash": "/4TfTvbwIDqpaKTiWvEsjUywiHYF9zZvGZF5sK15avoDsUO/WPQbKsF8TiMaesuphdFQPK2z52P0zk6j26V0rQ==",
+        "dependencies": {
+          "prometheus-net": "8.2.1"
+        }
+      },
+      "prometheus-net.DotNetRuntime": {
+        "type": "Transitive",
+        "resolved": "2.2.0",
+        "contentHash": "DNwo0cD5OVxwQECb/V5rBlRasIWRt5/KpiTiuXUwPH5RyI1xxppI9qIj+mmJVzH2O+B1RWL3cA0m/vvNRuzNIw==",
+        "dependencies": {
+          "prometheus-net": "2.1.3"
+        }
+      },
       "SQLitePCLRaw.bundle_e_sqlite3": {
         "type": "Transitive",
         "resolved": "2.1.13",
@@ -167,7 +188,9 @@
         "dependencies": {
           "Microsoft.AspNetCore.OpenApi": "[10.0.13, )",
           "Microsoft.Data.Sqlite": "[10.0.13, )",
-          "MothaSync.Shared": "[0.1.0, )"
+          "MothaSync.Shared": "[0.1.0, )",
+          "prometheus-net.AspNetCore": "[8.2.1, )",
+          "prometheus-net.DotNetRuntime": "[2.2.0, )"
         }
       },
       "mothasync.shared": {
