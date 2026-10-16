@@ -49,7 +49,7 @@
             <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
         </PackageReference>
         <PackageReference Include="DotNet.Bundle" Version="0.9.13"/>
-        <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.0"/>
+        <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.13"/>
         <PackageReference Include="Avalonia.Labs.Notifications" Version="12.0.2"/>
     </ItemGroup>
 
