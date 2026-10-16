@@ -16,7 +16,7 @@ It should feel trustworthy, with no playful decoration.
 
 ## Header
 
-Left to right: logo tile (32 px), app name "MothaSync" in semibold, a status dot, then a spacer
+Left to right: logo (48 px), app name "MothaSync" in semibold, a status dot, then a spacer
 and 30 px icon buttons: history, settings, a thin divider, then minimize and close.
 The status dot shows the app's current status on every screen, including Settings and History.
 Minimize minimizes the main window.
@@ -38,19 +38,27 @@ Amber `#F59E0B` is reserved for paused and for warning icons. Keep it clearly di
 
 ## Tray icon
 
-The logo also serves as the system tray icon on Windows, macOS and Linux.
+The tray icon is the logo's face with a status overlay, on Windows, macOS and Linux:
+
+| Status  | Icon      | Overlay                 |
+|---------|-----------|-------------------------|
+| Idle (not configured) | `idle.png`    | gear                    |
+| Waiting for drives    | `waiting.png` | dashed grey arrows      |
+| Syncing               | `syncing.png` | green sync arrows       |
+| Paused                | `paused.png`  | pause bars and check    |
+| Ok                    | `ok.png`      | green check             |
+| Error                 | `error.png`   | red cross               |
+
 Clicking it, or choosing "Open MothaSync" from its menu, shows and focuses the main window.
 "Exit" in the tray menu quits the app.
 On Linux the tray needs a StatusNotifier host, which GNOME only provides with the AppIndicator extension.
 
 ## Logo
 
-The logo is a friendly mother holding one drive in each hand (`assets/logo.png`,
-source in `assets/logo-original.jpg`).
-It uses a blue, cream and warm yellow palette on an off-white ground.
-The header shows it as a rounded square tile.
-The UI accent stays orange, so the logo is the only blue artwork on screen; blue otherwise
-appears only in the running status dot.
+The logo is a friendly pink mother figure holding one drive in each hand (`assets/logo.png`,
+source sheet in `assets/logo-original.jpg`), with a transparent background.
+It uses a pink, magenta and cream palette.
+The header shows it directly on the dark surface, without a tile.
 
 ## Color
 
@@ -84,9 +92,9 @@ The single orange accent is the only decorative color. Status colors carry meani
 
 ## Components
 
-- **Drive card**: card surface, orange drive icon, title ("Drive A · <label>" using the configured label),
-  path in monospace, and a status dot with label ("connected" / "waiting for drive") driven by whether
-  the configured path exists.
+- **Drive card** (waiting screen): centered column on the card surface with the title ("Drive A · <label>" using the
+  configured label), the drive artwork (`Assets/drive.png`, 96 px high), the path in monospace, and a status dot with
+  label ("connected" / "waiting for drive") driven by whether the configured path exists.
   Two sit side by side with the sync arrow between them on the waiting screen; Settings shows one per
   configured drive in its own card box, checking the currently entered path rather than the saved one.
 - **Sync arrow**: long orange right arrow, 180 px wide, with the caption "SYNC DIRECTION" below it on

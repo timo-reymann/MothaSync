@@ -19,7 +19,7 @@
 
     <TrayIcon.Icons>
         <TrayIcons>
-            <TrayIcon Icon="avares://MothaSync.Client/Assets/logo.png"
+            <TrayIcon Icon="avares://MothaSync.Client/Assets/Trays/idle.png"
                       ToolTipText="MothaSync"
                       Clicked="OnTrayClicked">
                 <TrayIcon.Menu>

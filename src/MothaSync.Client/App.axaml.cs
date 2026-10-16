@@ -1,8 +1,11 @@
 using System;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Platform;
+using Avalonia.Threading;
 using MothaSync.Client.Views;
 
 namespace MothaSync.Client;
@@ -17,6 +20,8 @@ public partial class App : Application
     public override void OnFrameworkInitializationCompleted()
     {
         DriveStatusMonitor.Start();
+        SyncStatusStore.Changed += () => Dispatcher.UIThread.Post(UpdateTrayIcon);
+        UpdateTrayIcon();
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
@@ -24,6 +29,28 @@ public partial class App : Application
         }
 
         base.OnFrameworkInitializationCompleted();
+    }
+
+    private static string TrayIconName(SyncStatus status) => status switch
+    {
+        SyncStatus.Waiting => "waiting",
+        SyncStatus.Running => "syncing",
+        SyncStatus.Paused => "paused",
+        SyncStatus.Ok => "ok",
+        SyncStatus.Error => "error",
+        _ => "idle",
+    };
+
+    private void UpdateTrayIcon()
+    {
+        var tray = TrayIcon.GetIcons(this)?.FirstOrDefault();
+        if (tray is null)
+        {
+            return;
+        }
+
+        var uri = new Uri($"avares://MothaSync.Client/Assets/Trays/{TrayIconName(SyncStatusStore.Current)}.png");
+        tray.Icon = new WindowIcon(AssetLoader.Open(uri));
     }
 
     private void OnTrayClicked(object? sender, EventArgs e) => ShowMainWindow();

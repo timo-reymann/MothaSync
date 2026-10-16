@@ -13,7 +13,25 @@ public static class LastSyncStore
         "MothaSync",
         "last-sync.json");
 
+    private static readonly object Gate = new();
+    private static bool _loaded;
+    private static DateTimeOffset? _cached;
+
     public static DateTimeOffset? GetLastCompleted()
+    {
+        lock (Gate)
+        {
+            if (!_loaded)
+            {
+                _cached = ReadFromDisk();
+                _loaded = true;
+            }
+
+            return _cached;
+        }
+    }
+
+    private static DateTimeOffset? ReadFromDisk()
     {
         try
         {
@@ -45,6 +63,12 @@ public static class LastSyncStore
 
         var info = new LastSyncInfo { LastCompletedUtc = DateTimeOffset.UtcNow };
         File.WriteAllText(FilePath, JsonSerializer.Serialize(info, JsonOptions));
+
+        lock (Gate)
+        {
+            _cached = info.LastCompletedUtc;
+            _loaded = true;
+        }
     }
 
     private sealed class LastSyncInfo

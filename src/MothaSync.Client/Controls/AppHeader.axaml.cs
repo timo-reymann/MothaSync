@@ -66,6 +66,7 @@ public partial class AppHeader : UserControl
         {
             SyncStatus.Waiting => "wait",
             SyncStatus.Running => "run",
+            SyncStatus.Paused => "wait",
             SyncStatus.Ok => "ok",
             SyncStatus.Error => "err",
             _ => "idle",
