@@ -56,6 +56,7 @@ public partial class App : Application
             return;
         }
 
+        tray.ToolTipText = $"MothaSync v{AppVersion.Current}";
         var uri = new Uri($"avares://MothaSync.Client/Assets/Trays/{TrayIconName(SyncStatusStore.Current)}.png");
         tray.Icon = new WindowIcon(AssetLoader.Open(uri));
     }

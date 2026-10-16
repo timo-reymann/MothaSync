@@ -11,8 +11,8 @@
         <CFBundleName>MothaSync</CFBundleName>
         <CFBundleDisplayName>MothaSync</CFBundleDisplayName>
         <CFBundleIdentifier>de.timo_reymann.mothasync</CFBundleIdentifier>
-        <CFBundleVersion>1.0.0</CFBundleVersion>
-        <CFBundleShortVersionString>1.0.0</CFBundleShortVersionString>
+        <CFBundleVersion>$(Version)</CFBundleVersion>
+        <CFBundleShortVersionString>$(Version)</CFBundleShortVersionString>
         <CFBundlePackageType>APPL</CFBundlePackageType>
         <CFBundleExecutable>MothaSync.Client</CFBundleExecutable>
         <CFBundleIconFile>MothaSync.icns</CFBundleIconFile>
