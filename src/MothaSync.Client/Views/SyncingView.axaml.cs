@@ -23,12 +23,14 @@ public partial class SyncingView : UserControl
         SyncStatusStore.Set(SyncStatus.Running);
         DummySyncEngine.Tick += OnTick;
         DummySyncEngine.Completed += OnCompleted;
+        DummySyncEngine.Failed += OnFailed;
     }
 
     protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
     {
         DummySyncEngine.Tick -= OnTick;
         DummySyncEngine.Completed -= OnCompleted;
+        DummySyncEngine.Failed -= OnFailed;
         base.OnDetachedFromVisualTree(e);
     }
 
@@ -82,6 +84,14 @@ public partial class SyncingView : UserControl
             {
                 PauseIcon.Data = geometry;
             }
+        }
+    }
+
+    private void OnFailed()
+    {
+        if (this.IsAttachedToVisualTree())
+        {
+            Navigation.ShowFailed(this);
         }
     }
 
