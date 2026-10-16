@@ -1,6 +1,9 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using Avalonia.Labs.Notifications;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 
 namespace MothaSync.Client;
 
@@ -10,6 +13,11 @@ internal static class SystemNotifier
     {
         try
         {
+            if (ShowLabsNotification(title, message))
+            {
+                return;
+            }
+
             if (OperatingSystem.IsMacOS())
             {
                 if (!ShowMacOsWithIcon(title, message))
@@ -38,6 +46,27 @@ internal static class SystemNotifier
         {
             // Native notifications are best effort; the in-app notification remains available.
         }
+    }
+
+    private static bool ShowLabsNotification(string title, string message)
+    {
+        var manager = NativeNotificationManager.Current;
+        if (manager is null)
+        {
+            return false;
+        }
+
+        if (manager.CreateNotification(null) is not { } notification)
+        {
+            return false;
+        }
+
+        notification.Icon = new Bitmap(AssetLoader.Open(
+            new Uri("avares://MothaSync.Client/Assets/logo.png")));
+        notification.Title = title;
+        notification.Message = message;
+        notification.Show();
+        return true;
     }
 
     private static void ShowMacOs(string title, string message)
