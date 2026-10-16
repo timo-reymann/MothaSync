@@ -14,6 +14,7 @@ public partial class SettingsView : UserControl
     private string _sourceAutoLabel = string.Empty;
     private string _destinationAutoLabel = string.Empty;
     private bool _loading;
+    private bool _urlValid = true;
 
     public SettingsView()
     {
@@ -24,13 +25,16 @@ public partial class SettingsView : UserControl
         {
             UpdateAutoLabel(SourcePath, SourceLabel, ref _sourceAutoLabel);
             ApplySourceStatus();
+            ValidatePaths();
         };
         DestinationPath.TextChanged += (_, _) =>
         {
             UpdateAutoLabel(DestinationPath, DestinationLabel, ref _destinationAutoLabel);
             ApplyDestinationStatus();
+            ValidatePaths();
         };
         ValidateServerUrl();
+        ValidatePaths();
         ApplySourceStatus();
         ApplyDestinationStatus();
     }
@@ -86,15 +90,29 @@ public partial class SettingsView : UserControl
         {
             ServerUrl.Classes.Remove("err");
             UrlValidationMessage.IsVisible = false;
-            SaveButton.IsEnabled = true;
+            _urlValid = true;
         }
         else
         {
             ServerUrl.Classes.Add("err");
             UrlValidationMessage.IsVisible = true;
-            SaveButton.IsEnabled = false;
+            _urlValid = false;
         }
+
+        UpdateSaveEnabled();
     }
+
+    private void ValidatePaths()
+    {
+        var same = SyncPaths.AreSame(SourcePath.Text, DestinationPath.Text);
+        SamePathMessage.IsVisible = same;
+        SourcePath.Classes.Set("err", same);
+        DestinationPath.Classes.Set("err", same);
+        UpdateSaveEnabled();
+    }
+
+    private void UpdateSaveEnabled() =>
+        SaveButton.IsEnabled = _urlValid && !SamePathMessage.IsVisible;
 
     private static bool IsValidUrl(string url)
     {

@@ -81,6 +81,20 @@
                     </StackPanel>
                 </Border>
 
+                <StackPanel x:Name="SamePathMessage"
+                            Orientation="Horizontal"
+                            Spacing="6"
+                            Margin="4,0"
+                            IsVisible="False">
+                    <c:Icon Data="{StaticResource IconWarn}" Size="14" Foreground="{DynamicResource AppErr}"
+                            VerticalAlignment="Center" />
+                    <TextBlock Text="Source and destination are the same folder. Choose two different locations."
+                               Foreground="{DynamicResource AppErrText}"
+                               FontSize="12"
+                               VerticalAlignment="Center"
+                               TextWrapping="Wrap" />
+                </StackPanel>
+
                 <!-- Sync Note -->
                 <TextBlock Classes="muted"
                            Text="Files only flow from A to B. Anything you change on Drive B is overwritten at the next sync."
