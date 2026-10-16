@@ -485,7 +485,8 @@ $RECYCLE.BIN/
 dist/
 
 # rclone binaries fetched by scripts/download-rclone.sh
-src/MothaSync.Client/Assets/rclone/
+src/MothaSync.Client/Assets/rclone/*
+!src/MothaSync.Client/Assets/rclone/COPYING
 
 # Local SQLite databases
 *.db
