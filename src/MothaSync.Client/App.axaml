@@ -29,6 +29,7 @@
                         <NativeMenuItemSeparator />
                         <NativeMenuItem Header="{x:Static local:AppVersion.MenuHeader}" IsEnabled="False" />
                         <NativeMenuItemSeparator />
+                        <NativeMenuItem Header="License information" Click="OnLicense" />
                         <NativeMenuItem Header="Exit" Click="OnExit" />
                     </NativeMenu>
                 </TrayIcon.Menu>

@@ -20,6 +20,9 @@
                 <Button x:Name="SettingsButton" Classes="icon" Click="OnSettings" ToolTip.Tip="Settings">
                     <c:Icon Data="{StaticResource IconGear}" />
                 </Button>
+                <Button x:Name="LicenseButton" Classes="icon" Click="OnLicense" ToolTip.Tip="License">
+                    <c:Icon Data="{StaticResource IconLicense}" />
+                </Button>
                 <Border Width="1" Height="16" Margin="6,0" Background="{DynamicResource AppLine}" />
                 <Button x:Name="MinimizeButton" Classes="icon" Click="OnMinimize" ToolTip.Tip="Minimize">
                     <c:Icon Data="{StaticResource IconMinimize}" />
