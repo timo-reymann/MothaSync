@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/timo-reymann/MothaSync/compare/v1.0.4...v1.0.5) (2026-10-17)
+
+
+### Bug Fixes
+
+* **circleci:** set a resource class on the Windows executor ([8b83cb7](https://github.com/timo-reymann/MothaSync/commit/8b83cb75e8e8f0eda48b811b0a607395d9d0a6d6))
+
 ## [1.0.4](https://github.com/timo-reymann/MothaSync/compare/v1.0.3...v1.0.4) (2026-10-17)
 
 
