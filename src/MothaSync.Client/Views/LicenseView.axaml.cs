@@ -1,3 +1,5 @@
+using System;
+using System.IO;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -43,22 +45,10 @@ public partial class LicenseView : UserControl
         LicenseText.Copy();
     }
 
-    // TODO: read the NOTICE file that the build copies next to the executable.
-    // Show placeholder text for now.
-    private static string LoadLicenseText() => """
-        MothaSync
-        Copyright (c) 2026 Timo Reymann
+    // The build bundles NOTICE next to the executable. A missing file is a
+    // packaging error. Loading then fails hard instead of showing a fallback.
+    private static string LoadLicenseText() => LoadLicenseText(
+        Path.Combine(AppContext.BaseDirectory, "NOTICE"));
 
-        This window shows the license information for MothaSync and the software
-        that MothaSync ships. MothaSync will load this text from the NOTICE file
-        when the file ships with the build.
-
-        MothaSync is licensed under the MIT License.
-
-        rclone provides the sync engine. rclone is licensed under the MIT License.
-
-        Open Sans and JetBrains Mono are licensed under the SIL Open Font License 1.1.
-
-        This is placeholder text. The NOTICE file will replace it.
-        """;
+    internal static string LoadLicenseText(string noticePath) => File.ReadAllText(noticePath);
 }
