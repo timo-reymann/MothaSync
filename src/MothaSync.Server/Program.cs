@@ -86,8 +86,14 @@ public static partial class Program
 
             app.UseHttpMetrics();
             // Create the business metric collectors eagerly so they appear in the
-            // first scrape.
-            app.Services.GetRequiredService<SyncMetrics>();
+            // first scrape, and restore the persisted per-device state so the
+            // inactivity query on the last-run gauges keeps working after a restart.
+            var metrics = app.Services.GetRequiredService<SyncMetrics>();
+            var db = app.Services.GetRequiredService<SyncDb>();
+            foreach (var (deviceId, registrationTime, lastRun) in db.ListDeviceRunStates())
+            {
+                metrics.DeviceRestored(deviceId, lastRun, registrationTime);
+            }
         }
 
         // Configure the HTTP request pipeline.
