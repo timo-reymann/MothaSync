@@ -23,7 +23,7 @@
             <HeaderedContentControl.Header>
                 <TextBlock Text="NOTICE" />
             </HeaderedContentControl.Header>
-            <SelectableTextBlock x:Name="LicenseText" Classes="log" TextWrapping="Wrap">
+            <SelectableTextBlock x:Name="LicenseText" Classes="log">
                 <ContextMenu>
                     <MenuItem Header="Copy" Click="OnCopy" />
                 </ContextMenu>
