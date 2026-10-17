@@ -1,3 +1,14 @@
+excludes:
+  paths:
+    - pattern: "tests/**"
+      reason: "TEST_OF"
+      comment: "Unit test projects; test tooling is not shipped with the application."
+curations:
+  packages:
+    - id: "NuGet:Google:Protobuf:3.36.2"
+      curations:
+        comment: "Package is licensed under BSD-3-Clause; the scanner only reports the scancode protobuf LicenseRef."
+        concluded_license: "BSD-3-Clause"
 resolutions:
   issues:
     - message: "(?s).*Could not resolve provenance for package 'NuGet:.*"
