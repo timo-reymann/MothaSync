@@ -1,0 +1,26 @@
+# VCS and tooling
+.git
+.git*
+.circleci
+.github
+.idea
+.ort.yml
+renovate.json
+
+# Build output and caches from local builds
+dist
+e2e-data
+**/bin
+**/obj
+**/TestResults
+
+# Development artifacts
+*.md
+!README.md
+
+# Client sources; only the server is published as a container image
+assets
+packaging
+scripts
+tests
+src/MothaSync.Client
