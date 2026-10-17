@@ -7,6 +7,8 @@
     "circleci",
     "nuget",
     "github-actions",
+    "docker-compose",
+    "dockerfile",
     "custom.regex"
   ],
   "customManagers": [
