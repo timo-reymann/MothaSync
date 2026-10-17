@@ -145,6 +145,8 @@ jobs:
 
   build-0bootstrap-windows:
     executor: windows
+    # Windows machines default to bash, but every step below is PowerShell.
+    shell: powershell.exe
     steps:
       # GitHub Pages deploys with a delay, so wait until the feed contains the
       # new version before the bootstrapper pulls names and icons from it.
