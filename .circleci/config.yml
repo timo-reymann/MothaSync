@@ -14,7 +14,13 @@ jobs:
           command: dotnet build --no-restore
       - run:
           name: Test
-          command: dotnet test --no-build
+          command: >-
+            dotnet test --no-build
+            --logger:"junit;LogFilePath=$PWD/TestResults/{assembly}.xml;FailureBodyFormat=Verbose"
+      - store_test_results:
+          path: TestResults
+      - store_artifacts:
+          path: TestResults
 
   publish-image:
     machine:
