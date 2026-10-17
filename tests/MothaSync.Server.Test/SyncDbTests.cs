@@ -244,4 +244,28 @@ public sealed class SyncDbTests : IDisposable
         Assert.Null(stored.Duration);
         Assert.Equal(string.Empty, stored.ErrorMessage);
     }
+
+    [Fact]
+    public void ListDeviceRunStates_ReturnsRegistrationTimeAndLastRunPerDevice()
+    {
+        var withRuns = RegisterTestDevice(_db.Db, "with-runs");
+        var withoutRuns = RegisterTestDevice(_db.Db, "without-runs");
+        _db.Db.UpsertRun(withRuns, NewRun(minutesAgo: 10, status: ProtoSyncRunStatus.Failed));
+        _db.Db.UpsertRun(withRuns, NewRun(minutesAgo: 5, status: ProtoSyncRunStatus.Completed, duration: TimeSpan.FromSeconds(30)));
+
+        var states = _db.Db.ListDeviceRunStates();
+
+        Assert.Equal(2, states.Count);
+        var restoredWithRuns = states.Single(state => state.DeviceId == withRuns);
+
+        // The most recent run wins, and duration rides along for the completion time.
+        Assert.Equal(ProtoSyncRunStatus.Completed, restoredWithRuns.LastRun!.Status);
+        Assert.Equal(TimeSpan.FromSeconds(30), restoredWithRuns.LastRun.Duration!.ToTimeSpan());
+        Assert.Equal(
+            Timestamp.FromDateTimeOffset(DateTimeOffset.UtcNow.AddMinutes(-5)).Seconds,
+            restoredWithRuns.LastRun.StartedAt.Seconds);
+
+        var restoredWithoutRuns = states.Single(state => state.DeviceId == withoutRuns);
+        Assert.Null(restoredWithoutRuns.LastRun);
+    }
 }

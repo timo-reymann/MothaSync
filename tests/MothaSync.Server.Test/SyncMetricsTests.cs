@@ -108,7 +108,7 @@ public sealed class SyncMetricsTests
     }
 
     [Fact]
-    public async Task DeviceRegistered_IncrementsCounter()
+    public async Task DeviceRegistered_IncrementsCounterAndCreatesLastRunGauges()
     {
         var registry = Prometheus.Metrics.NewCustomRegistry();
         var metrics = new SyncMetrics(registry);
@@ -118,13 +118,70 @@ public sealed class SyncMetricsTests
         Assert.NotNull(before);
         Assert.Equal(0, MetricsTestHelpers.ParseValue(before));
 
-        metrics.DeviceRegistered();
-        metrics.DeviceRegistered();
+        metrics.DeviceRegistered("device-new");
+        metrics.DeviceRegistered("device-new");
 
-        var line = MetricsTestHelpers.FindLine(
-            await MetricsTestHelpers.ExportToTextAsync(registry), "mothasync_devices_registered_total");
+        var text = await MetricsTestHelpers.ExportToTextAsync(registry);
+        var line = MetricsTestHelpers.FindLine(text, "mothasync_devices_registered_total");
         Assert.NotNull(line);
         Assert.Equal(2, MetricsTestHelpers.ParseValue(line));
+
+        // The device has a last-run series before its first report, so an
+        // inactivity alert matches it from registration time on.
+        var lastTimestamp = MetricsTestHelpers.FindLine(text, "mothasync_sync_last_run_timestamp_seconds", ("device_id", "device-new"));
+        Assert.NotNull(lastTimestamp);
+        Assert.True(MetricsTestHelpers.ParseValue(lastTimestamp) > 0);
+
+        var lastResult = MetricsTestHelpers.FindLine(text, "mothasync_sync_last_run_result", ("device_id", "device-new"));
+        Assert.NotNull(lastResult);
+        Assert.Equal(0, MetricsTestHelpers.ParseValue(lastResult));
+
+        // Registration does not count as a run.
+        Assert.Null(MetricsTestHelpers.FindLine(text, "mothasync_sync_runs_total", ("device_id", "device-new")));
+    }
+
+    [Fact]
+    public async Task DeviceRestored_LastRun_UsesCompletionTimeWithoutCounters()
+    {
+        var registry = Prometheus.Metrics.NewCustomRegistry();
+        var metrics = new SyncMetrics(registry);
+        var run = NewRun();
+
+        metrics.DeviceRestored("device-1", run, DateTimeOffset.UtcNow.AddHours(-1));
+
+        var text = await MetricsTestHelpers.ExportToTextAsync(registry);
+
+        var lastTimestamp = MetricsTestHelpers.FindLine(text, "mothasync_sync_last_run_timestamp_seconds", ("device_id", "device-1"));
+        Assert.NotNull(lastTimestamp);
+        Assert.Equal(run.StartedAt.ToDateTimeOffset().Add(run.Duration!.ToTimeSpan()).ToUnixTimeSeconds(), MetricsTestHelpers.ParseValue(lastTimestamp));
+
+        var lastResult = MetricsTestHelpers.FindLine(text, "mothasync_sync_last_run_result", ("device_id", "device-1"));
+        Assert.NotNull(lastResult);
+        Assert.Equal(1, MetricsTestHelpers.ParseValue(lastResult));
+
+        // A restore never touches the counters.
+        Assert.Null(MetricsTestHelpers.FindLine(text, "mothasync_sync_runs_total", ("device_id", "device-1")));
+        Assert.Null(MetricsTestHelpers.FindLine(text, "mothasync_devices_registered_total", ("device_id", "device-1")));
+    }
+
+    [Fact]
+    public async Task DeviceRestored_NoRun_UsesRegistrationTimeWithZeroResult()
+    {
+        var registry = Prometheus.Metrics.NewCustomRegistry();
+        var metrics = new SyncMetrics(registry);
+        var registrationTime = DateTimeOffset.UtcNow.AddHours(-5);
+
+        metrics.DeviceRestored("device-1", null, registrationTime);
+
+        var text = await MetricsTestHelpers.ExportToTextAsync(registry);
+
+        var lastTimestamp = MetricsTestHelpers.FindLine(text, "mothasync_sync_last_run_timestamp_seconds", ("device_id", "device-1"));
+        Assert.NotNull(lastTimestamp);
+        Assert.Equal(registrationTime.ToUnixTimeSeconds(), MetricsTestHelpers.ParseValue(lastTimestamp));
+
+        var lastResult = MetricsTestHelpers.FindLine(text, "mothasync_sync_last_run_result", ("device_id", "device-1"));
+        Assert.NotNull(lastResult);
+        Assert.Equal(0, MetricsTestHelpers.ParseValue(lastResult));
     }
 
     private static SyncRun NewRun() => new()

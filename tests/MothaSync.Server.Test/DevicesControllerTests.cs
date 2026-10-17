@@ -59,6 +59,11 @@ public sealed class DevicesControllerTests : IDisposable
         var line = MetricsTestHelpers.FindLine(text, "mothasync_devices_registered_total");
         Assert.NotNull(line);
         Assert.Equal(1, MetricsTestHelpers.ParseValue(line));
+
+        // The freshly registered device has a last-run series before its first report.
+        var gaugeLines = text.Split('\n', StringSplitOptions.TrimEntries)
+            .Count(line => line.StartsWith("mothasync_sync_last_run_timestamp_seconds", StringComparison.Ordinal));
+        Assert.Equal(1, gaugeLines);
     }
 
     [Fact]
