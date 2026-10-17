@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/timo-reymann/MothaSync/compare/v1.0.0...v1.0.1) (2026-10-17)
+
+
+### Bug Fixes
+
+* make release build scripts work on macOS bash and the linux image ([7defb86](https://github.com/timo-reymann/MothaSync/commit/7defb86dac6cf4bc307bd6a19570d6b437dbc003))
+
 # 1.0.0 (2026-10-17)
 
 
