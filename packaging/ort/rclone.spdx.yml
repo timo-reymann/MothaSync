@@ -1,0 +1,36 @@
+# SPDX declaration for the rclone binary that scripts/download-rclone.sh fetches
+# at build time. The concluded license makes ORT skip a source scan of it, so
+# attribution comes from the declaration alone.
+SPDXID: "SPDXRef-DOCUMENT"
+spdxVersion: "SPDX-2.3"
+creationInfo:
+  created: "2026-10-18T00:00:00Z"
+  creators:
+  - "Person: Timo Reymann"
+name: "mothasync-third-party"
+dataLicense: "CC0-1.0"
+documentNamespace: "https://spdx.org/spdxdocs/mothasync-third-party"
+documentDescribes:
+- "SPDXRef-Package-mothasync"
+packages:
+- SPDXID: "SPDXRef-Package-mothasync"
+  name: "mothasync"
+  downloadLocation: "https://github.com/timo-reymann/MothaSync"
+  filesAnalyzed: false
+  licenseConcluded: "MIT"
+  licenseDeclared: "MIT"
+  copyrightText: "Copyright (c) 2026 Timo Reymann"
+- SPDXID: "SPDXRef-Package-rclone"
+  name: "rclone"
+  # renovate: datasource=github-releases depName=rclone/rclone
+  versionInfo: v1.75.2
+  downloadLocation: "NOASSERTION"
+  homepage: "https://rclone.org"
+  filesAnalyzed: false
+  licenseConcluded: "MIT"
+  licenseDeclared: "MIT"
+  copyrightText: "Copyright (C) 2012 by Nick Craig-Wood http://www.craig-wood.com/nick/"
+relationships:
+- spdxElementId: "SPDXRef-Package-mothasync"
+  relationshipType: "DEPENDS_ON"
+  relatedSpdxElement: "SPDXRef-Package-rclone"
