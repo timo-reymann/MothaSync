@@ -33,7 +33,7 @@ public sealed class SyncMetrics
             LabelNames = ["device_id"],
             Buckets = DurationBuckets,
         });
-        _lastRunTimestamp = factory.CreateGauge("mothasync_sync_last_run_timestamp_seconds", "Completion timestamp (Unix time) of the last reported sync run; falls back to the start time while running.", "device_id");
+        _lastRunTimestamp = factory.CreateGauge("mothasync_sync_last_run_timestamp_seconds", "Completion timestamp (Unix time) of the last reported sync run; falls back to the device registration time until the first report.", "device_id");
         _lastRunResult = factory.CreateGauge("mothasync_sync_last_run_result", "1 when the last reported sync run completed, 0 otherwise.", "device_id");
         _devicesRegistered = factory.CreateCounter("mothasync_devices_registered_total", "Devices registered with the server.");
     }
@@ -72,10 +72,49 @@ public sealed class SyncMetrics
             completion += duration;
         }
 
-        _lastRunTimestamp.Labels(deviceId).Set(completion.ToUnixTimeSeconds());
-        _lastRunResult.Labels(deviceId).Set(run.Status == SyncRunStatus.Completed ? 1 : 0);
+        UpdateLastRunGauges(deviceId, run.Status, completion);
     }
 
-    /// <summary>Records one device registration in the server-wide counter.</summary>
-    public void DeviceRegistered() => _devicesRegistered.Inc();
+    /// <summary>Records one device registration in the server-wide counter and creates the per-device last-run gauges.</summary>
+    /// <remarks>
+    /// The last-run timestamp starts at the current time, so an inactivity alert on the gauges
+    /// covers the device before its first report arrives.
+    /// </remarks>
+    /// <param name="deviceId">The server-generated ID of the registered device.</param>
+    public void DeviceRegistered(string deviceId)
+    {
+        _devicesRegistered.Inc();
+        UpdateLastRunGauges(deviceId, SyncRunStatus.Unspecified, DateTimeOffset.UtcNow);
+    }
+
+    /// <summary>Restores the per-device last-run gauges from persisted state, without incrementing any counter.</summary>
+    /// <remarks>
+    /// A device with a persisted run uses that run's completion time and status.
+    /// A device without runs uses its registration time, so the inactivity query
+    /// keeps matching the device after a restart.
+    /// </remarks>
+    /// <param name="deviceId">The device ID whose gauge series to restore.</param>
+    /// <param name="lastRun">The last persisted run of the device, or null when the device has none.</param>
+    /// <param name="registrationTime">The persisted registration time as the fallback timestamp.</param>
+    public void DeviceRestored(string deviceId, SyncRun? lastRun, DateTimeOffset registrationTime)
+    {
+        var completion = registrationTime;
+        if (lastRun is not null)
+        {
+            completion = lastRun.StartedAt.ToDateTimeOffset();
+            if (lastRun.Duration is not null)
+            {
+                completion += lastRun.Duration.ToTimeSpan();
+            }
+        }
+
+        UpdateLastRunGauges(deviceId, lastRun?.Status ?? SyncRunStatus.Unspecified, completion);
+    }
+
+    /// <summary>Sets both last-run gauges for a device; the entry point for the series of that device.</summary>
+    private void UpdateLastRunGauges(string deviceId, SyncRunStatus status, DateTimeOffset completion)
+    {
+        _lastRunTimestamp.Labels(deviceId).Set(completion.ToUnixTimeSeconds());
+        _lastRunResult.Labels(deviceId).Set(status == SyncRunStatus.Completed ? 1 : 0);
+    }
 }

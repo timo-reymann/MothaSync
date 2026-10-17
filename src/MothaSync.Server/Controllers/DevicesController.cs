@@ -37,7 +37,7 @@ public sealed class DevicesController(SyncDb db, IConfiguration configuration, S
 
         var token = SyncDb.NewToken();
         var deviceId = db.RegisterDevice(request, SyncDb.HashToken(token));
-        metrics.DeviceRegistered();
+        metrics.DeviceRegistered(deviceId);
         return new RegisterDeviceResponse { DeviceId = deviceId, DeviceToken = token };
     }
 
