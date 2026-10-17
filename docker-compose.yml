@@ -1,0 +1,31 @@
+# Sample deployment that runs the optional MothaSync server with its
+# Prometheus metrics endpoint and a Prometheus instance to scrape it.
+#
+# Before starting:
+#   cp .env.example .env
+#   Set MOTHASYNC_ENROLLMENT_TOKEN to the token you enter in the client.
+services:
+  mothasync-server:
+    image: timoreymann/mothasync-server:latest
+    ports:
+      - 8080:8080
+      - 9100:9100
+    environment:
+      Server__EnrollmentToken: ${MOTHASYNC_ENROLLMENT_TOKEN:?MOTHASYNC_ENROLLMENT_TOKEN is required, see .env.example}
+      Server__DatabasePath: /data/mothasync-server.db
+    volumes:
+      - mothasync-data:/data
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:v3.15.0
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - 9090:9090
+    restart: unless-stopped
+    depends_on:
+      - mothasync-server
+
+volumes:
+  mothasync-data:
