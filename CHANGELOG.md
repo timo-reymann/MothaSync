@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/timo-reymann/MothaSync/compare/v1.0.3...v1.0.4) (2026-10-17)
+
+
+### Bug Fixes
+
+* base64 the release key for the CircleCI context ([9991728](https://github.com/timo-reymann/MothaSync/commit/999172811bd88927d6c876c019b699d88ffdd861))
+
 ## [1.0.3](https://github.com/timo-reymann/MothaSync/compare/v1.0.2...v1.0.3) (2026-10-17)
 
 
