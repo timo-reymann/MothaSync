@@ -199,13 +199,6 @@ workflows:
   main:
     jobs:
       - test
-      - publish-image:
-          context: docker-hub
-          filters:
-            branches:
-              only: main
-          requires:
-            - test
       - semantic-release/with_existing_config:
           name: semantic-release
           additional_packages: "@semantic-release/changelog @semantic-release/git"
