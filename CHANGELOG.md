@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/timo-reymann/MothaSync/compare/v1.0.2...v1.0.3) (2026-10-17)
+
+
+### Bug Fixes
+
+* give the release attach job an explicit repository ([fdecc90](https://github.com/timo-reymann/MothaSync/commit/fdecc9084cba8ea67ac38b3cbe1c3a728b7f7a3e))
+
 ## [1.0.2](https://github.com/timo-reymann/MothaSync/compare/v1.0.1...v1.0.2) (2026-10-17)
 
 
