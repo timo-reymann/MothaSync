@@ -1,7 +1,13 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "local>timo-reymann/renovate-config"
+  ],
+  "enabledManagers": [
+    "circleci",
+    "nuget",
+    "github-actions",
+    "custom.regex"
   ],
   "customManagers": [
     {
