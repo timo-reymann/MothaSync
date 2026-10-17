@@ -21,7 +21,7 @@
 
     <ItemGroup>
         <AvaloniaResource Include="Assets\**"/>
-        <Content Include="NOTICE" CopyToOutputDirectory="PreserveNewest" />
+        <Content Include="..\..\NOTICE" Link="NOTICE" CopyToOutputDirectory="PreserveNewest" />
         <Content Include="Assets\logo.png" CopyToOutputDirectory="PreserveNewest" />
         <Content Include="Assets\rclone\COPYING">
             <Link>rclone\COPYING</Link>
