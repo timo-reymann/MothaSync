@@ -9,13 +9,16 @@ RCLONE_VERSION=v1.75.2
 BASE_URL="https://downloads.rclone.org/$RCLONE_VERSION"
 OUT_DIR="src/MothaSync.Client/Assets/rclone"
 
-declare -A RID_ARCH=(
-  [win-x64]=windows-amd64
-  [linux-x64]=linux-amd64
-  [linux-arm64]=linux-arm64
-  [osx-arm64]=osx-arm64
-  [osx-x64]=osx-amd64
-)
+rid_arch() {
+  case "$1" in
+    win-x64) echo windows-amd64 ;;
+    linux-x64) echo linux-amd64 ;;
+    linux-arm64) echo linux-arm64 ;;
+    osx-arm64) echo osx-arm64 ;;
+    osx-x64) echo osx-amd64 ;;
+    *) echo "error: unknown RID '$1'" >&2; exit 1 ;;
+  esac
+}
 
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
@@ -28,7 +31,7 @@ cp "$TMP/COPYING" "$OUT_DIR/COPYING"
 curl -fsSL "$BASE_URL/SHA256SUMS" -o "$TMP/SHA256SUMS"
 
 for rid in win-x64 linux-x64 linux-arm64 osx-arm64 osx-x64; do
-  arch="${RID_ARCH[$rid]}"
+  arch="$(rid_arch "$rid")"
   zip="rclone-$RCLONE_VERSION-$arch.zip"
   binary="rclone"
   if [[ $rid == win-* ]]; then
