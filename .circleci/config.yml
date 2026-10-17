@@ -26,6 +26,9 @@ executors:
   windows:
     machine:
       image: windows-server-2022-gui:current
+    # Windows machine jobs need a windows.* resource class; the default
+    # assignment was rejected with "invalid-resource-class" on v1.0.4.
+    resource_class: windows.medium
 
 commands:
   install-dotnet-macos:
