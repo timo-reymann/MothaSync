@@ -15,10 +15,12 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/^scripts\\/download-rclone\\.sh$/"
+        "/^scripts\\/download-rclone\\.sh$/",
+        "/^packaging\\/ort\\/rclone\\.spdx\\.yml$/"
       ],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\nRCLONE_VERSION=(?<currentValue>\\S+)"
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\nRCLONE_VERSION=(?<currentValue>\\S+)",
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n\\s*versionInfo: (?<currentValue>\\S+)"
       ]
     }
   ]
