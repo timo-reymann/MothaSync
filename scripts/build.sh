@@ -18,10 +18,11 @@ usage() {
 }
 
 case "${1:-}" in
-  ""|-[hH]*|--help) usage; exit "${1:+1}0" ;;
+  "" ) usage; exit 1 ;;
+  -[hH]*|--help) usage; exit 0 ;;
+  *) version="$1" ;;
 esac
-version="$1"
-shift
+shift || true
 
 rids=("$@")
 if [[ ${#rids[@]} -eq 0 ]]; then
