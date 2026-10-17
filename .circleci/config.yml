@@ -16,7 +16,42 @@ jobs:
           name: Test
           command: dotnet test --no-build
 
+  publish-image:
+    machine:
+      image: ubuntu-2404:current
+    steps:
+      - checkout
+      - run:
+          name: Log into Docker Hub
+          command: echo "$DOCKERHUB_ACCESS_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+      - run:
+          name: Prepare multi-arch buildx builder
+          command: |
+            docker run --privileged --rm tonistiigi/binfmt:latest --install amd64,arm64
+            docker buildx create --name mothasync --driver docker-container --use
+      - run:
+          name: Build and push the server image
+          command: make build-image-server
+
 workflows:
   build-and-test:
     jobs:
       - test
+
+  publish:
+    jobs:
+      - test:
+          filters:
+            branches:
+              only: main
+            tags:
+              only: /^v.*/
+      - publish-image:
+          context: docker-hub
+          filters:
+            branches:
+              only: main
+            tags:
+              only: /^v.*/
+          requires:
+            - test
