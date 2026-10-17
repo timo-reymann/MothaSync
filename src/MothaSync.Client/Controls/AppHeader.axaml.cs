@@ -102,6 +102,11 @@ public partial class AppHeader : UserControl
         Navigation.ShowSettings(this);
     }
 
+    private void OnLicense(object? sender, RoutedEventArgs e)
+    {
+        Dialogs.ShowLicense(this);
+    }
+
     private void OnHeaderPointerPressed(object? sender, PointerPressedEventArgs e)
     {
         if (e.GetCurrentPoint(this).Properties.PointerUpdateKind != PointerUpdateKind.LeftButtonPressed ||

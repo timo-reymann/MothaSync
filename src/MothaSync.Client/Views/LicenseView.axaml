@@ -1,0 +1,29 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="using:MothaSync.Client.Controls"
+             x:Class="MothaSync.Client.Views.LicenseView">
+    <Grid RowDefinitions="Auto,*" Margin="16" RowSpacing="12">
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+            <StackPanel x:Name="TitleDrag"
+                        Grid.Column="0"
+                        Orientation="Horizontal"
+                        Spacing="10"
+                        Background="Transparent"
+                        PointerPressed="OnTitlePointerPressed">
+                <c:Icon Data="{StaticResource IconLicense}" Size="16"
+                        Foreground="{DynamicResource AppAccent}" VerticalAlignment="Center" />
+                <TextBlock Text="License information" FontSize="16" FontWeight="SemiBold"
+                           VerticalAlignment="Center" />
+            </StackPanel>
+            <Button Grid.Column="1" Classes="icon close" Click="OnClose" ToolTip.Tip="Close">
+                <c:Icon Data="{StaticResource IconClose}" />
+            </Button>
+        </Grid>
+        <HeaderedContentControl Grid.Row="1" Theme="{StaticResource LogPanel}">
+            <HeaderedContentControl.Header>
+                <TextBlock Text="NOTICE" />
+            </HeaderedContentControl.Header>
+            <TextBlock x:Name="LicenseText" Classes="log" TextWrapping="Wrap" />
+        </HeaderedContentControl>
+    </Grid>
+</UserControl>

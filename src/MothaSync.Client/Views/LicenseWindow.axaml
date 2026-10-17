@@ -1,0 +1,14 @@
+<views:ChromelessWindow xmlns="https://github.com/avaloniaui"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                          xmlns:views="using:MothaSync.Client.Views"
+                          x:Class="MothaSync.Client.Views.LicenseWindow"
+                          Icon="avares://MothaSync.Client/Assets/logo.png"
+                          CloseOnEscape="True"
+                          Width="640"
+                          Height="560"
+                          WindowStartupLocation="CenterOwner"
+                          Title="License information">
+    <Border BorderBrush="{DynamicResource AppLine}" BorderThickness="1">
+        <views:LicenseView x:Name="Detail" />
+    </Border>
+</views:ChromelessWindow>
