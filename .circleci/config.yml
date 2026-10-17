@@ -92,8 +92,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install unzip
-          command: apt-get update -qq && apt-get install -y -qq unzip
+          name: Install unzip and zip
+          command: apt-get update -qq && apt-get install -y -qq unzip zip
       - run:
           name: Download rclone
           command: ./scripts/download-rclone.sh
