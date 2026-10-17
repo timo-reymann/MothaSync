@@ -23,5 +23,5 @@ resolutions:
       comment: "The ANGLE repository has a submodule hosted on a private chrome-internal.googlesource.com remote that cannot be cloned. The Windows natives package is BSD-3-Clause licensed."
   rule_violations:
     - message: "The declared license 'https://www.nuget.org/packages/Avalonia.Angle.Windows.Natives/.*"
-      reason: "LICENSE_ACKNOWLEDGED_EXCEPTION"
+      reason: "CANT_FIX_EXCEPTION"
       comment: "License URL on nuget.org cannot be parsed as SPDX; the package is BSD-3-Clause licensed, see the curation above."
