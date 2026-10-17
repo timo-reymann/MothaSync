@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  codecov: codecov/codecov@6.1.0
+
 jobs:
   test:
     docker:
@@ -16,11 +19,15 @@ jobs:
           name: Test
           command: >-
             dotnet test --no-build
-            --logger:"junit;LogFilePath=$PWD/TestResults/{assembly}.xml;FailureBodyFormat=Verbose"
+            --logger:"junit;LogFilePath=$PWD/TestResults/junit/{assembly}.xml;FailureBodyFormat=Verbose"
+            --collect:"XPlat Code Coverage"
+            --results-directory "$PWD/TestResults/coverage"
       - store_test_results:
-          path: TestResults
+          path: TestResults/junit
       - store_artifacts:
           path: TestResults
+      - codecov/upload:
+          files: TestResults/coverage/**/coverage.cobertura.xml
 
   publish-image:
     machine:

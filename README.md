@@ -2,6 +2,7 @@
 
 [![License](https://img.shields.io/github/license/timo-reymann/MothaSync)](https://github.com/timo-reymann/MothaSync/blob/main/LICENSE)
 [![CircleCI](https://circleci.com/gh/timo-reymann/MothaSync.svg?style=shield)](https://app.circleci.com/pipelines/github/timo-reymann/MothaSync)
+[![Codecov](https://img.shields.io/codecov/c/github/timo-reymann/MothaSync)](https://app.codecov.io/gh/timo-reymann/MothaSync)
 [![GitHub Release](https://img.shields.io/github/v/tag/timo-reymann/MothaSync?label=version)](https://github.com/timo-reymann/MothaSync/releases)
 [![Renovate](https://img.shields.io/badge/renovate-enabled-green?logo=renovate)](https://renovatebot.com)
 
