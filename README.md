@@ -84,6 +84,56 @@ The optional server receives a report on every sync run and serves Prometheus me
 
 In short: MothaSync is a simple wrapper around rclone. It gives one person a backup flow that works by itself, and the optional server adds the proof that it worked.
 
+The diagram below shows the full flow. It uses the design system colors from [DESIGN.md](DESIGN.md).
+
+```mermaid
+---
+config:
+  layout: elk
+  theme: base
+  background: "#282727"
+  themeVariables:
+    primaryColor: "#343232"
+    primaryTextColor: "#F1F5F9"
+    lineColor: "#494646"
+    edgeLabelBackground: "#282727"
+    fontFamily: "Open Sans, sans-serif"
+---
+flowchart TD
+    start([MothaSync start]) --> cfg{Drives<br/>configured?}
+    cfg -- no --> settings[Settings:<br/>set Drive A and Drive B]
+    settings --> wait
+    cfg -- yes --> wait{Both drives connected<br/>and writable?}
+    wait -- no --> waiting[Waiting:<br/>poll every 2 s]
+    waiting --> wait
+    wait -- yes --> countdown[Countdown 3 s]
+    countdown --> sync[Sync Drive A to Drive B<br/>with rclone]
+    sync --> result{Sync result}
+    result -- success --> done[Sync complete:<br/>write history]
+    result -- failure --> failed[Sync failed:<br/>nothing deleted on Drive B]
+    failed --> retry{Retry?}
+    retry -- yes --> sync
+    retry -- no --> wait
+    sync -.-> paused[Paused] -.-> sync
+    done -.-> report["Report run to server<br/>(optional)"]
+    failed -.-> report
+    done --> wait
+
+    classDef card fill:#343232,stroke:#494646,color:#F1F5F9;
+    classDef waiting fill:#343232,stroke:#FACC15,color:#F1F5F9,stroke-width:2px;
+    classDef sync fill:#343232,stroke:#3B82F6,color:#F1F5F9,stroke-width:2px;
+    classDef done fill:#343232,stroke:#10B981,color:#F1F5F9,stroke-width:2px;
+    classDef failed fill:#343232,stroke:#EF4444,color:#F1F5F9,stroke-width:2px;
+    classDef paused fill:#343232,stroke:#F59E0B,color:#F1F5F9,stroke-width:2px;
+
+    class start,cfg,settings,result,retry,report card;
+    class wait,waiting waiting;
+    class countdown,sync sync;
+    class done done;
+    class failed failed;
+    class paused paused;
+```
+
 ## Server (optional)
 
 The server stores sync run reports and serves Prometheus metrics. Clients enroll once with a shared enrollment token, receive their own device token, and send one report per sync run with it.
