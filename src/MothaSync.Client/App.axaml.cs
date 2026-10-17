@@ -65,7 +65,11 @@ public partial class App : Application
 
     private void OnOpen(object? sender, EventArgs e) => ShowMainWindow();
 
-    private void OnLicense(object? sender, EventArgs e) => Dialogs.ShowLicense(null);
+    private void OnLicense(object? sender, EventArgs e)
+    {
+        ShowMainWindow();
+        Dialogs.ShowLicense(null);
+    }
 
     private void OnExit(object? sender, EventArgs e)
     {
