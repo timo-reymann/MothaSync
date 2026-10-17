@@ -275,3 +275,5 @@ docker buildx build -t mothasync-server:local -f docker/server.Dockerfile .
 MothaSync source code and original project assets are released under the [MIT License](LICENSE).
 
 The bundled Open Sans and JetBrains Mono font files are separate works and remain licensed under [OFL-1.1](https://spdx.org/licenses/OFL-1.1.html). Their license texts are stored next to the font files in `src/MothaSync.Client/Assets/Fonts/` and must be preserved when redistributing them.
+
+The build fetches the [rclone](https://rclone.org/) binary with `scripts/download-rclone.sh` and redistributes it under the [MIT License](https://spdx.org/licenses/MIT.html). The license text is stored next to the binary in `src/MothaSync.Client/Assets/rclone/COPYING` and must be preserved when redistributing them. `packaging/ort/rclone.spdx.yml` declares rclone for the `NOTICE` file.

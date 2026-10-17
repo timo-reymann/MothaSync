@@ -1,5 +1,10 @@
 excludes:
   paths:
+    - pattern: "src/MothaSync.Client/Assets/rclone/COPYING"
+      reason: "OTHER"
+      comment: >-
+        License of the rclone binary. The build fetches rclone with scripts/download-rclone.sh.
+        The ORT analyzer declares rclone as a package in packaging/ort/rclone.spdx.yml instead.
     - pattern: "tests/**"
       reason: "TEST_OF"
       comment: "Unit test projects; test tooling is not shipped with the application."
