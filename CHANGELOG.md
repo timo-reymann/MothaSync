@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/timo-reymann/MothaSync/compare/v1.0.1...v1.0.2) (2026-10-17)
+
+
+### Bug Fixes
+
+* install zip in the linux build job ([f2ab5ca](https://github.com/timo-reymann/MothaSync/commit/f2ab5cac177e3da0787e513c7a25ad90a2eaa393))
+
 ## [1.0.1](https://github.com/timo-reymann/MothaSync/compare/v1.0.0...v1.0.1) (2026-10-17)
 
 
