@@ -129,7 +129,8 @@ jobs:
       - github-cli/install
       - run:
           name: Attach archives to the release
-          command: gh release upload "${CIRCLE_TAG}" dist/* --clobber
+          # The job has no checkout, so gh gets the repository explicitly.
+          command: gh release upload --repo timo-reymann/MothaSync "${CIRCLE_TAG}" dist/* --clobber
 
   publish-0install-feed:
     executor: zero-install
