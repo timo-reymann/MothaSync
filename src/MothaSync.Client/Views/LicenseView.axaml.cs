@@ -33,6 +33,16 @@ public partial class LicenseView : UserControl
         }
     }
 
+    private void OnCopy(object? sender, RoutedEventArgs e)
+    {
+        if (string.IsNullOrEmpty(LicenseText.SelectedText))
+        {
+            LicenseText.SelectAll();
+        }
+
+        LicenseText.Copy();
+    }
+
     // TODO: read the NOTICE file that the build copies next to the executable.
     // Show placeholder text for now.
     private static string LoadLicenseText() => """

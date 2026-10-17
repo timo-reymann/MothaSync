@@ -14,7 +14,7 @@
     <Style Selector="TextBlock.mono">
         <Setter Property="FontFamily" Value="{DynamicResource MonoFont}" />
     </Style>
-    <Style Selector="TextBlock.log">
+    <Style Selector=":is(TextBlock).log">
         <Setter Property="FontFamily" Value="{DynamicResource MonoFont}" />
         <Setter Property="FontSize" Value="11" />
         <Setter Property="LineHeight" Value="19" />
