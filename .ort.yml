@@ -1,0 +1,5 @@
+resolutions:
+  issues:
+    - message: "(?s).*Could not resolve provenance for package 'NuGet:.*"
+      reason: "CANT_FIX_ISSUE"
+      comment: "NuGet metadata of these third-party packages (SkiaSharp, HarfBuzzSharp, SQLitePCLRaw, System.Memory, ...) has no resolvable source repository or revision, so the source cannot be scanned. License information is taken from the package metadata."
