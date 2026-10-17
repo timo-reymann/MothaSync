@@ -3,3 +3,6 @@ resolutions:
     - message: "(?s).*Could not resolve provenance for package 'NuGet:.*"
       reason: "CANT_FIX_ISSUE"
       comment: "NuGet metadata of these third-party packages (SkiaSharp, HarfBuzzSharp, SQLitePCLRaw, System.Memory, ...) has no resolvable source repository or revision, so the source cannot be scanned. License information is taken from the package metadata."
+    - message: "(?s).*Could not resolve nested provenance for package 'NuGet:Avalonia.Angle:.*"
+      reason: "CANT_FIX_ISSUE"
+      comment: "The ANGLE repository has a submodule hosted on a private chrome-internal.googlesource.com remote that cannot be cloned. The Windows natives package is BSD-3-Clause licensed."
