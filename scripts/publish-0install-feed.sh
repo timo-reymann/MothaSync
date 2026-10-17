@@ -8,7 +8,9 @@ set -euo pipefail
 # The version is the release version without the leading v, for example 1.2.0.
 #
 # Requires: 0template, gpg, python3, git. Expects the context variables
-# GITHUB_TOKEN and GPG_KEY (armored private key without a passphrase).
+# GITHUB_TOKEN and GPG_KEY (base64 encoded armored private key without a
+# passphrase; CircleCI context variables cannot hold multi-line values,
+# so the armored key text is decoded with base64 first).
 # The run must start after the release archives are uploaded, because
 # 0template downloads them to compute the manifest digests.
 # The merge and signature come from scripts/merge-feed.py, because the
@@ -33,7 +35,11 @@ work="$(mktemp -d)"
 trap 'rm -rf "$work"' EXIT
 
 # Import the release key. The key must have no passphrase for unattended use.
-echo "$GPG_KEY" | gpg --batch --import
+if [[ $GPG_KEY == -----BEGIN* ]]; then
+  printf '%s\n' "$GPG_KEY" | gpg --batch --import
+else
+  printf '%s' "$GPG_KEY" | base64 --decode | gpg --batch --import
+fi
 key_id="$(gpg --list-secret-keys --with-colons | awk -F: '/^sec/ { print $5; exit }')"
 if [[ -z "$key_id" ]]; then
   echo "error: no signing key found after GPG import" >&2
