@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/timo-reymann/MothaSync/compare/v1.0.5...v1.0.6) (2026-10-17)
+
+
+### Bug Fixes
+
+* **circleci:** run the Windows bootstrapper job in PowerShell ([daa98e0](https://github.com/timo-reymann/MothaSync/commit/daa98e07b16decb8b74c415a4643338946d0cc24))
+
 ## [1.0.5](https://github.com/timo-reymann/MothaSync/compare/v1.0.4...v1.0.5) (2026-10-17)
 
 
