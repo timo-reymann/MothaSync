@@ -2,11 +2,49 @@ version: 2.1
 
 orbs:
   codecov: codecov/codecov@6.1.0
+  github-cli: circleci/github-cli@3.0.0
+  semantic-release: trustedshops-public/semantic-release@6.1.0
+
+only_tags: &only_tags
+  filters:
+    tags:
+      only: /.*/
+    branches:
+      ignore: /.*/
+
+executors:
+  dotnet:
+    docker:
+      - image: mcr.microsoft.com/dotnet/sdk:10.0
+  # Bundles 0install, 0template, gpg and git for the feed pipeline.
+  zero-install:
+    docker:
+      - image: 0installnet/0repo
+  macos:
+    macos:
+      xcode: "16.4.0"
+  windows:
+    machine:
+      image: windows-server-2022-gui:current
+
+commands:
+  install-dotnet-macos:
+    description: Install .NET SDK from global.json and GNU coreutils for sha256sum
+    steps:
+      - run:
+          name: Install .NET SDK and GNU coreutils
+          command: |
+            brew install coreutils
+            export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+            curl -fsSL https://dot.net/v1/dotnet-install.sh -o "$HOME/dotnet-install.sh"
+            chmod +x "$HOME/dotnet-install.sh"
+            "$HOME/dotnet-install.sh" --jsonfile global.json --install-dir "$HOME/.dotnet"
+            echo 'export DOTNET_ROOT="$HOME/.dotnet"' >> "$BASH_ENV"
+            echo 'export PATH="$HOME/.dotnet:/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"' >> "$BASH_ENV"
 
 jobs:
   test:
-    docker:
-      - image: mcr.microsoft.com/dotnet/sdk:10.0
+    executor: dotnet
     steps:
       - checkout
       - run:
@@ -45,26 +83,163 @@ jobs:
       - run:
           name: Build and push the server image
           command: make build-image-server
+      - run:
+          name: Build and push the server image
+          command: make build-image-server
+
+  build-linux:
+    executor: dotnet
+    steps:
+      - checkout
+      - run:
+          name: Download rclone
+          command: ./scripts/download-rclone.sh
+      - run:
+          name: Build archives
+          command: ./scripts/build.sh "${CIRCLE_TAG#v}" win-x64 linux-x64 linux-arm64
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist
+
+  build-macos:
+    executor: macos
+    steps:
+      - checkout
+      - install-dotnet-macos
+      - run:
+          name: Download rclone
+          command: ./scripts/download-rclone.sh
+      - run:
+          name: Build archives
+          command: ./scripts/build.sh "${CIRCLE_TAG#v}" osx-arm64 osx-x64
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist
+
+  attach-artifacts-to-release:
+    executor: dotnet
+    steps:
+      - attach_workspace:
+          at: .
+      - github-cli/install
+      - run:
+          name: Attach archives to the release
+          command: gh release upload "${CIRCLE_TAG}" dist/* --clobber
+
+  publish-0install-feed:
+    executor: zero-install
+    steps:
+      - checkout
+      - run:
+          name: Publish feed to GitHub Pages
+          command: ./scripts/publish-0install-feed.sh "${CIRCLE_TAG#v}"
+
+  build-0bootstrap-windows:
+    executor: windows
+    steps:
+      # GitHub Pages deploys with a delay, so wait until the feed contains the
+      # new version before the bootstrapper pulls names and icons from it.
+      - run:
+          name: Wait for the feed to contain the release
+          command: |
+            $feed = "https://timo-reymann.github.io/MothaSync/mothasync.xml"
+            $version = $env:CIRCLE_TAG -replace '^v', ''
+            for ($i = 1; $i -le 12; $i++) {
+              try {
+                $response = Invoke-WebRequest -Uri $feed -UseBasicParsing
+                if ($response.Content.Contains("mothasync-$version-win-x64.zip")) {
+                  Write-Output "Feed contains version $version"
+                  exit 0
+                }
+              } catch {
+                Write-Output "Attempt $i failed: $($_.Exception.Message)"
+              }
+              Write-Output "Attempt $i: waiting for feed with version $version"
+              Start-Sleep -Seconds 15
+            }
+            throw "Feed at $feed does not contain version $version"
+      - run:
+          name: Create Windows bootstrapper
+          command: |
+            Invoke-WebRequest https://get.0install.net/0install.exe -OutFile 0install.exe
+            # Pre-trust the official Zero Install feeds key so batch mode works.
+            .\0install.exe trust add 88C8A1F375928691D7365C0259AA3927C24E4E1E https://apps.0install.net
+            # Pre-trust the MothaSync release key from the exported public key.
+            git clone -b gh-pages https://x-access-token:$env:GITHUB_TOKEN@github.com/timo-reymann/MothaSync.git pages
+            if (-not (Get-Command gpg -ErrorAction SilentlyContinue)) { choco install gnupg -y }
+            gpg --import pages\*.gpg
+            $fingerprint = (gpg --list-keys --with-colons | Select-String -Pattern "\Afpr:" | Select-Object -First 1).Line.Split(':')[9]
+            .\0install.exe trust add $fingerprint https://timo-reymann.github.io
+            # The bootstrapper tool resolves its CLI through the ZEROINSTALL variable.
+            $env:ZEROINSTALL = "$PWD\0install.exe"
+            .\0install.exe run https://apps.0install.net/0install/0bootstrap.xml https://timo-reymann.github.io/MothaSync/mothasync.xml --integrate-args=--add-standard
+            if (-not (Test-Path "MothaSync.exe")) { throw "0bootstrap did not produce MothaSync.exe" }
+      - run:
+          name: Attach bootstrapper to the release
+          command: |
+            choco install gh -y
+            gh release upload "$env:CIRCLE_TAG" MothaSync.exe --clobber -R timo-reymann/MothaSync
+      - run:
+          name: Publish bootstrapper to GitHub Pages
+          command: |
+            Copy-Item MothaSync.exe pages\
+            git -C pages config user.name "CircleCI"
+            git -C pages config user.email "no-reply@circleci.com"
+            git -C pages add MothaSync.exe
+            git -C pages commit -m "chore: Update Windows bootstrapper [skip ci]"
+            git -C pages push
 
 workflows:
-  build-and-test:
+  main:
     jobs:
       - test
-
-  publish:
-    jobs:
-      - test:
-          filters:
-            branches:
-              only: main
-            tags:
-              only: /^v.*/
       - publish-image:
           context: docker-hub
           filters:
             branches:
               only: main
-            tags:
-              only: /^v.*/
           requires:
             - test
+      - semantic-release/with_existing_config:
+          name: semantic-release
+          additional_packages: "@semantic-release/changelog @semantic-release/git"
+          validate_config_file: true
+          requires:
+            - test
+          context:
+            - semantic-release
+          filters:
+            branches:
+              only:
+                - main
+
+  release:
+    jobs:
+      - build-linux:
+          <<: *only_tags
+      - build-macos:
+          <<: *only_tags
+      - attach-artifacts-to-release:
+          <<: *only_tags
+          requires:
+            - build-linux
+            - build-macos
+          context:
+            - semantic-release
+      - publish-0install-feed:
+          <<: *only_tags
+          requires:
+            - attach-artifacts-to-release
+          context:
+            - semantic-release
+      - build-0bootstrap-windows:
+          <<: *only_tags
+          requires:
+            - publish-0install-feed
+          context:
+            - semantic-release
+      - publish-image:
+          <<: *only_tags
+          context: docker-hub

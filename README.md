@@ -29,9 +29,18 @@
 
 ## Installation
 
-Download the archive for your platform from the [GitHub Releases](https://github.com/timo-reymann/MothaSync/releases) page, extract it, and start MothaSync.
+- Download the archive for your platform from the [GitHub Releases](https://github.com/timo-reymann/MothaSync/releases) page, extract it, and start MothaSync.
+- On Windows, start the `MothaSync.exe` bootstrapper from the release instead. The bootstrapper installs 0install on first use and runs the current version from the 0install feed. It adds the app to the start menu.
+- Or manage updates through 0install directly:
 
-Release archives are available for Windows x64, Linux x64, Linux arm64, macOS Apple Silicon, and macOS Intel.
+```bash
+0install add MothaSync https://timo-reymann.github.io/MothaSync/mothasync.xml
+0install run MothaSync
+```
+
+Release archives are available for Windows x64, Linux x64, Linux arm64, macOS Apple Silicon, and macOS Intel. The 0install feed ships the same archives.
+
+The feed is signed by a release key kept on GitHub Pages next to the feed. 0install downloads the key automatically. On first run, 0install asks once to trust the key for `timo-reymann.github.io`.
 
 ## Usage
 
