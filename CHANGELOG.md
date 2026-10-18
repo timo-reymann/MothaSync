@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/timo-reymann/MothaSync/compare/v1.2.0...v1.3.0) (2026-10-18)
+
+
+### Features
+
+* **docs:** Migrate the pages site and feed to mothasync.timo-reymann.de ([#23](https://github.com/timo-reymann/MothaSync/issues/23)) ([e07d8f6](https://github.com/timo-reymann/MothaSync/commit/e07d8f615218332c0ccc8a2eeed17ef69bc572ee))
+
 # [1.2.0](https://github.com/timo-reymann/MothaSync/compare/v1.1.0...v1.2.0) (2026-10-18)
 
 
