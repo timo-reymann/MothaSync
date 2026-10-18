@@ -171,10 +171,12 @@ jobs:
             throw "Feed at $feed does not contain version $version"
       - run:
           name: Create Windows bootstrapper
+          no_output_timeout: 10m
           command: |
             Invoke-WebRequest https://get.0install.net/0install.exe -OutFile 0install.exe
             # Pre-trust the official Zero Install feeds key so batch mode works.
-            .\0install.exe trust add 88C8A1F375928691D7365C0259AA3927C24E4E1E https://apps.0install.net
+            # Trust domains are bare hostnames, not URLs.
+            .\0install.exe trust add 88C8A1F375928691D7365C0259AA3927C24E4E1E apps.0install.net
             # Pre-trust the MothaSync release key from the exported public key.
             git clone -b gh-pages https://x-access-token:$env:GITHUB_TOKEN@github.com/timo-reymann/MothaSync.git pages
             if (-not (Get-Command gpg -ErrorAction SilentlyContinue)) { choco install gnupg -y }
@@ -182,17 +184,17 @@ jobs:
             Get-ChildItem pages -Filter *.gpg | ForEach-Object { gpg --import $_.FullName }
             $fingerprint = (gpg --list-keys --with-colons | Select-String -Pattern "\Afpr:" | Select-Object -First 1).Line.Split(':')[9]
             Write-Output "Trusting fingerprint: $fingerprint"
-            .\0install.exe trust add $fingerprint https://timo-reymann.github.io
+            .\0install.exe trust add $fingerprint timo-reymann.github.io
             Write-Output "trust add exit code: $LASTEXITCODE"
             .\0install.exe trust list
             # Diagnose the feed signature check with the full, unmangled output.
-            .\0install.exe download https://timo-reymann.github.io/MothaSync/mothasync.xml --batch -v 2>&1 | Out-String | Write-Output
+            .\0install.exe download https://timo-reymann.github.io/MothaSync/mothasync.xml --batch 2>&1 | Out-String | Write-Output
             Write-Output "download exit code: $LASTEXITCODE"
             # The bootstrapper tool resolves its CLI through the ZEROINSTALL variable.
             $env:ZEROINSTALL = "$PWD\0install.exe"
             .\0install.exe run https://apps.0install.net/0install/0bootstrap.xml https://timo-reymann.github.io/MothaSync/mothasync.xml --integrate-args=--add-standard 2>&1 | Out-String | Write-Output
             Write-Output "0bootstrap exit code: $LASTEXITCODE"
-            if (-not (Test-Path "MothaSync.exe")) { throw "0bootstrap did not produce MothaSync.exe" }
+            if (-not (Test-Path "MothaSync.exe")) { Write-Error "0bootstrap did not produce MothaSync.exe"; exit 1 }
       - run:
           name: Attach bootstrapper to the release
           command: |
