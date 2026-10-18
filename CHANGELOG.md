@@ -1,3 +1,10 @@
+## [1.0.9](https://github.com/timo-reymann/MothaSync/compare/v1.0.8...v1.0.9) (2026-10-18)
+
+
+### Bug Fixes
+
+* **circleci:** log the trust state and full output of the bootstrapper step ([2d53a70](https://github.com/timo-reymann/MothaSync/commit/2d53a70256908e85d7dd8ebb07b5812a7c104dc9))
+
 ## [1.0.8](https://github.com/timo-reymann/MothaSync/compare/v1.0.7...v1.0.8) (2026-10-18)
 
 
