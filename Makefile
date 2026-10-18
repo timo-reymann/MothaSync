@@ -22,6 +22,9 @@ test: ## Run all tests
 build-release: ## Build the release archives for the client
 	@./scripts/build.sh
 
+publish-homepage: ## Publish the homepage for VERSION to the gh-pages branch
+	@./scripts/publish-homepage.py "$(VERSION:v%=%)"
+
 build-image-server: ## Build and push the mothasync-server container image
 	@docker buildx build . \
 		-t $(SERVER_IMAGE):$(VERSION) \

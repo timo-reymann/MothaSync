@@ -20,6 +20,10 @@ executors:
   zero-install:
     docker:
       - image: 0installnet/0repo
+  # Renders and publishes the GitHub Pages homepage with Python and git.
+  pages:
+    docker:
+      - image: cimg/python:3.13
   macos:
     macos:
       xcode: "16.4.0"
@@ -143,6 +147,14 @@ jobs:
           name: Publish feed to GitHub Pages
           command: ./scripts/publish-0install-feed.sh "${CIRCLE_TAG#v}"
 
+  publish-homepage:
+    executor: pages
+    steps:
+      - checkout
+      - run:
+          name: Publish homepage to GitHub Pages
+          command: ./scripts/publish-homepage.py "${CIRCLE_TAG#v}"
+
   build-0bootstrap-windows:
     executor: windows
     # Windows machines default to bash, but every step below is PowerShell.
@@ -243,10 +255,17 @@ workflows:
             - build-macos
           context:
             - semantic-release
+      - publish-homepage:
+          <<: *only_tags
+          requires:
+            - attach-artifacts-to-release
+          context:
+            - semantic-release
       - publish-0install-feed:
           <<: *only_tags
           requires:
             - attach-artifacts-to-release
+            - publish-homepage
           context:
             - semantic-release
       - build-0bootstrap-windows:

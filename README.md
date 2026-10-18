@@ -42,6 +42,8 @@ Release archives are available for Windows x64, Linux x64, Linux arm64, macOS Ap
 
 The feed is signed by a release key kept on GitHub Pages next to the feed. 0install downloads the key automatically. On first run, 0install asks once to trust the key for `timo-reymann.github.io`.
 
+The [homepage](https://timo-reymann.github.io/MothaSync/) lists the downloads and the 0install command. The release pipeline publishes it next to the feed, and `make publish-homepage` publishes it for a single version.
+
 ## Usage
 
 Configure Drive A and Drive B in the client, then start a sync from the tray application.
