@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/timo-reymann/MothaSync/compare/v1.3.0...v1.3.1) (2026-10-18)
+
+
+### Bug Fixes
+
+* opt the homepage out of Dark Reader ([#24](https://github.com/timo-reymann/MothaSync/issues/24)) ([e492289](https://github.com/timo-reymann/MothaSync/commit/e4922895ba73d0a6668ca707571770dc745db2ea))
+
 # [1.3.0](https://github.com/timo-reymann/MothaSync/compare/v1.2.0...v1.3.0) (2026-10-18)
 
 
