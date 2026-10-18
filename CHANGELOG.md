@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/timo-reymann/MothaSync/compare/v1.4.0...v1.4.1) (2026-10-18)
+
+
+### Bug Fixes
+
+* **client:** show MothaSync instead of Avalonia Application on macOS ([#28](https://github.com/timo-reymann/MothaSync/issues/28)) ([bf60c9f](https://github.com/timo-reymann/MothaSync/commit/bf60c9f65bfe6c3f7e25de7211dfdad236ad13d5))
+
 # [1.4.0](https://github.com/timo-reymann/MothaSync/compare/v1.3.1...v1.4.0) (2026-10-18)
 
 
