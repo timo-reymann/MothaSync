@@ -16,12 +16,15 @@
       "customType": "regex",
       "managerFilePatterns": [
         "/^scripts\\/download-rclone\\.sh$/",
-        "/^packaging\\/ort\\/rclone\\.spdx\\.yml$/"
+        "/^packaging\\/ort\\/rclone\\.spdx\\.yml$/",
+        "/^\\.ort\\.yml$/"
       ],
       "matchStrings": [
         "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\nRCLONE_VERSION=(?<currentValue>\\S+)",
         "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n\\s*versionInfo: (?<currentValue>\\S+)",
-        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n\\s*downloadLocation: \"git\\+https://github.com/rclone/rclone\\.git@(?<currentValue>\\S+?)\""
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n\\s*downloadLocation: \"git\\+https://github.com/rclone/rclone\\.git@(?<currentValue>\\S+?)\"",
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n\\s*revision: \"(?<currentValue>[^\"]+)\"",
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\n\\s*- id: \"SpdxDocumentFile::rclone:(?<currentValue>[^\"]+)\""
       ]
     }
   ]
