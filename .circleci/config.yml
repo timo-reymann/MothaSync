@@ -165,7 +165,7 @@ jobs:
               } catch {
                 Write-Output "Attempt $i failed: $($_.Exception.Message)"
               }
-              Write-Output "Attempt $i: waiting for feed with version $version"
+              Write-Output "Attempt ${i}: waiting for feed with version $version"
               Start-Sleep -Seconds 15
             }
             throw "Feed at $feed does not contain version $version"
