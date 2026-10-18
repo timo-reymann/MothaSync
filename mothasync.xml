@@ -44,6 +44,10 @@
       <manifest-digest sha256new="WNXZQXKGTJJEJFDUU5FPVDSDOWXYSALYNRVNYABV5UV7Y73PKFIQ"/>
       <archive extract="mothasync-1.0.11-win-x64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.0.11/mothasync-1.0.11-win-x64.zip" size="253994308" type="application/zip"/>
     </implementation>
+    <implementation arch="Windows-x86_64" id="sha1new=2c0cb059a330da257163c178c5a84e42f48dff71" released="2026-10-18" version="1.0.12">
+      <manifest-digest sha256new="X4QPUJE54I37I2FFQ4HX2UBFNULFXNFMMIJBDWAFX6EIT6SHRM2Q"/>
+      <archive extract="mothasync-1.0.12-win-x64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.0.12/mothasync-1.0.12-win-x64.zip" size="253994472" type="application/zip"/>
+    </implementation>
   </group>
   <group>
     <command name="run" path="MothaSync.Client"/>
@@ -110,6 +114,14 @@
     <implementation arch="Linux-aarch64" id="sha1new=e73c00b62fc88f82b39832641315de40a5ddf626" released="2026-10-18" version="1.0.11">
       <manifest-digest sha256new="5X72VKOEMCOFCJB3KWIGUXTXBASM2GMKOJGS7FOXHPPF355SFWWQ"/>
       <archive extract="mothasync-1.0.11-linux-arm64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.0.11/mothasync-1.0.11-linux-arm64.zip" size="220113562" type="application/zip"/>
+    </implementation>
+    <implementation arch="Linux-x86_64" id="sha1new=441aab74d350486fccb4f10d6d6e0937e3b2c239" released="2026-10-18" version="1.0.12">
+      <manifest-digest sha256new="52TDMBFQLH4JAIHNINLTQ5KNGQ6RYE2ZTHXEMATXXKEA4AXX2OMA"/>
+      <archive extract="mothasync-1.0.12-linux-x64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.0.12/mothasync-1.0.12-linux-x64.zip" size="225432224" type="application/zip"/>
+    </implementation>
+    <implementation arch="Linux-aarch64" id="sha1new=061fb25acec49109388ec313c44ba0f2f3b0fdca" released="2026-10-18" version="1.0.12">
+      <manifest-digest sha256new="UUSKTB3253CNDS5KOV3D5BPVD23C5M7KU55USKLZY53CVPJQ4KWA"/>
+      <archive extract="mothasync-1.0.12-linux-arm64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.0.12/mothasync-1.0.12-linux-arm64.zip" size="220113723" type="application/zip"/>
     </implementation>
   </group>
   <group>
@@ -178,17 +190,25 @@
       <manifest-digest sha256new="B4PWZ4JNZ676TCRITN42N5NYUKFORZPL6V3YX4VAXXSSOJF6BP5Q"/>
       <archive extract="mothasync-1.0.11-osx-arm64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.0.11/mothasync-1.0.11-osx-arm64.zip" size="227686234" type="application/zip"/>
     </implementation>
+    <implementation arch="MacOSX-x86_64" id="sha1new=870deef8f2a4ea75d8bf667699b98db17f0f5689" released="2026-10-18" version="1.0.12">
+      <manifest-digest sha256new="4S4DH3SW24JNUGFP66TDV6SLFIFGREX6MHHYA2BQRFXEWQRGPG3A"/>
+      <archive extract="mothasync-1.0.12-osx-x64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.0.12/mothasync-1.0.12-osx-x64.zip" size="233206968" type="application/zip"/>
+    </implementation>
+    <implementation arch="MacOSX-aarch64" id="sha1new=6b3aea3667a82eda45dabcd2b71433714f9ee0a6" released="2026-10-18" version="1.0.12">
+      <manifest-digest sha256new="YS7H7LYOMWJYTG4HCOJB54F5YI3CSROHLZKEMBVCJQGPQ5ZQIFTA"/>
+      <archive extract="mothasync-1.0.12-osx-arm64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.0.12/mothasync-1.0.12-osx-arm64.zip" size="227686255" type="application/zip"/>
+    </implementation>
   </group>
 </interface>
 <!-- Base64 Signature
-iQGzBAABCgAdFiEEZSeT/O5TvJQqSgp+vOBJryTDigQFAmrUitwACgkQvOBJryTD
-igRkdQv/Xlrd0Qd7TE2UP5bAcfargyh82J9qWSGKJc0ds1PWLsG1sMvPXlvHgZk0
-kl5Tst0pyqCj3GzDsfSVOdy3vOZH15dqzxBt1HXb/6XGgj+TN4i1Ws+rt7mvo1P3
-MWL0BFLF7bf9apaDVbYrUN3d3Y2e0TssfHp1CMgWECU41v/QTh700yVmmdt3v6Uo
-Y60elYS2E7lbUvub8woy+IpPMWkRi3339aEPk2EH/Yf+PcMGi7COUMYL0YR6g3Dd
-nXO5tJNugwhdSKgSS09JGXq9rXycnvjcnP9H102RINri34HNg+NxY++kie8W8aF1
-x2GfklU6OoQhivJy4+mT0XzNDAANWAaldLzTBwaWkf0JPDjAjPzqBit9c0Khcsmg
-kgwhKv1Dr4uFgUSPEW5rKRFcwJrNM6ReL89dNpNkfsF48FtGvEan8HljEChG0iiY
-E1c+kxtsnbi2nEKiBFm9vrYYjAGr6mwUqqX8j/r27x8mu3/DAm9XUTG+eYwVbbX1
-O4rnMGKm
+iQGzBAABCgAdFiEEZSeT/O5TvJQqSgp+vOBJryTDigQFAmrUjZUACgkQvOBJryTD
+igQdywv/VaSdwTUOMuoxmenJ4IlSUReDDpOOkADUAVzIawLAM63ib1XGK4nXXevd
+EsxZ151CnmAXG8mhzJZmR+qYhQsTu/nQNfZsr/DE7EBAObPWN8rqVrjX35DVRBPs
+MBQMPSZPHZ4PHGffPPSIRo2+ufHXXEkA3WYTvgUzydzKaOj+45snInRYhTdKKmzh
+BfsGDyXMtl5qKi5ARxIf6M+Uj5j6VQUXUIxy1J3epkuDy8ePKiOsCWIXAHZ96g8m
+Ie/FLMjsUhKqLRDa5J2ln8r6IjvyRIHDFQapYK2j3+ZP+uFb6dRwDAGrc3n9leWG
++0NZBKsNU4ulKbm16y8nTKJvLqaF5UlvWIpEUzjJlBmgTRv18nsnraCG29RjSX57
+cLlk/IRJYjyFA3hcB/KwifdJqMvcS+veaelYasf9Fi1mr5GXOuV0jLGMJENfKPUk
+VOBHz8kCOtzvq3TDx7nqFYzGLPawQdaM6xBlXiNFpmVVrS4VuOGi5wHUhRKamibS
+4Kt2/rlx
 -->
