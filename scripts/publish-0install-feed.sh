@@ -28,7 +28,8 @@ version="$1"
 released="$(date -u +%F)"
 gh_owner=timo-reymann
 gh_repo=MothaSync
-feed_url="https://${gh_owner}.github.io/${gh_repo}/mothasync.xml"
+pages_host=mothasync.timo-reymann.de
+feed_url="https://${pages_host}/mothasync.xml"
 repo_url="https://x-access-token:${GITHUB_TOKEN}@github.com/${gh_owner}/${gh_repo}.git"
 
 work="$(mktemp -d)"
@@ -69,14 +70,20 @@ else
 fi
 
 if [[ -f "$master" ]]; then
-  # Merge the new version into the master feed and re-sign it.
-  python3 scripts/merge-feed.py "$master" "$generated" "$key_id"
+  # Merge the new version into the master feed and re-sign it. --canonical
+  # re-points the feed-for element of an existing master feed to the current
+  # feed URL, so a domain migration survives the next merge.
+  python3 scripts/merge-feed.py --canonical "$feed_url" "$master" "$generated" "$key_id"
 else
   # The generated feed becomes the first version of the master feed.
   # merge-feed.py signs it and the public key is exported next to it below,
   # so 0install clients can fetch the key from the same directory.
-  python3 scripts/merge-feed.py --init "$feed_url" "$work/pages/mothasync.xml" "$generated" "$key_id"
+  python3 scripts/merge-feed.py --init "$feed_url" --canonical "$feed_url" "$work/pages/mothasync.xml" "$generated" "$key_id"
 fi
+
+# GitHub Pages serves the custom domain only when the CNAME file sits at the
+# root of the publish branch.
+printf '%s\n' "$pages_host" > "$work/pages/CNAME"
 
 # Publish the icons next to the feed. The icon gives the Windows bootstrapper
 # and 0install launchers their icon.

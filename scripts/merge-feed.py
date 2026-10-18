@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 """Merges a 0template-generated feed into the 0install master feed and signs it.
 
-Usage: merge-feed.py [--init FEED_URI] <master-feed> <generated-feed> <gpg-key-id>
+Usage: merge-feed.py [--init FEED_URI] [--canonical FEED_URI] <master-feed> <generated-feed> <gpg-key-id>
 
 --init creates the master feed from the generated one and sets the canonical
 feed URI. Without --init the implementations of the generated feed are merged
 into the matching per-arch groups. Implementations with the same version are
 replaced, so a re-run is safe.
+
+--canonical re-points the feed-for element and the deprecated root uri
+attribute of the result to the given feed URI. Pass it on every run, so a
+canonical feed URL change survives the next merge.
 
 The result is signed with a detached GPG signature embedded as a Base64
 comment block, the same format 0install clients accept. Requires gpg on
@@ -92,7 +96,7 @@ def sorted_attrs(node):
     return sorted(node.attributes.keys())
 
 
-def merge(master_path, generated_path, init_uri):
+def merge(master_path, generated_path, init_uri, canonical_uri):
     master_doc = minidom.parse(master_path) if init_uri is None else minidom.parse(generated_path)
     generated_doc = minidom.parse(generated_path)
 
@@ -102,6 +106,16 @@ def merge(master_path, generated_path, init_uri):
     if init_uri is not None:
         # The generated feed becomes the master feed; set the canonical feed URI.
         master_root.setAttribute("uri", init_uri)
+
+    if canonical_uri is not None:
+        # Keep the canonical feed URL current, so a domain migration applies
+        # to the published master feed with the next merge.
+        if master_root.hasAttribute("uri"):
+            master_root.setAttribute("uri", canonical_uri)
+        for feed_for in direct_children(master_root, "feed-for"):
+            feed_for.setAttribute("interface", canonical_uri)
+
+    if init_uri is not None:
         return master_doc
 
     master_groups = group_index(master_root)
@@ -155,20 +169,24 @@ def sign(master_doc, key_id, gpg="gpg"):
 def main():
     args = sys.argv[1:]
     init_uri = None
-    if args[:1] == ["--init"] and len(args) == 5:
-        init_uri = args[1]
-        args = args[2:]
+    canonical_uri = None
+    while args[:1] == ["--init"] or args[:1] == ["--canonical"]:
+        flag, value, args = args[0], args[1], args[2:]
+        if flag == "--init":
+            init_uri = value
+        else:
+            canonical_uri = value
     if len(args) != 3:
         print(__doc__)
         sys.exit(1)
     master_path, generated_path, key_id = args
 
     if init_uri is not None:
-        result = merge(master_path, generated_path, init_uri=init_uri)
+        result = merge(master_path, generated_path, init_uri=init_uri, canonical_uri=canonical_uri)
     else:
         if not os.path.exists(master_path):
             fail(f"master feed {master_path} does not exist")
-        result = merge(master_path, generated_path, init_uri=None)
+        result = merge(master_path, generated_path, init_uri=None, canonical_uri=canonical_uri)
 
     with open(master_path, "wb") as file:
         file.write(sign(result, key_id))

@@ -165,7 +165,7 @@ jobs:
       - run:
           name: Wait for the feed to contain the release
           command: |
-            $feed = "https://timo-reymann.github.io/MothaSync/mothasync.xml"
+            $feed = "https://mothasync.timo-reymann.de/mothasync.xml"
             $version = $env:CIRCLE_TAG -replace '^v', ''
             for ($i = 1; $i -le 12; $i++) {
               try {
@@ -200,12 +200,12 @@ jobs:
             gpgconf --kill all
             Get-Process gpg-agent, dirmngr, keyboxd -ErrorAction SilentlyContinue | Stop-Process -Force
             Write-Output "Trusting fingerprint: $fingerprint"
-            .\0install.exe trust add $fingerprint timo-reymann.github.io
+            .\0install.exe trust add $fingerprint mothasync.timo-reymann.de
             Write-Output "trust add exit code: $LASTEXITCODE"
             .\0install.exe trust list
             # The bootstrapper tool resolves its CLI through the ZEROINSTALL variable.
             $env:ZEROINSTALL = "$PWD\0install.exe"
-            .\0install.exe run https://apps.0install.net/0install/0bootstrap.xml https://timo-reymann.github.io/MothaSync/mothasync.xml --integrate-args=--add-standard 2>&1 | Out-String | Write-Output
+            .\0install.exe run https://apps.0install.net/0install/0bootstrap.xml https://mothasync.timo-reymann.de/mothasync.xml --integrate-args=--add-standard 2>&1 | Out-String | Write-Output
             Write-Output "0bootstrap exit code: $LASTEXITCODE"
             if (-not (Test-Path "MothaSync.exe")) { Write-Error "0bootstrap did not produce MothaSync.exe"; exit 1 }
       - run:

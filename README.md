@@ -34,15 +34,17 @@
 - Or manage updates through 0install directly:
 
 ```bash
-0install add MothaSync https://timo-reymann.github.io/MothaSync/mothasync.xml
+0install add MothaSync https://mothasync.timo-reymann.de/mothasync.xml
 0install run MothaSync
 ```
 
 Release archives are available for Windows x64, Linux x64, Linux arm64, macOS Apple Silicon, and macOS Intel. The 0install feed ships the same archives.
 
-The feed is signed by a release key kept on GitHub Pages next to the feed. 0install downloads the key automatically. On first run, 0install asks once to trust the key for `timo-reymann.github.io`.
+The feed is signed by a release key kept next to the feed on `mothasync.timo-reymann.de`. 0install downloads the key automatically. On first run, 0install asks once to trust the key for `mothasync.timo-reymann.de`.
 
-The [homepage](https://timo-reymann.github.io/MothaSync/) lists the downloads and the 0install command. The release pipeline publishes it next to the feed, and `make publish-homepage` publishes it for a single version.
+Installs that use the old `timo-reymann.github.io` feed URL keep working. GitHub Pages redirects the old URL to the new domain. 0install asks once to trust the key for the new domain on the next update.
+
+The [homepage](https://mothasync.timo-reymann.de/) lists the downloads and the 0install command. The release pipeline publishes it next to the feed, and `make publish-homepage` publishes it for a single version.
 
 ## Usage
 
