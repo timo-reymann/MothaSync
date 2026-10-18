@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.Versioning;
 using System.Xml.Linq;
 using Microsoft.Win32;
@@ -12,6 +13,12 @@ internal static class AutoStartRegistration
 {
     private const string Argument = "--mothasync-autostart";
     private const string ApplicationId = "de.timo_reymann.mothasync";
+
+    /// <summary>True when the app was started through its autostart entry.</summary>
+    public static bool IsAutoStart => HasAutoStartArgument(Environment.GetCommandLineArgs());
+
+    public static bool HasAutoStartArgument(IReadOnlyList<string> args)
+        => args.Contains(Argument, StringComparer.Ordinal);
 
     public static void EnsureRegistered()
     {

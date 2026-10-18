@@ -12,6 +12,8 @@ namespace MothaSync.Client;
 
 public partial class App : Application
 {
+    private Window? _mainWindow;
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -25,7 +27,13 @@ public partial class App : Application
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.MainWindow = new MainWindow();
+            _mainWindow = new MainWindow();
+            // The classic lifetime shows its MainWindow on startup. An autostart
+            // run starts minimized to the tray, so the window stays unassigned.
+            if (!AutoStartRegistration.IsAutoStart)
+            {
+                desktop.MainWindow = _mainWindow;
+            }
         }
 
         UserNotifications.Error += OnError;
@@ -81,17 +89,19 @@ public partial class App : Application
 
     private void ShowMainWindow()
     {
-        if (ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime { MainWindow: { } window })
+        if (ApplicationLifetime is not IClassicDesktopStyleApplicationLifetime desktop || _mainWindow is null)
         {
             return;
         }
 
-        window.Show();
-        if (window.WindowState == WindowState.Minimized)
+        // Dialog ownership and close behavior need the lifetime to know the window.
+        desktop.MainWindow = _mainWindow;
+        _mainWindow.Show();
+        if (_mainWindow.WindowState == WindowState.Minimized)
         {
-            window.WindowState = WindowState.Normal;
+            _mainWindow.WindowState = WindowState.Normal;
         }
 
-        window.Activate();
+        _mainWindow.Activate();
     }
 }
