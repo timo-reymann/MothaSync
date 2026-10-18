@@ -1,3 +1,17 @@
+# [1.4.0](https://github.com/timo-reymann/MothaSync/compare/v1.3.1...v1.4.0) (2026-10-18)
+
+
+### Bug Fixes
+
+* add a favicon to the homepage ([f3331b2](https://github.com/timo-reymann/MothaSync/commit/f3331b2285eccc25d073c4546bba0624833ce444))
+* center the sync history rows and the warning icon ([6e00eb3](https://github.com/timo-reymann/MothaSync/commit/6e00eb3a35bf3dfcba60a801f0dbd751672646ef))
+* polish the drive cards on the homepage ([59b6a96](https://github.com/timo-reymann/MothaSync/commit/59b6a96ac2ede656d337e5cc63df8fb081102dff))
+
+
+### Features
+
+* start minimized to the tray on autostart ([e285e11](https://github.com/timo-reymann/MothaSync/commit/e285e11e67a151c839c797e9ece25f83ba9bea2b))
+
 ## [1.3.1](https://github.com/timo-reymann/MothaSync/compare/v1.3.0...v1.3.1) (2026-10-18)
 
 
