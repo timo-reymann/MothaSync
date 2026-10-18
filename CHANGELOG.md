@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/timo-reymann/MothaSync/compare/v1.0.12...v1.1.0) (2026-10-18)
+
+
+### Features
+
+* list rclone in NOTICE via an SPDX declaration ([#20](https://github.com/timo-reymann/MothaSync/issues/20)) ([b6844e2](https://github.com/timo-reymann/MothaSync/commit/b6844e241817a2bd19108bb6268f096fcc46d490))
+
 ## [1.0.12](https://github.com/timo-reymann/MothaSync/compare/v1.0.11...v1.0.12) (2026-10-18)
 
 
