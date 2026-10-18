@@ -1,3 +1,10 @@
+## [1.0.8](https://github.com/timo-reymann/MothaSync/compare/v1.0.7...v1.0.8) (2026-10-18)
+
+
+### Bug Fixes
+
+* **circleci:** expand the key glob in PowerShell before importing it ([983dbee](https://github.com/timo-reymann/MothaSync/commit/983dbee275c50c66f36df36c2d1b69764ef2a636))
+
 ## [1.0.7](https://github.com/timo-reymann/MothaSync/compare/v1.0.6...v1.0.7) (2026-10-18)
 
 
