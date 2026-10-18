@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<interface uri="https://timo-reymann.github.io/MothaSync/mothasync.xml" xmlns="http://zero-install.sourceforge.net/2004/injector/interface" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://zero-install.sourceforge.net/2004/injector/interface https://docs.0install.net/specifications/feed.xsd">
+<interface uri="https://mothasync.timo-reymann.de/mothasync.xml" xmlns="http://zero-install.sourceforge.net/2004/injector/interface" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://zero-install.sourceforge.net/2004/injector/interface https://docs.0install.net/specifications/feed.xsd">
   <name>MothaSync</name>
   <summary>system tray tool that syncs a folder from disk A to disk B</summary>
   <description>MothaSync provides a focused desktop interface for keeping a folder mirrored between two local drives without requiring users to operate rclone directly.</description>
@@ -8,7 +8,7 @@
   <icon href="https://timo-reymann.github.io/MothaSync/mothasync.png" type="image/png"/>
   <icon href="https://timo-reymann.github.io/MothaSync/mothasync.ico" type="image/vnd.microsoft.icon"/>
   <icon href="https://timo-reymann.github.io/MothaSync/mothasync.icns" type="image/x-icns"/>
-  <feed-for interface="https://timo-reymann.github.io/MothaSync/mothasync.xml"/>
+  <feed-for interface="https://mothasync.timo-reymann.de/mothasync.xml"/>
   <entry-point binary-name="MothaSync.Client" command="run"/>
   <group>
     <command name="run" path="MothaSync.Client.exe"/>
@@ -55,6 +55,10 @@
     <implementation arch="Windows-x86_64" id="sha1new=59e024e6ebe9508d681d524c1ec0f11cebb4fdd5" released="2026-10-18" version="1.2.0">
       <manifest-digest sha256new="5JGXBFAHZQK7MFKFPLDTYZVLPEEUZE47E2CK5QELOCB3YLZ2TGBQ"/>
       <archive extract="mothasync-1.2.0-win-x64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.2.0/mothasync-1.2.0-win-x64.zip" size="253993995" type="application/zip"/>
+    </implementation>
+    <implementation arch="Windows-x86_64" id="sha1new=2bf856b80fde4d109572dd97d3f1196612b103d4" released="2026-10-18" version="1.3.0">
+      <manifest-digest sha256new="4VKM4ZELRZCZIH2X73U7H3GX5GTVCHEBL5WYSASO5MVZCNQBWTTA"/>
+      <archive extract="mothasync-1.3.0-win-x64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.3.0/mothasync-1.3.0-win-x64.zip" size="253993972" type="application/zip"/>
     </implementation>
   </group>
   <group>
@@ -147,6 +151,14 @@
       <manifest-digest sha256new="JTDFUUG6JFHJY5UWP4MZS7ED77MW4DU3U23AJ7I6DDXVRDGKA7BA"/>
       <archive extract="mothasync-1.2.0-linux-arm64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.2.0/mothasync-1.2.0-linux-arm64.zip" size="220113257" type="application/zip"/>
     </implementation>
+    <implementation arch="Linux-x86_64" id="sha1new=6bcb7fae1f75bb3ec2529467e9f70aa4d90a62d0" released="2026-10-18" version="1.3.0">
+      <manifest-digest sha256new="OODMXSC7QSIXTHPBSBFGG53ONSO7DBTMAO62BWHJ5J3ZGHJZJ7QQ"/>
+      <archive extract="mothasync-1.3.0-linux-x64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.3.0/mothasync-1.3.0-linux-x64.zip" size="225431895" type="application/zip"/>
+    </implementation>
+    <implementation arch="Linux-aarch64" id="sha1new=7d778ba8043130ba2b0c366e65e1dac57772ea0a" released="2026-10-18" version="1.3.0">
+      <manifest-digest sha256new="2XSP5PY6DC7JLQBJWHRDNBGASDOCFLLTJ5BXY3UMAHKGB6V2MZSQ"/>
+      <archive extract="mothasync-1.3.0-linux-arm64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.3.0/mothasync-1.3.0-linux-arm64.zip" size="220113244" type="application/zip"/>
+    </implementation>
   </group>
   <group>
     <command name="run" path="MothaSync.app/Contents/MacOS/MothaSync.Client"/>
@@ -238,17 +250,25 @@
       <manifest-digest sha256new="KCF4LORUCMPG3IWWQTTRHT7NWYFEW7B5ZUA64N6UVFMZG7LVLKUQ"/>
       <archive extract="mothasync-1.2.0-osx-arm64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.2.0/mothasync-1.2.0-osx-arm64.zip" size="227685490" type="application/zip"/>
     </implementation>
+    <implementation arch="MacOSX-x86_64" id="sha1new=2749bc3424a0fd6b1985784233fbacbaff428f81" released="2026-10-18" version="1.3.0">
+      <manifest-digest sha256new="MX3GN3DJZ32RVCZWGF2K3UH66OUFVYU7FUGU2FQ5OH5VMPPZ6WGQ"/>
+      <archive extract="mothasync-1.3.0-osx-x64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.3.0/mothasync-1.3.0-osx-x64.zip" size="233206212" type="application/zip"/>
+    </implementation>
+    <implementation arch="MacOSX-aarch64" id="sha1new=e69b93a1f1c8ae509ef74d3d162124afc562048b" released="2026-10-18" version="1.3.0">
+      <manifest-digest sha256new="AH7A5YNEV2PLSCEJVW2BAJFROI7AQKB7IMVV7E5SFSZZHIVVIQUQ"/>
+      <archive extract="mothasync-1.3.0-osx-arm64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.3.0/mothasync-1.3.0-osx-arm64.zip" size="227685480" type="application/zip"/>
+    </implementation>
   </group>
 </interface>
 <!-- Base64 Signature
-iQGzBAABCgAdFiEEZSeT/O5TvJQqSgp+vOBJryTDigQFAmrUlocACgkQvOBJryTD
-igQvMgv/f4n+OzxHk46Ovuq/bsqtSdTR0KC8aaK03COWsKWVpxcqLFqBSEH5lObX
-m0bu4s5JHdNZIruex7LNIejBsyysT9/A3fK6/GYN3uoQZVKIY0SnBoBS5aUHmWJT
-BXFBbMVvqul/5XtqeVSRXY5MBovcH/JUODLzT2IrU+XZIIdmwgKvbJyn8EHXhOfJ
-B2NjYfbRr3YniZYXSZYKCHkmScXYwtcsyicY7O0HF0jL7+YG4wm5rgmEH3a6Ugzf
-6As1q2mMVzUfsNRZkKi8WpjWuHfXC7Qg0+JEEcYfZ/kADqgH1O/Mu1tot+mqzJOf
-Q7DbH9Qf/z+Xtgni1kzf1SCAXF14QJ5DjugmNLcP8ePXQw9zvqKS/DKSZxciZkCJ
-6dI+NI0jvzwAflxFDlYDRswB+Ta0+/LdZqvv2iRqU3xAg9Zk/uoSIH/4JMeAtUWi
-eSkcuqy1Lo1IZKhlWGjG3q+VUUnywvYC+gPj40rFhTLPMtXA0OuBhm+6ETwSFRYy
-qBO8WyMG
+iQGzBAABCgAdFiEEZSeT/O5TvJQqSgp+vOBJryTDigQFAmrUo+YACgkQvOBJryTD
+igR3Zwv6AhSmfOkRm74i+dPNZeFTZobEv09djh2cs1CJiisqZUSz53AtZTDNf+0F
+R5oxeUQCT1j5PNVwMgf46nfGzI2+TTqlxWicEb95gKYAkhPZtnlgK5JWp7tRmeVE
+FoHHbfP5px1aBtta2dZzK6anwE30N9vcXq7QrCyg2vHvRmcRdPVRUmJfoECX0ibN
+RtrQaTlBqmE36HPehGC43SYfyR7okKbJAHNiIpzV0KGamuIZFClKwPMgt4niCuoM
+vMva38co37RwqaXVcXhguawy58nfydFzBGzlTABQqma8yBWoKQX2IQzVXIPkMJiy
+wOifXVN7mOSivP4ISPZb20WFuRTlfJSI8VPriC6na6uk8GPdaXp0+AZDSt8Dapd1
+XnwojF+UzC1pn4+1S3u+ckoq2XZssXVSQl+L8aC8OdxbTVxltOqTT23f3kxlwzYD
+P0Za41iZgSoUIYumFEfIsWuMJuQos0RFSCNWOgAVililBfDhKAMTmXBZBYHo29Ig
+MvuMKdS/
 -->
