@@ -1,3 +1,10 @@
+## [1.0.11](https://github.com/timo-reymann/MothaSync/compare/v1.0.10...v1.0.11) (2026-10-18)
+
+
+### Bug Fixes
+
+* **circleci:** stop the gpg agent so the Windows bootstrapper step can finish ([0923f97](https://github.com/timo-reymann/MothaSync/commit/0923f97721b4efc17c8ef0ba832bbf04ba2a416e))
+
 ## [1.0.10](https://github.com/timo-reymann/MothaSync/compare/v1.0.9...v1.0.10) (2026-10-18)
 
 
