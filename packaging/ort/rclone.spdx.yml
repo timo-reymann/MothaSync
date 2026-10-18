@@ -1,6 +1,7 @@
 # SPDX declaration for the rclone binary that scripts/download-rclone.sh fetches
-# at build time. The source URL lets ORT scan the rclone v1.75.2 source, and the
-# declared license is used unchanged as the attribution.
+# at build time. The git location pins the rclone source tag so ORT scans rclone
+# itself instead of resolving to this repository, and the declared license is
+# used unchanged as the attribution.
 SPDXID: "SPDXRef-DOCUMENT"
 spdxVersion: "SPDX-2.3"
 creationInfo:
@@ -22,7 +23,7 @@ packages:
 - SPDXID: "SPDXRef-Package-rclone"
   name: "rclone"
   # renovate: datasource=github-releases depName=rclone/rclone
-  downloadLocation: "https://github.com/rclone/rclone/archive/refs/tags/v1.75.2.tar.gz"
+  downloadLocation: "git+https://github.com/rclone/rclone.git@v1.75.2"
   # renovate: datasource=github-releases depName=rclone/rclone
   versionInfo: v1.75.2
   homepage: "https://rclone.org"
