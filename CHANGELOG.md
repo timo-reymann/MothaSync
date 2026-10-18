@@ -1,3 +1,10 @@
+## [1.0.7](https://github.com/timo-reymann/MothaSync/compare/v1.0.6...v1.0.7) (2026-10-18)
+
+
+### Bug Fixes
+
+* **circleci:** delimit the loop variable in the feed wait message ([d5541d2](https://github.com/timo-reymann/MothaSync/commit/d5541d210dd8370d880e4c2f06c699e68d0c1010))
+
 ## [1.0.6](https://github.com/timo-reymann/MothaSync/compare/v1.0.5...v1.0.6) (2026-10-17)
 
 
