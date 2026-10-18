@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MothaSync</title>
+<meta name="description" content="MothaSync is a system tray tool that syncs a folder from disk A to disk B. Download it or install it through 0install.">
+<meta name="theme-color" content="#282727">
+<style>
+  :root {
+    /* Colors mirror the client theme in src/MothaSync.Client/Styles/Resources.axaml. */
+    --bg: #282727;             /* AppBg */
+    --card: #343232;           /* AppCard */
+    --line: #494646;           /* AppLine */
+    --line-hover: #615D5D;     /* AppLineHover */
+    --ink: #F1F5F9;            /* AppText */
+    --muted: #94A3B8;          /* AppMuted */
+    --accent: #F97316;         /* AppAccent */
+    --accent-hover: #FB8A3C;   /* AppAccentHover */
+    --accent-soft: rgba(249, 115, 22, 0.12);  /* AppAccentSoft */
+    --accent-border: rgba(249, 115, 22, 0.4); /* AppAccentBorder */
+    --on-accent: #282727;      /* AppOnAccent */
+    --code-bg: #1F1E1E;        /* AppLogBg */
+    --ok: #10B981;             /* AppOk */
+    --sync: #3B82F6;           /* AppSync */
+    --err: #EF4444;            /* AppErr */
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .hero {
+    text-align: center;
+    padding: 56px 16px 8px;
+  }
+  .hero img {
+    width: 150px;
+    height: 150px;
+  }
+  h1 {
+    font-size: 2.1rem;
+    margin: 4px 0 6px;
+  }
+  .tagline {
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 38rem;
+    margin: 0 auto 14px;
+  }
+  main {
+    max-width: 56rem;
+    margin: 0 auto;
+    padding: 8px 16px 40px;
+  }
+  section {
+    margin-top: 48px;
+  }
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.95rem;
+    color: var(--ink);
+    margin: 0 0 16px;
+  }
+  h2::before {
+    content: "";
+    width: 40px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 3px;
+    flex: none;
+  }
+  h2::after {
+    content: "";
+    flex: 1;
+    height: 2px;
+    background: var(--accent-border);
+    border-radius: 1px;
+  }
+  h2 img { width: 22px; height: 22px; }
+  .cta {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 10px;
+  }
+  .cta-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 12px;
+    padding: 14px 28px;
+    font-weight: 700;
+    font-size: 1.05rem;
+    text-decoration: none;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .cta-btn.primary {
+    background: var(--accent);
+    border: 1px solid var(--accent);
+    color: var(--on-accent);
+  }
+  .cta-btn.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+  .cta-btn.secondary {
+    background: var(--card);
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .cta-btn.secondary:hover { border-color: var(--accent-hover); }
+  .cta-btn svg { width: 18px; height: 18px; fill: currentColor; }
+  .cta-btn img { width: 22px; height: 22px; }
+  .zigzag {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+  }
+  .zz-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px 28px;
+  }
+  .zz-row.reverse { flex-direction: row-reverse; }
+  .zz-row .text { flex: 1 0 calc(40% - 14px); }
+  .zz-row .visual { flex: 1 0 calc(60% - 14px); }
+  .zz-row figure { margin: 0; }
+  .zz-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin: 0 0 6px;
+  }
+  .zz-ico {
+    width: 20px;
+    height: 20px;
+    flex: none;
+    color: var(--accent);
+  }
+  .zz-desc {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin: 0;
+  }
+  .shot {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px;
+    margin: 0;
+  }
+  .shot svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+  }
+  .shot-main {
+    max-width: 54rem;
+    margin: 30px auto;
+  }
+  .slideshow {
+    position: relative;
+    aspect-ratio: 1100 / 720;
+    overflow: hidden;
+  }
+  .slideshow img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .slideshow img.current { opacity: 1; }
+  .sl-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: rgba(40, 39, 39, 0.78);
+    color: var(--ink);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s, border-color 0.2s;
+  }
+  .sl-nav svg { width: 14px; height: 14px; }
+  .sl-prev { left: 12px; }
+  .sl-next { right: 12px; }
+  .slideshow:hover .sl-nav, .sl-nav:focus-visible { opacity: 1; }
+  .sl-nav:hover { border-color: var(--accent); }
+  .sl-dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 10px;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+  }
+  .sl-dots span {
+    position: relative;
+    width: 30px;
+    height: 3px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.18);
+    overflow: hidden;
+  }
+  .sl-dots span::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  .sl-dots span.active::after { animation: dot-fill 8s linear forwards; }
+  @keyframes dot-fill { to { transform: scaleX(1); } }
+  .cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 12px;
+  }
+  .platform-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .platform-name {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+  }
+  .icon {
+    width: 28px;
+    height: 28px;
+    flex: none;
+    fill: currentColor;
+  }
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .file-link {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 8px 14px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, background 0.15s, transform 0.15s;
+  }
+  .file-link:hover {
+    border-color: var(--accent-hover);
+  }
+  .file-link.recommended {
+    border-color: var(--accent-border);
+    background: var(--accent-soft);
+  }
+  .file-link.matched {
+    position: relative;
+    z-index: 1;
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    transform: scale(1.03);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  }
+  .file-link .label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.88rem;
+  }
+  .file-link .file {
+    display: block;
+    color: var(--muted);
+    font-size: 0.78rem;
+    margin-top: 2px;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--on-accent);
+    border-radius: 999px;
+    font-size: 0.68rem;
+    padding: 1px 8px;
+    margin-left: 6px;
+    vertical-align: 2px;
+  }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 16px;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  pre code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: var(--ink); }
+  .code-block { position: relative; }
+  .copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 5px 10px;
+    color: var(--muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .copy-btn:hover { color: var(--ink); border-color: var(--accent-hover); }
+  .copy-btn.copied { color: var(--ok); border-color: var(--ok); }
+  .copy-btn svg { width: 13px; height: 13px; }
+  .note {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin: 12px 0 0;
+  }
+  .note a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .note a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+  footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 16px 40px;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { color: var(--accent-hover); text-decoration: underline; }
+  .footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .footer-link .gh { width: 16px; height: 16px; fill: currentColor; }
+  .footer-link .doc { width: 15px; height: 15px; }
+  .fork-me {
+    position: fixed;
+    top: 42px;
+    right: -58px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 220px;
+    padding: 7px 0;
+    transform: rotate(45deg);
+    background: var(--accent);
+    color: var(--on-accent);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+  }
+  .fork-me svg { width: 16px; height: 16px; fill: var(--on-accent); }
+  @media (max-width: 640px) {
+    .fork-me { top: 28px; right: -70px; width: 200px; font-size: 0.72rem; }
+  }
+</style>
+</head>
+<body>
+  <a class="fork-me" href="https://github.com/timo-reymann/MothaSync" aria-label="Fork me on GitHub">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+    <span>Fork me on GitHub</span>
+  </a>
+  <header class="hero">
+    <img src="logo.png" alt="MothaSync logo" width="150" height="150">
+    <h1>MothaSync</h1>
+    <p class="tagline">One drive alone is not gonna save you from data loss. Plug your working drive and your backup drive into the PC, and MothaSync mirrors them on its own — no hassle.</p>
+  </header>
+  <main>
+    <div class="cta">
+      <a class="cta-btn primary" href="#download">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M7 1h2v6.6l2.3-2.3 1.4 1.4L8 11.4 3.3 6.7l1.4-1.4L7 7.6z"/><path d="M2 12h12v2H2z"/></svg>
+        <span>Download the app</span>
+      </a>
+      <a class="cta-btn secondary" href="#install">
+        <img src="zeroinstall-icon.png" alt="" width="22" height="22">
+        <span>Install through 0install</span>
+      </a>
+    </div>
+    <!-- The slideshow cycles the DemoShot captures; the tray and log panels are mocks. -->
+    <figure class="shot-main">
+      <div class="slideshow">
+        <img class="current" src="screenshot-overview.png" alt="MothaSync main window with both drives connected" width="1100" height="720">
+        <img src="screenshot-settings.png" alt="Settings with both drives configured" width="1100" height="960">
+        <img src="screenshot-done.png" alt="Sync complete with 6 files and 68 MiB in one second" width="1100" height="720">
+        <img src="screenshot-history.png" alt="Sync history listing six runs with one failed run marked" width="1100" height="560">
+        <button class="sl-nav sl-prev" type="button" aria-label="Previous screenshot">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 3 5 8l5 5"/></svg>
+        </button>
+        <button class="sl-nav sl-next" type="button" aria-label="Next screenshot">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
+        </button>
+        <div class="sl-dots">
+          <span class="active"></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </figure>
+    <section>
+      <h2>Features</h2>
+      <div class="zigzag">
+        <div class="zz-row">
+          <div class="text">
+            <p class="zz-title"><svg class="zz-ico" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 2l2.5 2.5L9 6v5H7V6L5.5 7.5 3 5z"/><path d="M2 10h2.5l1 1.5h5l1-1.5H14v3a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-3z"/></svg>Tray app</p>
+            <p class="zz-desc">Motha runs in the background and watches over your drives from the tray. Always there, never in the way.</p>
+          </div>
+          <figure class="shot visual">
+            <svg viewBox="150 0 250 132" role="img" aria-label="Cut of the macOS menu bar with the open MothaSync tray menu">
+              <defs>
+                <filter id="menu-shadow" x="-20%" y="-20%" width="140%" height="160%">
+                  <feDropShadow dx="0" dy="3" stdDeviation="4" flood-opacity="0.4"/>
+                </filter>
+              </defs>
+              <!-- macOS menu bar -->
+              <rect x="150" y="0" width="250" height="24" fill="#161616"/>
+              <!-- MothaSync tray icon with the open-menu highlight -->
+              <rect x="229" y="4" width="18" height="16" rx="4" fill="#3a3a3c"/>
+              <image href="tray-ok.png" x="230.5" y="4.5" width="15" height="15"/>
+              <!-- system status icons -->
+              <g fill="none" stroke="#d6d6d6" stroke-width="1.2">
+                <rect x="254" y="7" width="14" height="5" rx="2.5"/>
+                <rect x="254" y="14" width="14" height="5" rx="2.5" fill="#d6d6d6" stroke="none" opacity="0.7"/>
+              </g>
+              <text x="392" y="15.5" font-size="9" fill="#d6d6d6" text-anchor="end">Thu 1 May 1997  13:31</text>
+              <!-- open tray menu -->
+              <rect x="230" y="28" width="150" height="92" rx="10" fill="#2b2b2d" stroke="#3d3d3f" filter="url(#menu-shadow)"/>
+              <rect x="235" y="32" width="140" height="20" rx="5" fill="#0a60ff"/>
+              <text x="241" y="45.5" font-size="10" fill="#fff">Open MothaSync</text>
+              <line x1="234" y1="55.5" x2="376" y2="55.5" stroke="#ffffff" opacity="0.12"/>
+              <text x="241" y="66.5" font-size="10" fill="#7c7c80">MothaSync v1.2.3</text>
+              <line x1="234" y1="76.5" x2="376" y2="76.5" stroke="#ffffff" opacity="0.12"/>
+              <text x="241" y="87.5" font-size="10" fill="#F1F5F9">License information</text>
+              <text x="241" y="108.5" font-size="10" fill="#F1F5F9">Exit</text>
+            </svg>
+          </figure>
+        </div>
+        <div class="zz-row reverse">
+          <div class="text">
+            <p class="zz-title"><svg class="zz-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5"/><path d="M4.5 6l2.5 2-2.5 2M8.5 10.5h3"/></svg>Backed by rclone</p>
+            <p class="zz-desc">Fast, reliable syncs powered by rclone — the tool trusted by millions.</p>
+          </div>
+          <figure class="shot visual">
+            <svg viewBox="0 0 320 200" role="img" aria-label="Sync log driven by rclone">
+              <rect x="0.5" y="0.5" width="319" height="199" rx="9" fill="#343232" stroke="#494646"/>
+              <path d="M9.5 0.5h301a9 9 0 0 1 9 9v19h-319v-19a9 9 0 0 1 9-9z" fill="#1F1E1E"/>
+              <circle cx="16" cy="14" r="4" fill="#F97316"/>
+              <text x="28" y="17.5" font-size="10" fill="#94A3B8">Sync log</text>
+              <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5">
+                <text x="12" y="50"><tspan fill="#64748B">11:02:31 </tspan><tspan fill="#3B82F6">INFO</tspan><tspan fill="#F1F5F9">  Starting rclone sync API</tspan></text>
+                <text x="12" y="68"><tspan fill="#64748B">11:02:32 </tspan><tspan fill="#3B82F6">INFO</tspan><tspan fill="#F1F5F9">  rclone sync API job 3 started</tspan></text>
+                <text x="12" y="86"><tspan fill="#64748B">11:02:33 </tspan><tspan fill="#3B82F6">INFO</tspan><tspan fill="#F1F5F9">  Copied: photos-export.bin (11.0 MiB)</tspan></text>
+                <text x="12" y="104"><tspan fill="#64748B">11:02:33 </tspan><tspan fill="#3B82F6">INFO</tspan><tspan fill="#F1F5F9">  Copied: taxes-2026.bin (13.0 MiB)</tspan></text>
+                <text x="12" y="122"><tspan fill="#64748B">11:02:34 </tspan><tspan fill="#3B82F6">INFO</tspan><tspan fill="#F1F5F9">  Transferred 2 files (24.0 MiB)</tspan></text>
+                <text x="12" y="140"><tspan fill="#64748B">11:02:34 </tspan><tspan fill="#3B82F6">INFO</tspan><tspan fill="#F1F5F9">  Stopping rclone sync API</tspan></text>
+                <text x="12" y="158"><tspan fill="#64748B">11:02:34 </tspan><tspan fill="#3B82F6">INFO</tspan><tspan fill="#F1F5F9">  Sync finished with status completed</tspan></text>
+              </g>
+            </svg>
+          </figure>
+        </div>
+        <div class="zz-row">
+          <div class="text">
+            <p class="zz-title"><svg class="zz-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><path d="M8 4.5V8l2.5 1.5"/></svg>Fire and forget</p>
+            <p class="zz-desc">Set it up once and it just works. Motha syncs on login and whenever all drives connect.</p>
+          </div>
+          <figure class="shot visual">
+            <svg viewBox="0 0 320 200" role="img" aria-label="Sync complete summary">
+              <rect x="0.5" y="0.5" width="319" height="199" rx="9" fill="#343232" stroke="#494646"/>
+              <path d="M9.5 0.5h301a9 9 0 0 1 9 9v19h-319v-19a9 9 0 0 1 9-9z" fill="#1F1E1E"/>
+              <circle cx="16" cy="14" r="4" fill="#F97316"/>
+              <text x="28" y="17.5" font-size="10" fill="#94A3B8">Sync complete</text>
+              <circle cx="160" cy="76" r="20" fill="none" stroke="#10B981" stroke-width="2.5"/>
+              <path d="M151 76l6.5 6.5L171 69" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <text x="160" y="122" font-size="12" font-weight="600" fill="#F1F5F9" text-anchor="middle">Sync complete</text>
+              <g font-size="8" fill="#94A3B8" text-anchor="middle">
+                <rect x="74" y="136" width="52" height="17" rx="8.5" fill="#282727" stroke="#494646"/>
+                <text x="100" y="147.5">6 files</text>
+                <rect x="132" y="136" width="62" height="17" rx="8.5" fill="#282727" stroke="#494646"/>
+                <text x="163" y="147.5">68.0 MiB</text>
+                <rect x="200" y="136" width="46" height="17" rx="8.5" fill="#282727" stroke="#494646"/>
+                <text x="223" y="147.5">0m 1s</text>
+              </g>
+            </svg>
+          </figure>
+        </div>
+        <div class="zz-row reverse">
+          <div class="text">
+            <p class="zz-title"><svg class="zz-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2.5 7 8 2.5 13.5 7"/><path d="M4.5 6v7.5h7V6"/></svg>Hot and cold</p>
+            <p class="zz-desc">One drive travels, one stays home. MothaSync keeps the two in sync — your backup tool of choice picks the home drive up from there.</p>
+          </div>
+          <figure class="visual">
+            <svg viewBox="0 0 320 170" role="img" aria-label="Hot and cold drive setup">
+              <rect x="12" y="10" width="130" height="150" rx="10" fill="#343232" stroke="#494646"/>
+              <rect x="59" y="40" width="36" height="26" rx="3" fill="none" stroke="#F97316" stroke-width="2"/>
+              <path d="M71 40v-5h12v5" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
+              <text x="77" y="92" font-size="10" font-weight="600" fill="#F1F5F9" text-anchor="middle">Drive A</text>
+              <text x="77" y="112" font-size="8.5" fill="#94A3B8" text-anchor="middle">travels with you</text>
+              <text x="77" y="130" font-size="8.5" fill="#94A3B8" text-anchor="middle">used as usual</text>
+              <path d="M146 85h32m0 0l-6-5m6 5l-6 5" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="178" y="10" width="130" height="150" rx="10" fill="#343232" stroke="#494646"/>
+              <path d="M237 46l14-11 14 11" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M241 44v20h20V44" fill="none" stroke="#F97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <text x="243" y="92" font-size="10" font-weight="600" fill="#F1F5F9" text-anchor="middle">Drive B</text>
+              <text x="243" y="112" font-size="8.5" fill="#94A3B8" text-anchor="middle">stays home</text>
+              <text x="243" y="130" font-size="8.5" fill="#94A3B8" text-anchor="middle">backup on your schedule</text>
+            </svg>
+          </figure>
+        </div>
+        <div class="zz-row">
+          <div class="text">
+            <p class="zz-title"><svg class="zz-ico" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M3 9h2.5v4.5H3zM6.75 5.5h2.5v8h-2.5zM10.5 2.5H13v11h-2.5z"/></svg>Reporting</p>
+            <p class="zz-desc">Sync several PCs or set one up for someone else. You get a nudge as soon as drives go stale or a run fails.</p>
+          </div>
+          <figure class="shot visual">
+            <svg viewBox="0 0 320 200" role="img" aria-label="Sync history list">
+              <rect x="0.5" y="0.5" width="319" height="199" rx="9" fill="#343232" stroke="#494646"/>
+              <path d="M9.5 0.5h301a9 9 0 0 1 9 9v19h-319v-19a9 9 0 0 1 9-9z" fill="#1F1E1E"/>
+              <circle cx="16" cy="14" r="4" fill="#F97316"/>
+              <text x="28" y="17.5" font-size="10" fill="#94A3B8">Sync history</text>
+              <text x="308" y="17.5" font-size="8" fill="#64748B" text-anchor="end">last 10 runs</text>
+              <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="8.5">
+                <circle cx="16" cy="45" r="3" fill="#10B981"/>
+                <text x="26" y="48" fill="#F1F5F9">2026-10-18 11:02</text>
+                <text x="130" y="48" fill="#94A3B8">6 files</text>
+                <text x="182" y="48" fill="#3B82F6">68 MB</text>
+                <text x="242" y="48" fill="#94A3B8">0m 01s</text>
+                <path d="M292 45l3 3 5-6" fill="none" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="10" y1="60" x2="310" y2="60" stroke="#494646" stroke-width="0.5"/>
+                <circle cx="16" cy="69" r="3" fill="#10B981"/>
+                <text x="26" y="72" fill="#F1F5F9">2026-10-17 12:53</text>
+                <text x="130" y="72" fill="#94A3B8">118 files</text>
+                <text x="182" y="72" fill="#3B82F6">460 MB</text>
+                <text x="242" y="72" fill="#94A3B8">0m 47s</text>
+                <path d="M292 69l3 3 5-6" fill="none" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="10" y1="84" x2="310" y2="84" stroke="#494646" stroke-width="0.5"/>
+                <circle cx="16" cy="93" r="3" fill="#10B981"/>
+                <text x="26" y="96" fill="#F1F5F9">2026-10-16 11:53</text>
+                <text x="130" y="96" fill="#94A3B8">96 files</text>
+                <text x="182" y="96" fill="#3B82F6">382.6 MB</text>
+                <text x="242" y="96" fill="#94A3B8">0m 38s</text>
+                <path d="M292 93l3 3 5-6" fill="none" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="10" y1="108" x2="310" y2="108" stroke="#494646" stroke-width="0.5"/>
+                <circle cx="16" cy="117" r="3" fill="#EF4444"/>
+                <text x="26" y="120" fill="#F1F5F9">2026-10-15 13:53</text>
+                <text x="130" y="120" fill="#94A3B8">24 files</text>
+                <text x="182" y="120" fill="#3B82F6">89.8 MB</text>
+                <text x="242" y="120" fill="#94A3B8">0m 12s</text>
+                <path d="M296 110l4.5 8h-9z" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M296 112.5v2.6" stroke="#F59E0B" stroke-width="1.2" stroke-linecap="round"/>
+                <circle cx="296" cy="116.6" r="0.7" fill="#F59E0B"/>
+                <line x1="10" y1="132" x2="310" y2="132" stroke="#494646" stroke-width="0.5"/>
+                <circle cx="16" cy="141" r="3" fill="#10B981"/>
+                <text x="26" y="144" fill="#F1F5F9">2026-10-14 12:53</text>
+                <text x="130" y="144" fill="#94A3B8">143 files</text>
+                <text x="182" y="144" fill="#3B82F6">497.9 MB</text>
+                <text x="242" y="144" fill="#94A3B8">0m 51s</text>
+                <path d="M292 141l3 3 5-6" fill="none" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <line x1="10" y1="156" x2="310" y2="156" stroke="#494646" stroke-width="0.5"/>
+                <circle cx="16" cy="165" r="3" fill="#10B981"/>
+                <text x="26" y="168" fill="#F1F5F9">2026-10-13 12:53</text>
+                <text x="130" y="168" fill="#94A3B8">131 files</text>
+                <text x="182" y="168" fill="#3B82F6">455.6 MB</text>
+                <text x="242" y="168" fill="#94A3B8">0m 44s</text>
+                <path d="M292 165l3 3 5-6" fill="none" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+            </svg>
+          </figure>
+        </div>
+      </div>
+    </section>
+    <section id="download">
+      <h2>Download</h2>
+      <div class="cols">
+        <div class="platform-col">
+          <div class="platform-name">
+            <svg class="icon" viewBox="0 0 128 128" aria-hidden="true" focusable="false"><path d="M126 1.637l-67 9.834v49.831l67-.534zM1.647 66.709l.003 42.404 50.791 6.983-.04-49.057zm56.82.68l.094 49.465 67.376 9.509.016-58.863zM1.61 19.297l.047 42.383 50.791-.289-.023-49.016z"/></svg>
+            <span>Windows</span>
+          </div>
+          <a class="file-link recommended" href="MothaSync.exe" data-os="windows">
+            <span class="label">Bootstrapper<span class="badge">Recommended</span></span>
+            <span class="file">MothaSync.exe</span>
+          </a>
+          <a class="file-link" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.2.0/mothasync-1.2.0-win-x64.zip" data-os="windows" data-arch="x64">
+            <span class="label">Archive</span>
+            <span class="file">mothasync-1.2.0-win-x64.zip</span>
+          </a>
+        </div>
+        <div class="platform-col">
+          <div class="platform-name">
+            <svg class="icon" viewBox="0 0 128 128" aria-hidden="true" focusable="false"><path d="M97.905 67.885c.174 18.8 16.494 25.057 16.674 25.137-.138.44-2.607 8.916-8.597 17.669-5.178 7.568-10.553 15.108-19.018 15.266-8.318.152-10.993-4.934-20.504-4.934-9.508 0-12.479 4.776-20.354 5.086-8.172.31-14.395-8.185-19.616-15.724C15.822 94.961 7.669 66.8 18.616 47.791c5.438-9.44 15.158-15.417 25.707-15.571 8.024-.153 15.598 5.398 20.503 5.398 4.902 0 14.106-6.676 23.782-5.696 4.051.169 15.421 1.636 22.722 12.324-.587.365-13.566 7.921-13.425 23.639M82.272 21.719c4.338-5.251 7.258-12.563 6.462-19.836-6.254.251-13.816 4.167-18.301 9.416-4.02 4.647-7.54 12.087-6.591 19.216 6.971.54 14.091-3.542 18.43-8.796"/></svg>
+            <span>macOS</span>
+          </div>
+          <a class="file-link" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.2.0/mothasync-1.2.0-osx-arm64.zip" data-os="macos" data-arch="arm64">
+            <span class="label">Apple Silicon</span>
+            <span class="file">mothasync-1.2.0-osx-arm64.zip</span>
+          </a>
+          <a class="file-link" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.2.0/mothasync-1.2.0-osx-x64.zip" data-os="macos" data-arch="x64">
+            <span class="label">Intel</span>
+            <span class="file">mothasync-1.2.0-osx-x64.zip</span>
+          </a>
+        </div>
+        <div class="platform-col">
+          <div class="platform-name">
+            <svg class="icon" viewBox="0 0 128 128" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M113.823 104.595c-1.795-1.478-3.629-2.921-5.308-4.525-1.87-1.785-3.045-3.944-2.789-6.678.147-1.573-.216-2.926-2.113-3.452.446-1.154.864-1.928 1.033-2.753.188-.92.178-1.887.204-2.834.264-9.96-3.334-18.691-8.663-26.835-2.454-3.748-5.017-7.429-7.633-11.066-4.092-5.688-5.559-12.078-5.633-18.981a47.564 47.564 0 00-1.081-9.475C80.527 11.956 77.291 7.233 71.422 4.7c-4.497-1.942-9.152-2.327-13.901-1.084-6.901 1.805-11.074 6.934-10.996 14.088.074 6.885.417 13.779.922 20.648.288 3.893-.312 7.252-2.895 10.34-2.484 2.969-4.706 6.172-6.858 9.397-1.229 1.844-2.317 3.853-3.077 5.931-2.07 5.663-3.973 11.373-7.276 16.5-1.224 1.9-1.363 4.026-.494 6.199.225.563.363 1.429.089 1.882-2.354 3.907-5.011 7.345-10.066 8.095-3.976.591-4.172 1.314-4.051 5.413.1 3.337.061 6.705-.28 10.021-.363 3.555.008 4.521 3.442 5.373 7.924 1.968 15.913 3.647 23.492 6.854 3.227 1.365 6.465.891 9.064-1.763 2.713-2.771 6.141-3.855 9.844-3.859 6.285-.005 12.572.298 18.86.369 1.702.02 2.679.653 3.364 2.199.84 1.893 2.26 3.284 4.445 3.526 4.193.462 8.013-.16 11.19-3.359 3.918-3.948 8.436-7.066 13.615-9.227 1.482-.619 2.878-1.592 4.103-2.648 2.231-1.922 2.113-3.146-.135-5zM62.426 24.12c.758-2.601 2.537-4.289 5.243-4.801 2.276-.43 4.203.688 5.639 3.246 1.546 2.758 2.054 5.64.734 8.658-1.083 2.474-1.591 2.707-4.123 1.868-.474-.157-.937-.343-1.777-.652.708-.594 1.154-1.035 1.664-1.382 1.134-.772 1.452-1.858 1.346-3.148-.139-1.694-1.471-3.194-2.837-3.175-1.225.017-2.262 1.167-2.4 2.915-.086 1.089.095 2.199.173 3.589-3.446-1.023-4.711-3.525-3.662-7.118zm-12.75-2.251c1.274-1.928 3.197-2.314 5.101-1.024 2.029 1.376 3.547 5.256 2.763 7.576-.285.844-1.127 1.5-1.716 2.241l-.604-.374c-.23-1.253-.276-2.585-.757-3.733-.304-.728-1.257-1.184-1.919-1.762-.622.739-1.693 1.443-1.757 2.228-.088 1.084.477 2.28.969 3.331.311.661 1.001 1.145 1.713 1.916l-1.922 1.51c-3.018-2.7-3.915-8.82-1.871-11.909zM87.34 86.075c-.203 2.604-.5 2.713-3.118 3.098-1.859.272-2.359.756-2.453 2.964a101.744 101.744 0 00-.012 7.753c.061 1.77-.537 3.158-1.755 4.393-6.764 6.856-14.845 10.105-24.512 8.926-4.17-.509-6.896-3.047-9.097-6.639.98-.363 1.705-.607 2.412-.894 3.122-1.27 3.706-3.955 1.213-6.277-1.884-1.757-3.986-3.283-6.007-4.892-1.954-1.555-3.934-3.078-5.891-4.629-1.668-1.323-2.305-3.028-2.345-5.188-.094-5.182.972-10.03 3.138-14.747 1.932-4.209 3.429-8.617 5.239-12.885.935-2.202 1.906-4.455 3.278-6.388 1.319-1.854 2.134-3.669 1.988-5.94-.084-1.276-.016-2.562-.016-3.843l.707-.352c1.141.985 2.302 1.949 3.423 2.959 4.045 3.646 7.892 3.813 12.319.67 1.888-1.341 3.93-2.47 5.927-3.652.497-.294 1.092-.423 1.934-.738 2.151 5.066 4.262 10.033 6.375 15 1.072 2.524 1.932 5.167 3.264 7.547 2.671 4.775 4.092 9.813 4.07 15.272-.012 2.83.137 5.67-.081 8.482z"/></svg>
+            <span>Linux</span>
+          </div>
+          <a class="file-link" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.2.0/mothasync-1.2.0-linux-x64.zip" data-os="linux" data-arch="x64">
+            <span class="label">x64</span>
+            <span class="file">mothasync-1.2.0-linux-x64.zip</span>
+          </a>
+          <a class="file-link" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.2.0/mothasync-1.2.0-linux-arm64.zip" data-os="linux" data-arch="arm64">
+            <span class="label">arm64</span>
+            <span class="file">mothasync-1.2.0-linux-arm64.zip</span>
+          </a>
+        </div>
+      </div>
+    </section>
+    <section id="install">
+      <h2><img src="zeroinstall-icon.png" alt="0install logo" width="22" height="22">Install through 0install</h2>
+      <div class="code-block">
+        <pre><code>0install add MothaSync https://timo-reymann.github.io/MothaSync/mothasync.xml
+0install run MothaSync</code></pre>
+        <button class="copy-btn" type="button" aria-label="Copy the commands">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5"/><path d="M10.5 5.5v-2a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2"/></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <p class="note">Get 0install from <a href="https://0install.net">0install.net</a>. Updates ship through a signed feed. On first run, 0install asks once to trust the release key.</p>
+    </section>
+  </main>
+  <footer>
+    <a class="footer-link" href="https://github.com/timo-reymann/MothaSync">
+      <svg class="gh" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      <span>GitHub</span>
+    </a>
+    <a class="footer-link" href="https://github.com/timo-reymann/MothaSync/blob/main/NOTICE" title="Licenses">
+      <svg class="doc" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8.5 1.5H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V6z"/><path d="M8.5 1.5V6H13"/></svg>
+      <span>Licenses</span>
+    </a>
+  </footer>
+  <script>
+    (() => {
+      const block = document.querySelector(".code-block");
+      const button = block.querySelector(".copy-btn");
+      const label = button.querySelector("span");
+      const text = block.querySelector("code").textContent;
+      const reset = () => {
+        button.classList.remove("copied");
+        label.textContent = "Copy";
+      };
+      const fallbackCopy = () => {
+        const area = document.createElement("textarea");
+        area.value = text;
+        document.body.appendChild(area);
+        area.select();
+        const ok = document.execCommand("copy");
+        document.body.removeChild(area);
+        return ok ? Promise.resolve() : Promise.reject(new Error("copy failed"));
+      };
+      const copy = navigator.clipboard && navigator.clipboard.writeText
+        ? () => navigator.clipboard.writeText(text)
+        : fallbackCopy;
+      button.addEventListener("click", () => {
+        copy().then(() => {
+          button.classList.add("copied");
+          label.textContent = "Copied";
+          setTimeout(reset, 2000);
+        });
+      });
+
+      // Slideshow: manual arrows only, the orange line shows the spot.
+      const deck = document.querySelector(".slideshow");
+      if (deck) {
+        const slides = deck.querySelectorAll("img");
+        const dots = deck.querySelectorAll(".sl-dots span");
+        let slideIndex = 0;
+        const show = (next) => {
+          slides[slideIndex].classList.remove("current");
+          dots[slideIndex].classList.remove("active");
+          slideIndex = (next + slides.length) % slides.length;
+          slides[slideIndex].classList.add("current");
+          dots[slideIndex].classList.add("active");
+        };
+        deck.querySelector(".sl-prev").addEventListener("click", () => show(slideIndex - 1));
+        deck.querySelector(".sl-next").addEventListener("click", () => show(slideIndex + 1));
+      }
+
+      // Highlight the download card for the detected platform. The badge
+      // moves to the matched card; the static highlight stays as fallback.
+      const pickCard = (os, arch) => {
+        if (!os) return;
+        const cards = Array.prototype.slice.call(document.querySelectorAll(".file-link[data-os]"));
+        const candidates = cards.filter(c => c.dataset.os === os);
+        if (!candidates.length) return;
+        const chosen = candidates.find(c => !c.dataset.arch)
+          || candidates.find(c => arch && c.dataset.arch === arch)
+          || candidates[0];
+        document.querySelectorAll(".file-link.recommended").forEach(c => c.classList.remove("recommended"));
+        cards.forEach(c => c.classList.remove("matched"));
+        chosen.classList.add("matched");
+        const badge = document.querySelector(".badge");
+        if (badge && !chosen.contains(badge)) {
+          const cardLabel = chosen.querySelector(".label");
+          if (cardLabel) cardLabel.appendChild(badge);
+        }
+      };
+      const osFromUA = () => {
+        const ua = navigator.userAgent;
+        if (/Windows/i.test(ua)) return "windows";
+        if (/Mac/i.test(ua)) return "macos";
+        if (/Linux|X11/i.test(ua)) return "linux";
+        return null;
+      };
+      const archFromUA = () => {
+        const ua = navigator.userAgent;
+        if (/aarch64|arm64/i.test(ua)) return "arm64";
+        if (/x86_64|Win64|x64|WOW64/i.test(ua)) return "x64";
+        return null;
+      };
+      const detectPlatform = async () => {
+        const os = osFromUA();
+        let arch = archFromUA();
+        try {
+          if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
+            const values = await navigator.userAgentData.getHighEntropyValues(["architecture", "bitness"]);
+            if (values.architecture === "arm") arch = values.bitness === "64" ? "arm64" : "arm";
+            if (values.architecture === "x86" && values.bitness === "64") arch = "x64";
+          }
+        } catch (error) {
+          // Keep the user agent based guess.
+        }
+        pickCard(os, arch);
+      };
+      detectPlatform();
+    })();
+  </script>
+</body>
+</html>
