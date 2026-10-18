@@ -1,3 +1,10 @@
+## [1.0.12](https://github.com/timo-reymann/MothaSync/compare/v1.0.11...v1.0.12) (2026-10-18)
+
+
+### Bug Fixes
+
+* **circleci:** reload PATH after installing gh in the Windows job ([94e6c07](https://github.com/timo-reymann/MothaSync/commit/94e6c07ed76ecbbc9056e69dc51fa96ecd6f804e))
+
 ## [1.0.11](https://github.com/timo-reymann/MothaSync/compare/v1.0.10...v1.0.11) (2026-10-18)
 
 
