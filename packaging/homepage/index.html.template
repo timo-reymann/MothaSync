@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="darkreader-lock" />
 <title>MothaSync</title>
 <meta name="description" content="MothaSync is a system tray tool that syncs a folder from disk A to disk B. Download it or install it through 0install.">
 <meta name="theme-color" content="#282727">
