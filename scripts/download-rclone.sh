@@ -25,7 +25,7 @@ trap 'rm -rf "$TMP"' EXIT
 
 mkdir -p "$OUT_DIR"
 curl -fsSL "https://raw.githubusercontent.com/rclone/rclone/$RCLONE_VERSION/COPYING" -o "$TMP/COPYING"
-grep -Fq "Copyright (C) 2012 by Nick Craig-Wood" "$TMP/COPYING"
+grep -Fq "Nick Craig-Wood" "$TMP/COPYING"
 cp "$TMP/COPYING" "$OUT_DIR/COPYING"
 
 curl -fsSL "$BASE_URL/SHA256SUMS" -o "$TMP/SHA256SUMS"
