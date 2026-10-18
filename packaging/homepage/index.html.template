@@ -7,6 +7,8 @@
 <title>MothaSync</title>
 <meta name="description" content="MothaSync is a system tray tool that syncs a folder from disk A to disk B. Download it or install it through 0install.">
 <meta name="theme-color" content="#282727">
+<link rel="icon" href="logo.png" type="image/png">
+<link rel="apple-touch-icon" href="logo.png">
 <style>
   :root {
     /* Colors mirror the client theme in src/MothaSync.Client/Styles/Resources.axaml. */
