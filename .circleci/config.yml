@@ -200,6 +200,8 @@ jobs:
           name: Attach bootstrapper to the release
           command: |
             choco install gh -y
+            # choco updates PATH for new shells only, so reload it for this one.
+            $env:Path = [Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [Environment]::GetEnvironmentVariable("Path", "User")
             gh release upload "$env:CIRCLE_TAG" MothaSync.exe --clobber -R timo-reymann/MothaSync
       - run:
           name: Publish bootstrapper to GitHub Pages
