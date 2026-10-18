@@ -183,13 +183,14 @@ jobs:
             # Expand the glob in PowerShell, the Git-for-Windows gpg does not.
             Get-ChildItem pages -Filter *.gpg | ForEach-Object { gpg --import $_.FullName }
             $fingerprint = (gpg --list-keys --with-colons | Select-String -Pattern "\Afpr:" | Select-Object -First 1).Line.Split(':')[9]
+            # gpg starts a background agent that inherits the step output and keeps the
+            # step from ever finishing, so stop it once the key is read.
+            gpgconf --kill all
+            Get-Process gpg-agent, dirmngr, keyboxd -ErrorAction SilentlyContinue | Stop-Process -Force
             Write-Output "Trusting fingerprint: $fingerprint"
             .\0install.exe trust add $fingerprint timo-reymann.github.io
             Write-Output "trust add exit code: $LASTEXITCODE"
             .\0install.exe trust list
-            # Diagnose the feed signature check with the full, unmangled output.
-            .\0install.exe download https://timo-reymann.github.io/MothaSync/mothasync.xml --batch 2>&1 | Out-String | Write-Output
-            Write-Output "download exit code: $LASTEXITCODE"
             # The bootstrapper tool resolves its CLI through the ZEROINSTALL variable.
             $env:ZEROINSTALL = "$PWD\0install.exe"
             .\0install.exe run https://apps.0install.net/0install/0bootstrap.xml https://timo-reymann.github.io/MothaSync/mothasync.xml --integrate-args=--add-standard 2>&1 | Out-String | Write-Output
