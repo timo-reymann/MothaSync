@@ -28,6 +28,10 @@
       <manifest-digest sha256new="6S2YDNZAIJDJMUDHILRK3PRRBIO5S2R4YPXSBCRCZTEUQPMYNA3A"/>
       <archive extract="mothasync-1.0.7-win-x64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.0.7/mothasync-1.0.7-win-x64.zip" size="253993804" type="application/zip"/>
     </implementation>
+    <implementation arch="Windows-x86_64" id="sha1new=01133bbcca1b96ca465404bc5b4ba8f9a9903fd6" released="2026-10-18" version="1.0.8">
+      <manifest-digest sha256new="VGK3SFGCIVB2CKH6MLZNHBZWNFTYFQL45EO36EGRAU5QYC6KU6YA"/>
+      <archive extract="mothasync-1.0.8-win-x64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.0.8/mothasync-1.0.8-win-x64.zip" size="253993813" type="application/zip"/>
+    </implementation>
   </group>
   <group>
     <command name="run" path="MothaSync.Client"/>
@@ -62,6 +66,14 @@
     <implementation arch="Linux-aarch64" id="sha1new=9b7030888b0389ba8c5ad53ea2f2f7ee0f68f28c" released="2026-10-18" version="1.0.7">
       <manifest-digest sha256new="6NYK2BMFX4PKVXUKM5FNIOYLS3EKQAYKLAWBMLTD2BJRMNRN75MA"/>
       <archive extract="mothasync-1.0.7-linux-arm64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.0.7/mothasync-1.0.7-linux-arm64.zip" size="220113063" type="application/zip"/>
+    </implementation>
+    <implementation arch="Linux-x86_64" id="sha1new=9ae57b4211b9d30fe40d438cb82242e8269ddc3a" released="2026-10-18" version="1.0.8">
+      <manifest-digest sha256new="MMIB3F3DADA5XJ7FGNRWWOKOM6JVEDDOEBCFCY3WSXF3Q25JCMUA"/>
+      <archive extract="mothasync-1.0.8-linux-x64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.0.8/mothasync-1.0.8-linux-x64.zip" size="225431720" type="application/zip"/>
+    </implementation>
+    <implementation arch="Linux-aarch64" id="sha1new=d6d61060bd9a29719cadf09f1e1b4f2a73da1c24" released="2026-10-18" version="1.0.8">
+      <manifest-digest sha256new="YMKX34EFFZW6KXRQ27GUXANFSKAARVMLOVNIGXDD2LPA6HJ4O6TA"/>
+      <archive extract="mothasync-1.0.8-linux-arm64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.0.8/mothasync-1.0.8-linux-arm64.zip" size="220113069" type="application/zip"/>
     </implementation>
   </group>
   <group>
@@ -98,17 +110,25 @@
       <manifest-digest sha256new="7WGDS4PNC4UEIRLW5K3J5ZGHAMJUW4CMWLFMLGJVFGO5M325OEXA"/>
       <archive extract="mothasync-1.0.7-osx-arm64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.0.7/mothasync-1.0.7-osx-arm64.zip" size="227685287" type="application/zip"/>
     </implementation>
+    <implementation arch="MacOSX-x86_64" id="sha1new=87a4398d293f6cc43ed33e78580d2a3ffd832775" released="2026-10-18" version="1.0.8">
+      <manifest-digest sha256new="LDOFY52GROJGLMQPWOL2AEMIATDNU6AY5HO4HU3ZVTFMMWSN6QAQ"/>
+      <archive extract="mothasync-1.0.8-osx-x64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.0.8/mothasync-1.0.8-osx-x64.zip" size="233206019" type="application/zip"/>
+    </implementation>
+    <implementation arch="MacOSX-aarch64" id="sha1new=5833769efe354333ebff5186e55f2b3732a01875" released="2026-10-18" version="1.0.8">
+      <manifest-digest sha256new="YZD5QRA3YC3LSPWKWN7S3EA3C5MXT35CWLBNJA3LKTXWZKRQ5CPA"/>
+      <archive extract="mothasync-1.0.8-osx-arm64" href="https://github.com/timo-reymann/MothaSync/releases/download/v1.0.8/mothasync-1.0.8-osx-arm64.zip" size="227685298" type="application/zip"/>
+    </implementation>
   </group>
 </interface>
 <!-- Base64 Signature
-iQGzBAABCgAdFiEEZSeT/O5TvJQqSgp+vOBJryTDigQFAmrUf30ACgkQvOBJryTD
-igSuagv/bLOXhiI8ahmdR+QZuT8eoIxjnMU9B7rqgqOztrLJfVDtRZtNgE53pBDm
-XdN+kgh6EhyF4qrQYR7sAaReCaehlg9O9arjsgvrXzxHaHtgrJ968S31tGZK5a+e
-b28S3YTajMosPwWmD5JAZ4u3zRO3majiAfhPoSK5Nir6QX1U8mDYbeE6eUr1OlOP
-JHrqlS9J/MD86b2DSooP/hTy9/vrLNbHt5VrU62rDoCIMAmtdAtw51eAVOv/S4p1
-lB9TM+D5tzooLVX0ru2eQE2KfbjJqxrUuS6Bw0HvD3hTjPy+tno7/s5cDHGO46VK
-X0lDKlfTqDkoRoMN/p0pmeY0JcOK9aVb/J/+NftRYxmWLOJr1KP8XgRn6Z3Nhozb
-XYWkWqFNE8vxA4BgHfsaD5fpUFoPLeOfVOGqL+8zZK6bg901guwsHlV+rqr0gAeZ
-+dDITRCvOtVQg4TPPKba47ogRHzI86AtEdoTbzLgg8Qs2dzoJNXmSHiC//TPned5
-z2oSEvFw
+iQGzBAABCgAdFiEEZSeT/O5TvJQqSgp+vOBJryTDigQFAmrUgaEACgkQvOBJryTD
+igQeugv/eeS7TftfYZaurF5IskHSCiQ3e17wt6gA0RVATYjV2JLMRFuHV5qj3qow
+GVcaOLhSYV+W+tGr6TvMGd+HyWQd9fsV9mBSjp3p8MoJXmww811WrJzrh2tXe/kA
+L+bItswcPN98CWIwWBOroVpWR1pHIpR6FLyPfmjHB55KffVSA0qLgY5eXLWihiyu
+xgCqZPf4lWFjc3gfvGA5O1TTRRy5hnTnDK9rpxPP3tmTtjWyVzoK9ATLcuZX3q1l
+YqB0A1PpPW/cV6iUTDAyl+YGu/Q0xETIftdGiqFvDYXkIe7ddDFbzZ5CJ9Uz7NdO
+F+4FljUCKTypzjJs8u5ATxlItDIru2rzee9t9ZBSvYz8BJIAN8UdRCtNuYuy/yq1
+VDnl3MLqpA69xTAxDk7oSNNPa8x0uViqGqYrUl2j7UzBaobtXtDkw3AWJGqgiuDr
+Cp3VVjZNOFqbLC6nLCxxOHAvuc1nG2dj09djhdUX3/ub2GYCJJ0Ub0fR5fi+xe8H
+R0USXMXz
 -->
