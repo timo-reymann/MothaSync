@@ -178,7 +178,8 @@ jobs:
             # Pre-trust the MothaSync release key from the exported public key.
             git clone -b gh-pages https://x-access-token:$env:GITHUB_TOKEN@github.com/timo-reymann/MothaSync.git pages
             if (-not (Get-Command gpg -ErrorAction SilentlyContinue)) { choco install gnupg -y }
-            gpg --import pages\*.gpg
+            # Expand the glob in PowerShell, the Git-for-Windows gpg does not.
+            Get-ChildItem pages -Filter *.gpg | ForEach-Object { gpg --import $_.FullName }
             $fingerprint = (gpg --list-keys --with-colons | Select-String -Pattern "\Afpr:" | Select-Object -First 1).Line.Split(':')[9]
             .\0install.exe trust add $fingerprint https://timo-reymann.github.io
             # The bootstrapper tool resolves its CLI through the ZEROINSTALL variable.
