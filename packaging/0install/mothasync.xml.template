@@ -6,11 +6,11 @@
   <homepage>https://github.com/timo-reymann/MothaSync</homepage>
   <category>Utility</category>
 
-  <icon href="https://timo-reymann.github.io/MothaSync/mothasync.png" type="image/png"/>
-  <icon href="https://timo-reymann.github.io/MothaSync/mothasync.ico" type="image/vnd.microsoft.icon"/>
-  <icon href="https://timo-reymann.github.io/MothaSync/mothasync.icns" type="image/x-icns"/>
+  <icon href="https://mothasync.timo-reymann.de/mothasync.png" type="image/png"/>
+  <icon href="https://mothasync.timo-reymann.de/mothasync.ico" type="image/vnd.microsoft.icon"/>
+  <icon href="https://mothasync.timo-reymann.de/mothasync.icns" type="image/x-icns"/>
 
-  <feed-for interface="https://timo-reymann.github.io/MothaSync/mothasync.xml"/>
+  <feed-for interface="https://mothasync.timo-reymann.de/mothasync.xml"/>
 
   <entry-point binary-name="MothaSync.Client" command="run"/>
 

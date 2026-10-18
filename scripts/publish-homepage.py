@@ -26,7 +26,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 PAGE_DIR = REPO_ROOT / "packaging" / "homepage"
 GH_OWNER = "timo-reymann"
 GH_REPO = "MothaSync"
-PAGES_URL = f"https://{GH_OWNER}.github.io/{GH_REPO}/"
+PAGES_URL = "https://mothasync.timo-reymann.de/"
 BRANCH = "gh-pages"
 
 

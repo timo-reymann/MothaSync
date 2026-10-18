@@ -664,7 +664,7 @@
     <section id="install">
       <h2><img src="zeroinstall-icon.png" alt="0install logo" width="22" height="22">Install through 0install</h2>
       <div class="code-block">
-        <pre><code>0install add MothaSync https://timo-reymann.github.io/MothaSync/mothasync.xml
+        <pre><code>0install add MothaSync https://mothasync.timo-reymann.de/mothasync.xml
 0install run MothaSync</code></pre>
         <button class="copy-btn" type="button" aria-label="Copy the commands">
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5"/><path d="M10.5 5.5v-2a1 1 0 0 0-1-1h-6a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2"/></svg>
