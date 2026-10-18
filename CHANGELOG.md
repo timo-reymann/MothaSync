@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/timo-reymann/MothaSync/compare/v1.1.0...v1.2.0) (2026-10-18)
+
+
+### Features
+
+* publish a GitHub Pages homepage for releases ([8bfdf18](https://github.com/timo-reymann/MothaSync/commit/8bfdf18df8dd698713e50254027e1b5056f301b7)), closes [#pages](https://github.com/timo-reymann/MothaSync/issues/pages)
+
 # [1.1.0](https://github.com/timo-reymann/MothaSync/compare/v1.0.12...v1.1.0) (2026-10-18)
 
 
