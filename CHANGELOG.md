@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/timo-reymann/MothaSync/compare/v1.4.1...v1.5.0) (2026-10-24)
+
+
+### Features
+
+* **server:** add hostname label to sync run metrics ([#34](https://github.com/timo-reymann/MothaSync/issues/34)) ([b703539](https://github.com/timo-reymann/MothaSync/commit/b7035399d8e3c14f85948e269fc3ca2e04411bfc))
+
 ## [1.4.1](https://github.com/timo-reymann/MothaSync/compare/v1.4.0...v1.4.1) (2026-10-18)
 
 
