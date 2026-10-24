@@ -257,6 +257,11 @@ public sealed class SyncDbTests : IDisposable
 
         Assert.Equal(2, states.Count);
         var restoredWithRuns = states.Single(state => state.DeviceId == withRuns);
+        var restoredWithoutRuns = states.Single(state => state.DeviceId == withoutRuns);
+
+        // The device name rides along for the hostname metric label.
+        Assert.Equal("with-runs", restoredWithRuns.Name);
+        Assert.Equal("without-runs", restoredWithoutRuns.Name);
 
         // The most recent run wins, and duration rides along for the completion time.
         Assert.Equal(ProtoSyncRunStatus.Completed, restoredWithRuns.LastRun!.Status);
@@ -265,7 +270,6 @@ public sealed class SyncDbTests : IDisposable
             Timestamp.FromDateTimeOffset(DateTimeOffset.UtcNow.AddMinutes(-5)).Seconds,
             restoredWithRuns.LastRun.StartedAt.Seconds);
 
-        var restoredWithoutRuns = states.Single(state => state.DeviceId == withoutRuns);
         Assert.Null(restoredWithoutRuns.LastRun);
     }
 }

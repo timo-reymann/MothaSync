@@ -49,6 +49,16 @@ public sealed class SyncDb
         return command.ExecuteScalar() as string;
     }
 
+    /// <summary>Returns the persisted name of the device, or null when the ID is unknown.</summary>
+    public string? FindDeviceName(string deviceId)
+    {
+        using var connection = Open();
+        using var command = connection.CreateCommand();
+        command.CommandText = "SELECT Name FROM Devices WHERE Id = $id;";
+        command.Parameters.AddWithValue("$id", deviceId);
+        return command.ExecuteScalar() as string;
+    }
+
     /// <summary>Creates or updates a run owned by <paramref name="deviceId"/>. Returns false if the id belongs to another device.</summary>
     public bool UpsertRun(string deviceId, SyncRun run)
     {
@@ -124,15 +134,15 @@ public sealed class SyncDb
         return (runs, hasMore);
     }
 
-    /// <summary>The registration time and the most recent run, if any, per device.</summary>
+    /// <summary>The name, the registration time, and the most recent run, if any, per device.</summary>
     /// <remarks>Used to restore the per-device metrics after a server restart.</remarks>
-    public List<(string DeviceId, DateTimeOffset RegistrationTime, SyncRun? LastRun)> ListDeviceRunStates()
+    public List<(string DeviceId, string Name, DateTimeOffset RegistrationTime, SyncRun? LastRun)> ListDeviceRunStates()
     {
-        var states = new List<(string DeviceId, DateTimeOffset RegistrationTime, SyncRun? LastRun)>();
+        var states = new List<(string DeviceId, string Name, DateTimeOffset RegistrationTime, SyncRun? LastRun)>();
         using var connection = Open();
         using var command = connection.CreateCommand();
         command.CommandText = """
-                              SELECT d.Id, d.RegisteredAtUtc, r.Status, r.StartedAtUtc, r.DurationMs
+                              SELECT d.Id, d.Name, d.RegisteredAtUtc, r.Status, r.StartedAtUtc, r.DurationMs
                               FROM Devices d
                               LEFT JOIN SyncRuns r ON r.Id = (
                                   SELECT Id FROM SyncRuns WHERE DeviceId = d.Id
@@ -143,22 +153,23 @@ public sealed class SyncDb
         using var reader = command.ExecuteReader();
         while (reader.Read())
         {
-            var registrationTime = DateTimeOffset.Parse(reader.GetString(1));
+            var name = reader.GetString(1);
+            var registrationTime = DateTimeOffset.Parse(reader.GetString(2));
             SyncRun? lastRun = null;
-            if (!reader.IsDBNull(2))
+            if (!reader.IsDBNull(3))
             {
                 lastRun = new SyncRun
                 {
-                    Status = (SyncRunStatus)reader.GetInt32(2),
-                    StartedAt = Google.Protobuf.WellKnownTypes.Timestamp.FromDateTimeOffset(DateTimeOffset.Parse(reader.GetString(3))),
+                    Status = (SyncRunStatus)reader.GetInt32(3),
+                    StartedAt = Google.Protobuf.WellKnownTypes.Timestamp.FromDateTimeOffset(DateTimeOffset.Parse(reader.GetString(4))),
                 };
-                if (!reader.IsDBNull(4))
+                if (!reader.IsDBNull(5))
                 {
-                    lastRun.Duration = Google.Protobuf.WellKnownTypes.Duration.FromTimeSpan(TimeSpan.FromMilliseconds(reader.GetInt64(4)));
+                    lastRun.Duration = Google.Protobuf.WellKnownTypes.Duration.FromTimeSpan(TimeSpan.FromMilliseconds(reader.GetInt64(5)));
                 }
             }
 
-            states.Add((reader.GetString(0), registrationTime, lastRun));
+            states.Add((reader.GetString(0), name, registrationTime, lastRun));
         }
 
         return states;

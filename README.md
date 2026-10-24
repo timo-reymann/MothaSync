@@ -181,18 +181,20 @@ The server serves the default .NET runtime, process and HTTP request metrics, pl
 
 | Metric | Type | Labels | Purpose |
 |---|---|---|---|
-| `mothasync_sync_runs_total` | Counter | `device_id`, `status` | Sync runs reported by clients. `status` is one of `running`, `completed`, `failed`, `cancelled`. |
-| `mothasync_sync_files_changed_total` | Counter | `device_id` | Files added, updated or deleted. |
-| `mothasync_sync_bytes_transferred_total` | Counter | `device_id` | Bytes transferred. |
-| `mothasync_sync_run_duration_seconds` | Histogram | `device_id` | Wall-clock time of sync runs. |
-| `mothasync_sync_last_run_timestamp_seconds` | Gauge | `device_id` | Unix timestamp of the last reported run. |
-| `mothasync_sync_last_run_result` | Gauge | `device_id` | `1` when the last run completed, `0` otherwise. |
+| `mothasync_sync_runs_total` | Counter | `device_id`, `hostname`, `status` | Sync runs reported by clients. `status` is one of `running`, `completed`, `failed`, `cancelled`. |
+| `mothasync_sync_files_changed_total` | Counter | `device_id`, `hostname` | Files added, updated or deleted. |
+| `mothasync_sync_bytes_transferred_total` | Counter | `device_id`, `hostname` | Bytes transferred. |
+| `mothasync_sync_run_duration_seconds` | Histogram | `device_id`, `hostname` | Wall-clock time of sync runs. |
+| `mothasync_sync_last_run_timestamp_seconds` | Gauge | `device_id`, `hostname` | Unix timestamp of the last reported run. |
+| `mothasync_sync_last_run_result` | Gauge | `device_id`, `hostname` | `1` when the last run completed, `0` otherwise. |
 | `mothasync_devices_registered_total` | Counter | *(none)* | Devices registered with the server. |
+
+`hostname` is the device name that the client reports at registration. It defaults to the operating system's machine name.
 
 The most useful check is the sync that never happens. The expression below matches each device with no report for two days:
 
 ```promql
-time() - max by (device_id) (mothasync_sync_last_run_timestamp_seconds) > 86400 * 2
+time() - max by (device_id, hostname) (mothasync_sync_last_run_timestamp_seconds) > 86400 * 2
 ```
 
 A failed run shows up in the run counter:
