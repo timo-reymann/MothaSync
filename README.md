@@ -175,6 +175,10 @@ The server reads its settings from nested `appsettings.json` keys or environment
 
 The metrics listener serves only `/metrics`. The API endpoints are not reachable through the metrics port, and `/metrics` is not reachable through the API port.
 
+### Request logging
+
+The server writes one log line per request: HTTP method, path, status code, duration in milliseconds, and the MVC controller and action. Status codes below 400 log at information level, 4xx at warning, 5xx at error. Requests on the metrics port stay silent. The standard .NET logging settings (`Logging__LogLevel__*`, `Logging__Console__FormatterName`) apply, for example `Logging__LogLevel__MothaSync__Server__Logging__RequestLoggingMiddleware=Debug`.
+
 ### Metrics
 
 The server serves the default .NET runtime, process and HTTP request metrics, plus these metrics for sync runs:
