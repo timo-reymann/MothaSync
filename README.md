@@ -203,6 +203,10 @@ A failed run shows up in the run counter:
 increase(mothasync_sync_runs_total{status="failed"}[7d]) > 0
 ```
 
+### Grafana dashboard
+
+`packaging/grafana/mothasync-dashboard.json` is a ready-made dashboard. Import it in Grafana (Dashboards > New > Import). It has a Prometheus data source selector and a multi-select `job` variable that defaults to All. The first section shows fleet KPIs and a per-device status table. The ASP.NET Core and .NET runtime sections are collapsed by default.
+
 ## Documentation
 
 - [Design documentation](DESIGN.md)
