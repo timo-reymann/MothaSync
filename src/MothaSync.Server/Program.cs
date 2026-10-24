@@ -90,9 +90,9 @@ public static partial class Program
             // inactivity query on the last-run gauges keeps working after a restart.
             var metrics = app.Services.GetRequiredService<SyncMetrics>();
             var db = app.Services.GetRequiredService<SyncDb>();
-            foreach (var (deviceId, registrationTime, lastRun) in db.ListDeviceRunStates())
+            foreach (var (deviceId, hostname, registrationTime, lastRun) in db.ListDeviceRunStates())
             {
-                metrics.DeviceRestored(deviceId, lastRun, registrationTime);
+                metrics.DeviceRestored(deviceId, hostname, lastRun, registrationTime);
             }
         }
 

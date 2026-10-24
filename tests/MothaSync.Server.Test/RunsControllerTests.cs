@@ -160,7 +160,7 @@ public sealed class RunsControllerTests : IDisposable
         Assert.Null(controller.Report(new ReportSyncRunRequest { Run = NewRun() }).Result);
 
         var text = await MetricsTestHelpers.ExportToTextAsync(registry);
-        var line = MetricsTestHelpers.FindLine(text, "mothasync_sync_runs_total", ("device_id", deviceId), ("status", "completed"));
+        var line = MetricsTestHelpers.FindLine(text, "mothasync_sync_runs_total", ("device_id", deviceId), ("hostname", "device"), ("status", "completed"));
         Assert.NotNull(line);
         Assert.Equal(1, MetricsTestHelpers.ParseValue(line));
     }

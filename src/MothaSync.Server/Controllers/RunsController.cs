@@ -44,7 +44,8 @@ public sealed class RunsController(SyncDb db, SyncMetrics metrics) : ControllerB
             return Conflict();
         }
 
-        metrics.RunReported(DeviceId, run);
+        // The hostname label comes from the registration row for the device.
+        metrics.RunReported(DeviceId, db.FindDeviceName(DeviceId) ?? string.Empty, run);
         return new ReportSyncRunResponse();
     }
 
