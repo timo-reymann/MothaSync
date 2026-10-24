@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/timo-reymann/MothaSync/compare/v1.6.0...v1.7.0) (2026-10-24)
+
+
+### Features
+
+* **server:** log requests with controller, action, path, and duration ([#35](https://github.com/timo-reymann/MothaSync/issues/35)) ([b58e412](https://github.com/timo-reymann/MothaSync/commit/b58e412b63bfa2223a860cfcd7a853c4526d52c6))
+
 # [1.6.0](https://github.com/timo-reymann/MothaSync/compare/v1.5.0...v1.6.0) (2026-10-24)
 
 
