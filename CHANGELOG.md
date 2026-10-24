@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/timo-reymann/MothaSync/compare/v1.5.0...v1.6.0) (2026-10-24)
+
+
+### Features
+
+* **dashboard:** add ready-made Grafana dashboard ([e83ea42](https://github.com/timo-reymann/MothaSync/commit/e83ea42f0ee053c407129f372cdfbfaf0acaf2cc))
+
 # [1.5.0](https://github.com/timo-reymann/MothaSync/compare/v1.4.1...v1.5.0) (2026-10-24)
 
 
