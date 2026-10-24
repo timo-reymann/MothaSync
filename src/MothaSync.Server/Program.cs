@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using MothaSync.Server.Auth;
 using MothaSync.Server.Data;
+using MothaSync.Server.Logging;
 using MothaSync.Server.Metrics;
 using MothaSync.Server.Protobuf;
 using Prometheus;
@@ -57,6 +58,7 @@ public static partial class Program
     /// When metrics are enabled, serves metrics under /metrics on Metrics:Port (default 9100).
     /// Unmatched paths on that port return 404, and controller routes are inaccessible there.
     /// Enables HTTP request metrics and initializes business metric collectors.
+    /// Requests outside the scrape port are logged with controller, action, method, path, status code, and duration.
     /// </remarks>
     /// <returns>The configured application, which has not been started.</returns>
     internal static WebApplication BuildApplication(WebApplicationBuilder builder)
@@ -64,10 +66,17 @@ public static partial class Program
         var app = builder.Build();
 
         var metricsEnabled = app.Configuration.GetValue("Metrics:Enabled", true);
+        var metricsPort = app.Configuration.GetValue("Metrics:Port", 9100);
+
+        // Log every API request; the scrape port stays silent to keep the
+        // scraper's polling out of the log. The middleware registers first, so
+        // it wraps the full pipeline and sees every status code and exception.
+        app.UseWhen(
+            context => !(metricsEnabled && context.Connection.LocalPort == metricsPort),
+            branch => branch.UseMiddleware<RequestLoggingMiddleware>());
 
         if (metricsEnabled)
         {
-            var metricsPort = app.Configuration.GetValue("Metrics:Port", 9100);
 
             // Serve the Prometheus scraper on its own port. The branch is terminal
             // (MapWhen), so neither the API endpoints nor the scrape endpoint leak to
