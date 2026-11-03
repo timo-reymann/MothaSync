@@ -51,7 +51,7 @@
         </PackageReference>
         <PackageReference Include="DotNet.Bundle" Version="0.9.13"/>
         <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.14"/>
-        <PackageReference Include="Avalonia.Labs.Notifications" Version="12.0.2"/>
+        <PackageReference Include="Avalonia.Labs.Notifications" Version="12.1.0"/>
     </ItemGroup>
 
     <Target Name="CopyBundleIcon" AfterTargets="BundleApp">
