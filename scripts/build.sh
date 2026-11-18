@@ -48,7 +48,7 @@ for rid in "${rids[@]}"; do
     osx-arm64|osx-x64)
       dotnet restore "$PROJECT" -r "$rid" -p:RestoreLockedMode=false
       dotnet msbuild "$PROJECT" -t:BundleApp -p:RuntimeIdentifier="$rid" -p:Configuration=Release -p:SelfContained=true -p:Version="$version" -p:RestoreLockedMode=false
-      app="$PROJECT/bin/Release/net10.0/$rid/publish/MothaSync.app"
+      app="$PROJECT/bin/Release/net11.0/$rid/publish/MothaSync.app"
       if command -v codesign >/dev/null; then
         codesign --force --deep -s - "$app"
       fi

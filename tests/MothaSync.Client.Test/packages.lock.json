@@ -1,7 +1,7 @@
 {
   "version": 1,
   "dependencies": {
-    "net10.0": {
+    "net11.0": {
       "coverlet.collector": {
         "type": "Direct",
         "requested": "[10.1.0, )",
@@ -171,7 +171,6 @@
         "resolved": "2.2.3",
         "contentHash": "kQCInYusi2c9tjd9hV05Lln6Csbo07kiC672M3G7dsalDBe2j+pOk3We2nzdyy5ptQYy/9gQiC8ZaHhb6u/5Kw==",
         "dependencies": {
-          "Microsoft.Extensions.Logging.Abstractions": "8.0.0",
           "Microsoft.IO.RecyclableMemoryStream": "3.0.1"
         }
       },
@@ -240,19 +239,6 @@
         "contentHash": "aWaF2LDjuFZwE9UsAGRYGNyS48xqaXoKPAjwpJI85fsaM/43s5NTRnl4xtqbTGKq8of2M/W8mo7DJk7v4zzHGQ==",
         "dependencies": {
           "SQLitePCLRaw.core": "3.0.5"
-        }
-      },
-      "Microsoft.Extensions.DependencyInjection.Abstractions": {
-        "type": "Transitive",
-        "resolved": "8.0.0",
-        "contentHash": "cjWrLkJXK0rs4zofsK4bSdg+jhDLTaxrkXu4gS6Y7MAlCvRyNNgwY/lJi5RDlQOnSZweHqoyvgvbdvQsRIW+hg=="
-      },
-      "Microsoft.Extensions.Logging.Abstractions": {
-        "type": "Transitive",
-        "resolved": "8.0.0",
-        "contentHash": "arDBqTgFCyS0EvRV7O3MZturChstm50OJ0y9bDJvAcmEPJm0FFpFyjU/JLYyStNGGey081DvnQYlncNX5SJJGA==",
-        "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0"
         }
       },
       "Microsoft.IO.RecyclableMemoryStream": {

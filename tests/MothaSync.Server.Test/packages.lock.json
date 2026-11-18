@@ -1,7 +1,7 @@
 {
   "version": 1,
   "dependencies": {
-    "net10.0": {
+    "net11.0": {
       "coverlet.collector": {
         "type": "Direct",
         "requested": "[10.1.0, )",
@@ -49,7 +49,10 @@
       "Microsoft.AspNetCore.OpenApi": {
         "type": "Transitive",
         "resolved": "11.0.0",
-        "contentHash": "B5nHzRjpd5BhKN1ijqc2X4QVuQCCbQAWL/q3wpJgUBZou60IT0wgi1eiU3fF/DAj21RgBHXYAVNCV/AJ9y1GKw=="
+        "contentHash": "B5nHzRjpd5BhKN1ijqc2X4QVuQCCbQAWL/q3wpJgUBZou60IT0wgi1eiU3fF/DAj21RgBHXYAVNCV/AJ9y1GKw==",
+        "dependencies": {
+          "Microsoft.OpenApi": "[3.11.0, 4.0.0)"
+        }
       },
       "Microsoft.CodeCoverage": {
         "type": "Transitive",
@@ -73,6 +76,11 @@
         "dependencies": {
           "SQLitePCLRaw.core": "3.0.5"
         }
+      },
+      "Microsoft.OpenApi": {
+        "type": "Transitive",
+        "resolved": "3.11.0",
+        "contentHash": "kvQz+mL/fnDw2VaE8zMyQhbMv7FmOYUydIhCVNKxQdrLu9XiMT/07DHwJ5YkRO2uzcxTFvMAKFKKywxoyLKHcA=="
       },
       "Microsoft.TestPlatform.ObjectModel": {
         "type": "Transitive",
