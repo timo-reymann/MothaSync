@@ -7,7 +7,7 @@ COPY NOTICE NOTICE
 
 # Build stage - publish the ASP.NET Core server as a framework-dependent app.
 # Locked-mode restore uses the committed packages.lock.json files.
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:11.0 AS build
 WORKDIR /src
 COPY global.json Directory.Build.props MothaSync.slnx ./
 COPY src/MothaSync.Shared/MothaSync.Shared.csproj src/MothaSync.Shared/packages.lock.json src/MothaSync.Shared/
@@ -20,13 +20,13 @@ RUN dotnet publish src/MothaSync.Server -c Release --no-restore -o /app/publish
 
 # Empty data directory, owned by the app user (uid 1654) of the chiseled
 # runtime stage, so the SQLite database is writable in the container.
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS data
+FROM mcr.microsoft.com/dotnet/sdk:11.0 AS data
 RUN mkdir -p /data \
     && touch /data/.keep
 
 # Runtime stage - Ubuntu chiseled (distroless): no shell, no package manager,
 # non-root user uid 1654, invariant globalization, HTTP on port 8080.
-FROM mcr.microsoft.com/dotnet/aspnet:10.0-noble-chiseled
+FROM mcr.microsoft.com/dotnet/aspnet:11.0-resolute-chiseled
 LABEL org.opencontainers.image.title="MothaSync Server" \
       org.opencontainers.image.description="Optional sync reporting server for MothaSync clients." \
       org.opencontainers.image.licenses='MIT' \
