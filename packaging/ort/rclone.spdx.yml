@@ -23,9 +23,9 @@ packages:
 - SPDXID: "SPDXRef-Package-rclone"
   name: "rclone"
   # renovate: datasource=github-releases depName=rclone/rclone
-  downloadLocation: "git+https://github.com/rclone/rclone.git@v1.75.2"
+  downloadLocation: "git+https://github.com/rclone/rclone.git@v1.76.0"
   # renovate: datasource=github-releases depName=rclone/rclone
-  versionInfo: v1.75.2
+  versionInfo: v1.76.0
   homepage: "https://rclone.org"
   filesAnalyzed: false
   licenseConcluded: "MIT"
