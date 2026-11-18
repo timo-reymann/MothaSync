@@ -11,14 +11,14 @@ excludes:
 curations:
   packages:
     # renovate: datasource=github-releases depName=rclone/rclone
-    - id: "SpdxDocumentFile::rclone:v1.75.2"
+    - id: "SpdxDocumentFile::rclone:v1.76.0"
       curations:
         comment: "ORT resolves the SPDX package to the repository that holds packaging/ort/rclone.spdx.yml, so point it at the rclone source to get its real license and copyright."
         vcs:
           type: "Git"
           url: "https://github.com/rclone/rclone.git"
           # renovate: datasource=github-releases depName=rclone/rclone
-          revision: "v1.75.2"
+          revision: "v1.76.0"
           path: ""
     - id: "NuGet:Avalonia.Angle:Windows.Natives"
       curations:

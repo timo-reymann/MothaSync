@@ -4,7 +4,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 # renovate: datasource=github-releases depName=rclone/rclone
-RCLONE_VERSION=v1.75.2
+RCLONE_VERSION=v1.76.0
 
 BASE_URL="https://downloads.rclone.org/$RCLONE_VERSION"
 OUT_DIR="src/MothaSync.Client/Assets/rclone"
