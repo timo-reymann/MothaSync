@@ -118,7 +118,7 @@ public sealed class NuGetLockFileTests
 
         Assert.True(result.ExitCode == 0, result.Output);
         using var json = JsonDocument.Parse(File.ReadAllText(project.LockPath));
-        var packages = json.RootElement.GetProperty("dependencies").GetProperty("net10.0");
+        var packages = json.RootElement.GetProperty("dependencies").GetProperty("net11.0");
         var direct = packages.GetProperty("Fixture.Package");
         Assert.Equal("Direct", direct.GetProperty("type").GetString());
         Assert.Equal("1.0.0", direct.GetProperty("resolved").GetString());
@@ -193,7 +193,7 @@ public sealed class NuGetLockFileTests
 
         Assert.True(result.ExitCode == 0, result.Output);
         using var json = JsonDocument.Parse(File.ReadAllText(project.LockPath));
-        var package = json.RootElement.GetProperty("dependencies").GetProperty("net10.0")
+        var package = json.RootElement.GetProperty("dependencies").GetProperty("net11.0")
             .GetProperty("Fixture.Package");
         Assert.Equal("[1.0.1, )", package.GetProperty("requested").GetString());
         Assert.Equal("1.0.1", package.GetProperty("resolved").GetString());
@@ -256,7 +256,7 @@ public sealed class NuGetLockFileTests
             File.Copy(Path.Combine(RepositoryRoot, "global.json"), Path.Combine(_root, "global.json"));
             File.WriteAllText(ProjectPath, """
                 <Project Sdk="Microsoft.NET.Sdk">
-                  <PropertyGroup><TargetFramework>net10.0</TargetFramework></PropertyGroup>
+                  <PropertyGroup><TargetFramework>net11.0</TargetFramework></PropertyGroup>
                   <ItemGroup><PackageReference Include="Fixture.Package" Version="1.0.0" /></ItemGroup>
                 </Project>
                 """);

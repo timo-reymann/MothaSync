@@ -228,7 +228,7 @@ Please read the [Contribution Guidelines](CONTRIBUTING.md) before opening an iss
 
 ### Requirements
 
-- [.NET SDK 10](https://dotnet.microsoft.com/download/dotnet/10.0)
+- [.NET SDK 11](https://dotnet.microsoft.com/download/dotnet/11.0)
 - [Docker](https://docs.docker.com/get-docker/) when running ORT locally
 
 ### Test

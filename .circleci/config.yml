@@ -15,7 +15,7 @@ only_tags: &only_tags
 executors:
   dotnet:
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:10.0
+      - image: mcr.microsoft.com/dotnet/sdk:11.0
   # Bundles 0install, 0template, gpg and git for the feed pipeline.
   zero-install:
     docker:
