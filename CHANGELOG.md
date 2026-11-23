@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/timo-reymann/MothaSync/compare/v1.7.0...v1.7.1) (2026-11-23)
+
+
+### Bug Fixes
+
+* curate .NET 11 package licenses to keep the ORT scan feasible ([be7381b](https://github.com/timo-reymann/MothaSync/commit/be7381baaf96b8f2e388c309476a363f0015777a))
+
 # [1.7.0](https://github.com/timo-reymann/MothaSync/compare/v1.6.0...v1.7.0) (2026-10-24)
 
 
