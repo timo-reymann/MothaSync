@@ -28,6 +28,83 @@ curations:
       curations:
         comment: "Package is licensed under BSD-3-Clause; the scanner only reports the scancode protobuf LicenseRef."
         concluded_license: "BSD-3-Clause"
+    # .NET 11 packages resolve their source to the dotnet/dotnet unified repository. Cloning and scanning
+    # that multi-gigabyte tree exceeds the scan step budget, so conclude the licenses from the package
+    # metadata on nuget.org instead. The ids stay version-less, so patch updates stay covered.
+    - id: "NuGet:Microsoft.AspNetCore:WebUtilities"
+      curations:
+        concluded_license: "MIT"
+    - id: "NuGet:Microsoft.Extensions:Configuration"
+      curations:
+        concluded_license: "MIT"
+    - id: "NuGet:Microsoft.Extensions:Configuration.Binder"
+      curations:
+        concluded_license: "MIT"
+    - id: "NuGet:Microsoft.Extensions:Configuration.CommandLine"
+      curations:
+        concluded_license: "MIT"
+    - id: "NuGet:Microsoft.Extensions:Configuration.EnvironmentVariables"
+      curations:
+        concluded_license: "MIT"
+    - id: "NuGet:Microsoft.Extensions:Configuration.FileExtensions"
+      curations:
+        concluded_license: "MIT"
+    - id: "NuGet:Microsoft.Extensions:Configuration.Json"
+      curations:
+        concluded_license: "MIT"
+    - id: "NuGet:Microsoft.Extensions:Configuration.UserSecrets"
+      curations:
+        concluded_license: "MIT"
+    - id: "NuGet:Microsoft.Extensions:Diagnostics"
+      curations:
+        concluded_license: "MIT"
+    - id: "NuGet:Microsoft.Extensions:FileProviders.Physical"
+      curations:
+        concluded_license: "MIT"
+    - id: "NuGet:Microsoft.Extensions:FileSystemGlobbing"
+      curations:
+        concluded_license: "MIT"
+    - id: "NuGet:Microsoft.Extensions:Hosting"
+      curations:
+        concluded_license: "MIT"
+    - id: "NuGet:Microsoft.Extensions:Logging"
+      curations:
+        concluded_license: "MIT"
+    - id: "NuGet:Microsoft.Extensions:Logging.Configuration"
+      curations:
+        concluded_license: "MIT"
+    - id: "NuGet:Microsoft.Extensions:Logging.Console"
+      curations:
+        concluded_license: "MIT"
+    - id: "NuGet:Microsoft.Extensions:Logging.Debug"
+      curations:
+        concluded_license: "MIT"
+    - id: "NuGet:Microsoft.Extensions:Logging.EventLog"
+      curations:
+        concluded_license: "MIT"
+    - id: "NuGet:Microsoft.Extensions:Logging.EventSource"
+      curations:
+        concluded_license: "MIT"
+    - id: "NuGet:Microsoft.Extensions:Options.ConfigurationExtensions"
+      curations:
+        concluded_license: "MIT"
+    - id: "NuGet:Microsoft.Net:Http.Headers"
+      curations:
+        concluded_license: "MIT"
+    - id: "NuGet:System.Diagnostics:EventLog"
+      curations:
+        concluded_license: "MIT"
+    - id: "NuGet:SQLitePCLRaw:bundle_e_sqlite3"
+      curations:
+        comment: >-
+          Package metadata has no VCS revision, so ORT resolves the tip of the SQLitePCL.raw repository
+          and scans the same provenance as the packages that declare the revision explicitly. That
+          produces duplicate scan results, so pin the revision of the 3.0.5 packages here.
+        vcs:
+          type: "Git"
+          url: "https://github.com/ericsink/SQLitePCL.raw.git"
+          revision: "ed046114d5a30534e13294d94d78eb73de896ad4"
+          path: ""
 resolutions:
   issues:
     - message: "(?s).*Could not resolve provenance for package 'NuGet:.*"
